@@ -29,6 +29,7 @@ public class DetailsActivity extends AppCompatActivity {
     @BindView(R.id.details_genres_layout) LinearLayout genresLayout;
     @BindView(R.id.details_time_layout) LinearLayout timeLayout;
     @BindView(R.id.details_time_value) TextView timeValue;
+    @BindView(R.id.details_rating) TextView rating;
     ActionBar actionBar;
 
     SingleMovieDetails movie;
@@ -81,6 +82,8 @@ public class DetailsActivity extends AppCompatActivity {
             genresLayout.addView(tmpTxtView);
         }
         timeValue.setText(String.valueOf(movie.runtime)+ " min");
+        rating.setText(String.valueOf(movie.voteAverage));
+        detailsLayout.bringChildToFront(rating);
         }
     }
 }

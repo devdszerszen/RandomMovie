@@ -97,6 +97,33 @@
             </LinearLayout>
         </LinearLayout>
 
+        <FrameLayout
+            android:id="@+id/details_star_layout"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_marginTop="2dp"
+            android:layout_marginEnd="2dp"
+            app:layout_constraintEnd_toEndOf="@+id/details_poster"
+            app:layout_constraintTop_toTopOf="@+id/details_poster">
+
+            <ImageView
+                android:id="@+id/details_star_shape"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:srcCompat="@drawable/star" />
+
+            <TextView
+                android:id="@+id/details_rating"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="6dp"
+                android:gravity="center"
+                android:hint="@android:color/holo_orange_light"
+                android:textColor="@android:color/holo_orange_light"
+                android:textSize="16dp"
+                android:textStyle="bold" />
+        </FrameLayout>
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

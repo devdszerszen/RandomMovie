@@ -122,7 +122,7 @@ public class ApiConnector implements StartInterface.Model {
                 while (movie.overview.equals("")) {
                     randomMovie = random.nextInt(moviesList.size());
                     movie = moviesList.get(randomMovie);
-                    Log.d(TAG, "onResponse: Pętla while się wykonałą");
+                    Log.d(TAG, "onResponse: Pętla while się wykonała");
                 }
 
                 Log.d(TAG, "onResponse: Single movie data is: " + movie);
