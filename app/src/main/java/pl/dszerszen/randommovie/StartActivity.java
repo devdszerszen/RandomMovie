@@ -1,9 +1,13 @@
 package pl.dszerszen.randommovie;
 
+import android.app.Dialog;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -15,6 +19,7 @@ import com.bumptech.glide.Glide;
 import java.util.ArrayList;
 import java.util.List;
 import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -61,6 +66,7 @@ public class StartActivity extends AppCompatActivity implements StartInterface.V
         presenter = new StartPresenter(this, languageKey);
         detailsLayout.setVisibility(GONE);
         tmdbImage.setVisibility(View.VISIBLE);
+        //presenter.getGenresList();
     }
 
     public void setupActionBar() {
@@ -73,6 +79,12 @@ public class StartActivity extends AppCompatActivity implements StartInterface.V
         super.onStop();
         stopLoader();
     }
+
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        getMenuInflater().inflate(R.menu.menu_main,menu);
+//        return true;
+//    }
 
     @OnClick(R.id.randomButton)
     public void getRandomMovie() {
@@ -163,5 +175,14 @@ public class StartActivity extends AppCompatActivity implements StartInterface.V
 
     }
 
+    public void onFilterIconClicked (MenuItem item) {
+        Dialog dialog = new Dialog(this);
+        dialog.setContentView(R.layout.dialog_filter_view);
+        dialog.show();
 
+        int width = (int)(getResources().getDisplayMetrics().widthPixels*0.90);
+        int height = (int)(getResources().getDisplayMetrics().heightPixels*0.80);
+
+        dialog.getWindow().setLayout(width, height);
+    }
 }

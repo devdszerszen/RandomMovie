@@ -5,4 +5,6 @@
     <string name="no_desc">Brak opisu dla tego filmu.</string>
     <string name="movie_duration">Czas trwania</string>
     <string name="language_key">pl_PL</string>
+    <string name="filter_genre">Genre</string>
+    <string name="filter_year">Year</string>
 </resources>

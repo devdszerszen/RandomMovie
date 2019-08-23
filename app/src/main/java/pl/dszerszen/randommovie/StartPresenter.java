@@ -17,7 +17,8 @@ public class StartPresenter implements StartInterface.Presenter, Serializable {
         this.model = new ApiConnector(this);
     }
 
-    private void getGenresList() {
+    @Override
+    public void getGenresList() {
         Log.d(TAG, "getGenresList: called");
         model.getGenresList();
     }

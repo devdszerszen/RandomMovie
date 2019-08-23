@@ -16,6 +16,7 @@ public interface StartInterface {
         void reportError(String message);
         void sendGenresList(List<Genre> list);
         void getRandomMovie();
+        void getGenresList();
         void callbackRandomMovie(SingleMovieDetails movie);
     }
 
