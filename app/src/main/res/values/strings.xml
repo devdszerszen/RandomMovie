@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">RandomMovie</string>
+    <string name="random_movie">Get random movie</string>
+    <string name="no_desc">There is no description for this movie.</string>
+</resources>
