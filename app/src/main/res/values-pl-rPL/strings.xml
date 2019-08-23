@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Film na dziś</string>
+    <string name="random_movie">Wylosuj film</string>
+    <string name="no_desc">Brak opisu dla tego filmu.</string>
+    <string name="movie_duration">Czas trwania</string>
+    <string name="language_key">pl_PL</string>
+</resources>

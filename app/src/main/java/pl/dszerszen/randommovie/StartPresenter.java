@@ -12,10 +12,9 @@ public class StartPresenter implements StartInterface.Presenter, Serializable {
     private StartInterface.View view;
     private StartInterface.Model model;
 
-    public StartPresenter(StartInterface.View view) {
+    public StartPresenter(StartInterface.View view, String languageKey) {
         this.view = view;
         this.model = new ApiConnector(this);
-        //getGenresList();
     }
 
     private void getGenresList() {

@@ -57,8 +57,10 @@ public class StartActivity extends AppCompatActivity implements StartInterface.V
         setContentView(R.layout.activity_start);
         ButterKnife.bind(this);
         setupActionBar();
-        presenter = new StartPresenter(this);
-
+        String languageKey = getResources().getString(R.string.language_key);
+        presenter = new StartPresenter(this, languageKey);
+        detailsLayout.setVisibility(GONE);
+        tmdbImage.setVisibility(View.VISIBLE);
     }
 
     public void setupActionBar() {
@@ -160,4 +162,6 @@ public class StartActivity extends AppCompatActivity implements StartInterface.V
         });
 
     }
+
+
 }

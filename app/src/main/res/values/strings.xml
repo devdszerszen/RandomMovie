@@ -3,4 +3,5 @@
     <string name="random_movie">Get random movie</string>
     <string name="no_desc">There is no description for this movie.</string>
     <string name="movie_duration">Duration</string>
+    <string name="language_key">en_EN</string>
 </resources>
