@@ -21,6 +21,6 @@ public interface StartInterface {
 
     interface Model {
         void getGenresList();
-        void getRandomMovie();
+        void getRandomMovie(String presenterType);
     }
 }

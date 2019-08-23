@@ -3,11 +3,12 @@ package pl.dszerszen.randommovie;
 import android.app.Activity;
 import android.util.Log;
 
+import java.io.Serializable;
 import java.util.List;
 
 import pl.dszerszen.randommovie.GSON.Genre;
 
-public class StartPresenter implements StartInterface.Presenter {
+public class StartPresenter implements StartInterface.Presenter, Serializable {
 
     final String TAG = "DAMIAN";
 
@@ -39,7 +40,7 @@ public class StartPresenter implements StartInterface.Presenter {
 
     @Override
     public void getRandomMovie() {
-        model.getRandomMovie();
+        model.getRandomMovie(ApiConnector.START);
     }
 
     @Override

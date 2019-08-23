@@ -23,22 +23,33 @@ import okhttp3.Request;
 import okhttp3.Response;
 import pl.dszerszen.randommovie.GSON.Genre;
 
-public class ApiConnector implements StartInterface.Model {
+public class ApiConnector implements StartInterface.Model, DetailsInterface.Model {
     final String TAG = "Damian";
-    private String apiKey = "1ecff66"+"&t=Harry";
+    final static String START = "start";
+    final static String DETAILS = "details";
+
     private OkHttpClient client;
     private Api api;
     private Gson gson;
-    private StartInterface.Presenter presenter;
+    private StartInterface.Presenter startPresenter;
+    private DetailsInterface.Presenter detailsPresenter;
 
 
     public ApiConnector(StartInterface.Presenter presenter) {
         this.client = new OkHttpClient();
         this.api = new Api();
         this.gson = new Gson();
-        this.presenter = presenter;
-
+        this.startPresenter = presenter;
     }
+
+    public ApiConnector(DetailsInterface.Presenter presenter) {
+        this.client = new OkHttpClient();
+        this.api = new Api();
+        this.gson = new Gson();
+        this.detailsPresenter = presenter;
+    }
+
+
 
     public void callApi() {
         final Request request = new Request.Builder()
@@ -70,7 +81,7 @@ public class ApiConnector implements StartInterface.Model {
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(@NotNull Call call, @NotNull IOException e) {
-                presenter.reportError(e.getMessage());
+                startPresenter.reportError(e.getMessage());
             }
 
             @Override
@@ -83,31 +94,25 @@ public class ApiConnector implements StartInterface.Model {
 
                 Type listType = new TypeToken<List<Genre>>(){}.getType();
                 List<Genre> genresList = gson.fromJson(array,listType);
-                presenter.sendGenresList(genresList);
+                startPresenter.sendGenresList(genresList);
             }
         });
     }
 
     @Override
-    public void getRandomMovie() {
-        Random random = new Random();
-        int page = random.nextInt(500);
-
-        final Request request = new Request.Builder()
-                .url(api.getHostUrl()+"/3/discover/movie?language=pl-PL&page="
-                        +page
-                        +"&api_key="
-                        +api.getApiKey())
-                .build();
-
-        client.newCall(request).enqueue(new Callback() {
+    public void getRandomMovie(String presenterType) {
+        client.newCall(getRandomMovieRequest()).enqueue(new Callback() {
             @Override
             public void onFailure(@NotNull Call call, @NotNull IOException e) {
-                presenter.reportError(e.getMessage());
+                if (presenterType.equals(START))
+                    startPresenter.reportError(e.getMessage());
+                else if (presenterType.equals(DETAILS))
+                    detailsPresenter.reportError(e.getMessage());
             }
 
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                Random random = new Random();
                 String jsonOutput = response.body().string();
                 Log.d(TAG, "onResponse: response: "+ jsonOutput);
 
@@ -122,17 +127,15 @@ public class ApiConnector implements StartInterface.Model {
                 while (movie.overview.equals("")) {
                     randomMovie = random.nextInt(moviesList.size());
                     movie = moviesList.get(randomMovie);
-                    Log.d(TAG, "onResponse: Pętla while się wykonała");
                 }
 
                 Log.d(TAG, "onResponse: Single movie data is: " + movie);
-                //presenter.callbackRandomMovie(movie);
-                getMovieDetails(movie.id);
+                getMovieDetails(movie.id, presenterType);
             }
         });
     }
 
-    public void getMovieDetails(int id) {
+    public void getMovieDetails(int id, String presenterType) {
         final Request request = new Request.Builder()
                 .url(api.getHostUrl()+"/3/movie/"+id+"?language=pl-PL&api_key="+api.getApiKey())
                 .build();
@@ -140,7 +143,10 @@ public class ApiConnector implements StartInterface.Model {
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(@NotNull Call call, @NotNull IOException e) {
-                presenter.reportError(e.getMessage());
+                if (presenterType.equals(START))
+                    startPresenter.reportError(e.getMessage());
+                else if (presenterType.equals(DETAILS))
+                    detailsPresenter.reportError(e.getMessage());
             }
 
             @Override
@@ -150,8 +156,25 @@ public class ApiConnector implements StartInterface.Model {
 
                 SingleMovieDetails movieDetails = gson.fromJson(jsonOutput,SingleMovieDetails.class);
                 Log.d(TAG, "onResponse: SingleMovieDetails class details: " + movieDetails.toString());
-                presenter.callbackRandomMovie(movieDetails);
+                if (presenterType.equals(START))
+                    startPresenter.callbackRandomMovie(movieDetails);
+                else if (presenterType.equals(DETAILS))
+                    detailsPresenter.callbackRandomMovie(movieDetails);
             }
         });
+    }
+
+    public Request getRandomMovieRequest() {
+        Random random = new Random();
+        int page = random.nextInt(500);
+
+        final Request request = new Request.Builder()
+                .url(api.getHostUrl()+"/3/discover/movie?language=pl-PL&page="
+                        +page
+                        +"&api_key="
+                        +api.getApiKey())
+                .build();
+
+        return request;
     }
 }

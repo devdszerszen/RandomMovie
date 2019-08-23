@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 import android.graphics.Color;
 import android.os.Bundle;
@@ -14,11 +15,14 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.squareup.picasso.Picasso;
 
-public class DetailsActivity extends AppCompatActivity {
+public class DetailsActivity extends AppCompatActivity implements DetailsInterface.View {
+
+    DetailsInterface.Presenter presenter;
 
     final String TAG = "Damian";
 
@@ -33,7 +37,6 @@ public class DetailsActivity extends AppCompatActivity {
     ActionBar actionBar;
 
     SingleMovieDetails movie;
-    Api api;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,12 +44,10 @@ public class DetailsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_details);
         ButterKnife.bind(this);
         actionBar = getSupportActionBar();
+        presenter = new DetailsPresenter(this);
         setBackground();
-        api = new Api();
         getMovieData();
         showMovieInfo();
-
-
     }
 
     public void setBackground() {
@@ -64,8 +65,8 @@ public class DetailsActivity extends AppCompatActivity {
     public void showMovieInfo() {
         if (movie != null) {
             if (movie.backdropPath != null) {
-                Log.d(TAG, "showMovieInfo: path is: "+ api.getImageUrl()+movie.backdropPath);
-                Glide.with(this).load(api.getImageUrl()+movie.backdropPath).into(posterView);
+                Log.d(TAG, "showMovieInfo: path is: "+ Api.getImageUrl()+movie.backdropPath);
+                Glide.with(this).load(Api.getImageUrl()+movie.backdropPath).into(posterView);
             }
         title.setText(movie.title);
         desc.setText(movie.overview);
@@ -85,5 +86,32 @@ public class DetailsActivity extends AppCompatActivity {
         rating.setText(String.valueOf(movie.voteAverage));
         detailsLayout.bringChildToFront(rating);
         }
+    }
+
+    @Override
+    public void showNewMovie(SingleMovieDetails movie) {
+        DetailsActivity.this.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                setNewMovie(movie);
+                genresLayout.removeAllViews();
+                showMovieInfo();
+            }
+        });
+
+    }
+
+    @Override
+    public void reportError(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    }
+
+    @OnClick(R.id.details_random_movie_btn)
+    public void getNextMovie() {
+        presenter.changeMovie();
+    }
+
+    private void setNewMovie(SingleMovieDetails movie) {
+        this.movie = movie;
     }
 }
