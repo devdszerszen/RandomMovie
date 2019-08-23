@@ -3,145 +3,145 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/details_layout"
+    android:id="@+id/details_layouts"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".DetailsActivity">
 
-    <TextView
-        android:id="@+id/details_title"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:background="@drawable/shapes"
-        android:gravity="center"
-        android:minHeight="40dp"
-        android:text="asd"
-        android:textColor="@android:color/background_light"
-        android:textSize="26dp"
-        app:layout_constraintBottom_toBottomOf="@+id/details_poster"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.501"
-        app:layout_constraintStart_toStartOf="parent" />
+    <!--<TextView-->
+        <!--android:id="@+id/details_title"-->
+        <!--android:layout_width="0dp"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:background="@drawable/shapes"-->
+        <!--android:gravity="center"-->
+        <!--android:minHeight="40dp"-->
+        <!--android:text="asd"-->
+        <!--android:textColor="@android:color/background_light"-->
+        <!--android:textSize="26dp"-->
+        <!--app:layout_constraintBottom_toBottomOf="@+id/details_poster"-->
+        <!--app:layout_constraintEnd_toEndOf="parent"-->
+        <!--app:layout_constraintHorizontal_bias="0.501"-->
+        <!--app:layout_constraintStart_toStartOf="parent" />-->
 
-    <ScrollView
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="4dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="4dp"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/details_random_movie_btn"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/details_under_title_layout">
+    <!--<ScrollView-->
+        <!--android:layout_width="0dp"-->
+        <!--android:layout_height="0dp"-->
+        <!--android:layout_marginStart="4dp"-->
+        <!--android:layout_marginTop="8dp"-->
+        <!--android:layout_marginEnd="4dp"-->
+        <!--android:layout_marginBottom="8dp"-->
+        <!--app:layout_constraintBottom_toTopOf="@+id/details_random_movie_btn"-->
+        <!--app:layout_constraintEnd_toEndOf="parent"-->
+        <!--app:layout_constraintStart_toStartOf="parent"-->
+        <!--app:layout_constraintTop_toBottomOf="@+id/details_under_title_layout">-->
 
-        <TextView
-            android:id="@+id/details_desc"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="20dp"
-            android:layout_marginBottom="16dp"
-            android:justificationMode="inter_word"
-            android:text="saa"
-            android:textColor="@android:color/background_light"
-            android:textSize="16sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/details_under_title_layout"
-            app:layout_constraintVertical_bias="0.0" />
-    </ScrollView>
+        <!--<TextView-->
+            <!--android:id="@+id/details_desc"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginStart="20dp"-->
+            <!--android:layout_marginTop="8dp"-->
+            <!--android:layout_marginEnd="20dp"-->
+            <!--android:layout_marginBottom="16dp"-->
+            <!--android:justificationMode="inter_word"-->
+            <!--android:text="saa"-->
+            <!--android:textColor="@android:color/background_light"-->
+            <!--android:textSize="16sp"-->
+            <!--app:layout_constraintBottom_toBottomOf="parent"-->
+            <!--app:layout_constraintEnd_toEndOf="parent"-->
+            <!--app:layout_constraintHorizontal_bias="1.0"-->
+            <!--app:layout_constraintStart_toStartOf="parent"-->
+            <!--app:layout_constraintTop_toBottomOf="@+id/details_under_title_layout"-->
+            <!--app:layout_constraintVertical_bias="0.0" />-->
+    <!--</ScrollView>-->
 
-    <ImageView
-        android:id="@+id/details_poster"
-        android:layout_width="0dp"
-        android:layout_height="200dp"
-        android:contentDescription="tets"
-        android:textAlignment="center"
-        android:visibility="visible"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <!--<ImageView-->
+        <!--android:id="@+id/details_poster"-->
+        <!--android:layout_width="0dp"-->
+        <!--android:layout_height="200dp"-->
+        <!--android:contentDescription="tets"-->
+        <!--android:textAlignment="center"-->
+        <!--android:visibility="visible"-->
+        <!--app:layout_constraintEnd_toEndOf="parent"-->
+        <!--app:layout_constraintHorizontal_bias="0.0"-->
+        <!--app:layout_constraintStart_toStartOf="parent"-->
+        <!--app:layout_constraintTop_toTopOf="parent" />-->
 
-    <LinearLayout
-        android:id="@+id/details_under_title_layout"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"
-        android:minHeight="50dp"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/details_title">
+    <!--<LinearLayout-->
+        <!--android:id="@+id/details_under_title_layout"-->
+        <!--android:layout_width="0dp"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:background="@color/colorPrimary"-->
+        <!--android:minHeight="50dp"-->
+        <!--android:orientation="horizontal"-->
+        <!--app:layout_constraintEnd_toEndOf="parent"-->
+        <!--app:layout_constraintStart_toStartOf="parent"-->
+        <!--app:layout_constraintTop_toBottomOf="@+id/details_title">-->
 
-        <LinearLayout
-            android:id="@+id/details_genres_layout"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="0.5"
-            android:orientation="vertical"
-            android:paddingLeft="0dp"></LinearLayout>
+        <!--<LinearLayout-->
+            <!--android:id="@+id/details_genres_layout"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:layout_weight="0.5"-->
+            <!--android:orientation="vertical"-->
+            <!--android:paddingLeft="0dp"></LinearLayout>-->
 
-        <LinearLayout
-            android:id="@+id/details_time_layout"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="0.5"
-            android:orientation="vertical"
-            android:paddingRight="0dp">
+        <!--<LinearLayout-->
+            <!--android:id="@+id/details_time_layout"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:layout_weight="0.5"-->
+            <!--android:orientation="vertical"-->
+            <!--android:paddingRight="0dp">-->
 
-            <TextView
-                android:id="@+id/details_time_value"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:textColor="@android:color/background_light"
-                android:textSize="14dp" />
-        </LinearLayout>
-    </LinearLayout>
+            <!--<TextView-->
+                <!--android:id="@+id/details_time_value"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="match_parent"-->
+                <!--android:gravity="center"-->
+                <!--android:textColor="@android:color/background_light"-->
+                <!--android:textSize="14dp" />-->
+        <!--</LinearLayout>-->
+    <!--</LinearLayout>-->
 
-    <FrameLayout
-        android:id="@+id/details_star_layout"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
-        android:layout_marginTop="2dp"
-        android:layout_marginEnd="2dp"
-        app:layout_constraintEnd_toEndOf="@+id/details_poster"
-        app:layout_constraintTop_toTopOf="@+id/details_poster">
+    <!--<FrameLayout-->
+        <!--android:id="@+id/details_star_layout"-->
+        <!--android:layout_width="70dp"-->
+        <!--android:layout_height="70dp"-->
+        <!--android:layout_marginTop="2dp"-->
+        <!--android:layout_marginEnd="2dp"-->
+        <!--app:layout_constraintEnd_toEndOf="@+id/details_poster"-->
+        <!--app:layout_constraintTop_toTopOf="@+id/details_poster">-->
 
-        <ImageView
-            android:id="@+id/details_star_shape"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:srcCompat="@drawable/star" />
+        <!--<ImageView-->
+            <!--android:id="@+id/details_star_shape"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent"-->
+            <!--app:srcCompat="@drawable/star" />-->
 
-        <TextView
-            android:id="@+id/details_rating"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="6dp"
-            android:gravity="center"
-            android:hint="@android:color/holo_orange_light"
-            android:textColor="@android:color/holo_orange_light"
-            android:textSize="16dp"
-            android:textStyle="bold" />
-    </FrameLayout>
+        <!--<TextView-->
+            <!--android:id="@+id/details_rating"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:layout_marginTop="6dp"-->
+            <!--android:gravity="center"-->
+            <!--android:hint="@android:color/holo_orange_light"-->
+            <!--android:textColor="@android:color/holo_orange_light"-->
+            <!--android:textSize="16dp"-->
+            <!--android:textStyle="bold" />-->
+    <!--</FrameLayout>-->
 
-    <Button
-        android:id="@+id/details_random_movie_btn"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="16dp"
-        android:text="@string/random_movie"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+    <!--<Button-->
+        <!--android:id="@+id/details_random_movie_btn"-->
+        <!--android:layout_width="0dp"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginStart="8dp"-->
+        <!--android:layout_marginEnd="8dp"-->
+        <!--android:layout_marginBottom="16dp"-->
+        <!--android:text="@string/random_movie"-->
+        <!--app:layout_constraintBottom_toBottomOf="parent"-->
+        <!--app:layout_constraintEnd_toEndOf="parent"-->
+        <!--app:layout_constraintStart_toStartOf="parent" />-->
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

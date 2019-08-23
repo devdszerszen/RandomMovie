@@ -1,11 +1,14 @@
 package pl.dszerszen.randommovie;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
@@ -38,10 +41,14 @@ public class StartActivity extends AppCompatActivity implements StartInterface.V
     @BindView(R.id.recyclerView) RecyclerView recyclerView;
     @BindView(R.id.loader) ProgressBar loader;
     @BindView(R.id.randomButton) Button randomButton;
-    @BindView(R.id.start_movie_title) TextView title;
-    @BindView(R.id.start_movie_desc) TextView desc;
-    @BindView(R.id.start_movie_img) ImageView image;
-    @BindView(R.id.start_movie_layout) ConstraintLayout movieLayout;
+    @BindView(R.id.details_title) TextView title;
+    @BindView(R.id.details_desc) TextView desc;
+    @BindView(R.id.details_poster) ImageView posterView;
+    @BindView(R.id.details_layout) ConstraintLayout detailsLayout;
+    @BindView(R.id.details_genres_layout) LinearLayout genresLayout;
+    @BindView(R.id.details_time_layout) LinearLayout timeLayout;
+    @BindView(R.id.details_time_value) TextView timeValue;
+    @BindView(R.id.details_rating) TextView rating;
     ActionBar actionBar;
 
     private StartInterface.Presenter presenter;
@@ -53,14 +60,11 @@ public class StartActivity extends AppCompatActivity implements StartInterface.V
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Log.d(TAG, "onCreate: called");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
         ButterKnife.bind(this);
         actionBar = getSupportActionBar();
         presenter = new StartPresenter(this);
-        //initRecyclerView();
-        //startLoader();
     }
 
     @Override
@@ -69,6 +73,73 @@ public class StartActivity extends AppCompatActivity implements StartInterface.V
         stopLoader();
     }
 
+    @OnClick(R.id.randomButton)
+    public void getRandomMovie() {
+        startLoader();
+        presenter.getRandomMovie();
+    }
+
+    public void startLoader() {
+        loader.setVisibility(View.VISIBLE);
+        detailsLayout.setVisibility(GONE);
+    }
+    public void stopLoader() {
+        loader.setVisibility(GONE);
+        detailsLayout.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void showRandomMovie(SingleMovieDetails movie) {
+        StartActivity.this.runOnUiThread(() -> {
+            stopLoader();
+            populateMovieView(movie);
+        });
+
+    }
+
+    public void populateMovieView(SingleMovieDetails movie) {
+        if (movie != null) {
+
+            // Picture
+            if (movie.backdropPath != null) {
+                Glide.with(this).load(Api.getImageUrl()+movie.backdropPath).into(posterView);
+            }
+
+            //Title
+            title.setText(movie.title);
+            detailsLayout.bringChildToFront(title);
+
+            //Description
+            desc.setText(movie.overview);
+
+            //Genres
+            genresLayout.removeAllViews();
+            for (int i = 0; i<movie.genres.size(); i++) {
+                TextView tmpTxtView = new TextView(this);
+                tmpTxtView.setTextColor(Color.WHITE);
+                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT, 1f);
+                tmpTxtView.setLayoutParams(params);
+                tmpTxtView.setTextSize(14f);
+                tmpTxtView.setGravity(Gravity.CENTER);
+                tmpTxtView.setText(movie.genres.get(i).name.toLowerCase());
+                genresLayout.addView(tmpTxtView);
+            }
+
+            //Time
+            timeValue.setText(String.valueOf(movie.runtime)+ " min");
+
+            //Rating
+            rating.setText(String.valueOf(movie.voteAverage));
+        }
+    }
+
+    @Override
+    public void showError(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    }
+
+
+    // Used to get genres list
     public void initRecyclerView() {
         Log.d(TAG, "initRecyclerView: called");
         recyclerList = new ArrayList<>();
@@ -76,8 +147,6 @@ public class StartActivity extends AppCompatActivity implements StartInterface.V
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
-
-
     @Override
     public void populateGenresList(List<Genre> genres) {
         Log.d(TAG, "populateGenresList: called");
@@ -93,47 +162,5 @@ public class StartActivity extends AppCompatActivity implements StartInterface.V
             }
         });
 
-    }
-
-    @Override
-    public void showError(String message) {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void showRandomMovie(SingleMovieDetails movie) {
-        //New activity
-        Intent intent = new Intent(this,DetailsActivity.class);
-        intent.putExtra("movie",movie);
-        startActivity(intent);
-
-        //Same activity
-//        stopLoader();
-//        populateMovieView(movie);
-    }
-
-    public void populateMovieView(SingleMovie movie) {
-        title.setText(movie.title);
-        desc.setText(movie.overview);
-        if (movie.posterPath != null) {
-            Log.d(TAG, "showMovieInfo: path is: "+ Api.getImageUrl()+movie.posterPath);
-            Glide.with(this).load(Api.getImageUrl()+movie.posterPath).into(image);
-        }
-    }
-
-    public void startLoader() {
-        loader.setVisibility(View.VISIBLE);
-        //movieLayout.setVisibility(GONE);
-    }
-
-    public void stopLoader() {
-        loader.setVisibility(GONE);
-        //movieLayout.setVisibility(View.VISIBLE);
-    }
-
-    @OnClick(R.id.randomButton)
-    public void getRandomMovie() {
-        startLoader();
-        presenter.getRandomMovie();
     }
 }

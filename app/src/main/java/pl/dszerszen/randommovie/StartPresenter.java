@@ -40,7 +40,7 @@ public class StartPresenter implements StartInterface.Presenter, Serializable {
 
     @Override
     public void getRandomMovie() {
-        model.getRandomMovie(ApiConnector.START);
+        model.getRandomMovie();
     }
 
     @Override

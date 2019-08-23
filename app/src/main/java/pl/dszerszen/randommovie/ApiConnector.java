@@ -23,16 +23,14 @@ import okhttp3.Request;
 import okhttp3.Response;
 import pl.dszerszen.randommovie.GSON.Genre;
 
-public class ApiConnector implements StartInterface.Model, DetailsInterface.Model {
+public class ApiConnector implements StartInterface.Model{
     final String TAG = "Damian";
-    final static String START = "start";
-    final static String DETAILS = "details";
+
 
     private OkHttpClient client;
     private Api api;
     private Gson gson;
     private StartInterface.Presenter startPresenter;
-    private DetailsInterface.Presenter detailsPresenter;
 
 
     public ApiConnector(StartInterface.Presenter presenter) {
@@ -42,41 +40,11 @@ public class ApiConnector implements StartInterface.Model, DetailsInterface.Mode
         this.startPresenter = presenter;
     }
 
-    public ApiConnector(DetailsInterface.Presenter presenter) {
-        this.client = new OkHttpClient();
-        this.api = new Api();
-        this.gson = new Gson();
-        this.detailsPresenter = presenter;
-    }
-
-
-
-    public void callApi() {
-        final Request request = new Request.Builder()
-                .url(api.getHostUrl())
-                .build();
-
-        client.newCall(request).enqueue(new Callback() {
-            @Override
-            public void onFailure(@NotNull Call call, @NotNull IOException e) {
-                Log.d(TAG, "onFailure: call: " + call.toString());
-                Log.d(TAG, "onFailure: exception: "+ e.getLocalizedMessage());
-            }
-
-            @Override
-            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-                Log.d(TAG, "onResponse: call: "+ call.toString());
-                Log.d(TAG, "onResponse: response: "+ response.body().string());
-            }
-        });
-    }
-
     @Override
     public void getGenresList() {
         final Request request = new Request.Builder()
                 .url(api.getHostUrl()+"/3/genre/movie/list?language=pl-PL&api_key="+api.getApiKey())
                 .build();
-
 
         client.newCall(request).enqueue(new Callback() {
             @Override
@@ -100,14 +68,11 @@ public class ApiConnector implements StartInterface.Model, DetailsInterface.Mode
     }
 
     @Override
-    public void getRandomMovie(String presenterType) {
+    public void getRandomMovie() {
         client.newCall(getRandomMovieRequest()).enqueue(new Callback() {
             @Override
             public void onFailure(@NotNull Call call, @NotNull IOException e) {
-                if (presenterType.equals(START))
-                    startPresenter.reportError(e.getMessage());
-                else if (presenterType.equals(DETAILS))
-                    detailsPresenter.reportError(e.getMessage());
+                startPresenter.reportError(e.getMessage());
             }
 
             @Override
@@ -130,12 +95,12 @@ public class ApiConnector implements StartInterface.Model, DetailsInterface.Mode
                 }
 
                 Log.d(TAG, "onResponse: Single movie data is: " + movie);
-                getMovieDetails(movie.id, presenterType);
+                getMovieDetails(movie.id);
             }
         });
     }
 
-    public void getMovieDetails(int id, String presenterType) {
+    public void getMovieDetails(int id) {
         final Request request = new Request.Builder()
                 .url(api.getHostUrl()+"/3/movie/"+id+"?language=pl-PL&api_key="+api.getApiKey())
                 .build();
@@ -143,10 +108,8 @@ public class ApiConnector implements StartInterface.Model, DetailsInterface.Mode
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(@NotNull Call call, @NotNull IOException e) {
-                if (presenterType.equals(START))
-                    startPresenter.reportError(e.getMessage());
-                else if (presenterType.equals(DETAILS))
-                    detailsPresenter.reportError(e.getMessage());
+                startPresenter.reportError(e.getMessage());
+
             }
 
             @Override
@@ -156,10 +119,7 @@ public class ApiConnector implements StartInterface.Model, DetailsInterface.Mode
 
                 SingleMovieDetails movieDetails = gson.fromJson(jsonOutput,SingleMovieDetails.class);
                 Log.d(TAG, "onResponse: SingleMovieDetails class details: " + movieDetails.toString());
-                if (presenterType.equals(START))
-                    startPresenter.callbackRandomMovie(movieDetails);
-                else if (presenterType.equals(DETAILS))
-                    detailsPresenter.callbackRandomMovie(movieDetails);
+                startPresenter.callbackRandomMovie(movieDetails);
             }
         });
     }
