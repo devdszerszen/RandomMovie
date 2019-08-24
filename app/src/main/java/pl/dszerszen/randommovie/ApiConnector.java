@@ -26,25 +26,34 @@ import pl.dszerszen.randommovie.GSON.Genre;
 public class ApiConnector implements StartInterface.Model{
     final String TAG = "Damian";
 
-
     private OkHttpClient client;
-    private Api api;
     private Gson gson;
     private StartInterface.Presenter startPresenter;
+    private RequestBuilder requestHelper = new RequestBuilder();
 
 
     public ApiConnector(StartInterface.Presenter presenter) {
         this.client = new OkHttpClient();
-        this.api = new Api();
         this.gson = new Gson();
         this.startPresenter = presenter;
+        this.requestHelper = new RequestBuilder();
     }
+
+//    public NewApiConnector() {
+//        this.client = new OkHttpClient();
+//        this.api = new Api();
+//        this.gson = new Gson();
+//        this.requestHelper = new RequestBuilder();
+//
+//        getRandomMovie(288,RequestBuilder.NO_FILTER);
+//    }
 
     @Override
     public void getGenresList() {
-        final Request request = new Request.Builder()
-                .url(api.getHostUrl()+"/3/genre/movie/list?language=pl-PL&api_key="+api.getApiKey())
-                .build();
+        Request.Builder requestBuilder = new Request.Builder();
+        requestBuilder.url(requestHelper.createGenresListRequest());
+        Request request = requestBuilder.build();
+        Log.d(TAG, "APIConnector: Genres url is: " + request.toString());
 
         client.newCall(request).enqueue(new Callback() {
             @Override
@@ -68,73 +77,88 @@ public class ApiConnector implements StartInterface.Model{
     }
 
     @Override
-    public void getRandomMovie() {
-        client.newCall(getRandomMovieRequest()).enqueue(new Callback() {
+    public void getRandomMovie(int page, String filter) {
+        //Create random
+        Random random = new Random();
+
+        //Create request url
+        Request.Builder requestBuilder = new Request.Builder();
+        requestBuilder.url(requestHelper.createRandomMovieRequest(page, filter));
+        Request request = requestBuilder.build();
+        Log.d(TAG, "APIConnector: Random movie url is: " + request.toString());
+
+        //Call to api
+        client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(@NotNull Call call, @NotNull IOException e) {
-                startPresenter.reportError(e.getMessage());
+                Log.d(TAG, "APIConnector: fail: " + e.getMessage());
             }
 
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-                Random random = new Random();
-                String jsonOutput = response.body().string();
-                Log.d(TAG, "onResponse: response: "+ jsonOutput);
+                Log.d(TAG, "APIConnector: response code is: " + response.code());
+                if (response.code() != 200) {
+                    //handle error
+                } else {
+                    String jsonOutput = response.body().string();
+                    MoviesList moviesList = gson.fromJson(jsonOutput, MoviesList.class);
+                    Log.d(TAG, "APIConnector: moviesListObject:" + moviesList.toString());
 
-                JsonObject jsonObject = gson.fromJson(jsonOutput,JsonObject.class);
-                JsonArray array = jsonObject.get("results").getAsJsonArray();
+                    // Wrong page or lack of results
+                    if (moviesList.page > moviesList.totalPages || moviesList.results.size() == 0) {
+                        Log.d(TAG, "APIConnector: should call method again with correct page");
+                        int randomPage = random.nextInt(moviesList.totalPages);
+                        getRandomMovie(randomPage, filter);
+                        return;
 
-                Type listType = new TypeToken<List<SingleMovie>>(){}.getType();
-                List<SingleMovie> moviesList = gson.fromJson(array,listType);
-                int randomMovie = random.nextInt(moviesList.size());
-                SingleMovie movie = moviesList.get(randomMovie);
+                        // Movie page is OK, get random movie from that page
+                    } else {
+                        int randomInt = random.nextInt(moviesList.results.size());
+                        MoviesList.Result randomMovie = moviesList.results.get(randomInt);
 
-                while (movie.overview.equals("")) {
-                    randomMovie = random.nextInt(moviesList.size());
-                    movie = moviesList.get(randomMovie);
+                        // Check description and picture
+                        int counter = 0;
+                        while (randomMovie.overview.equals("") || randomMovie.backdropPath == null) {
+                            if (counter > 3) {
+                                Log.d(TAG, "APIConnector: try another page");
+                                int randomPage = random.nextInt(moviesList.totalPages);
+                                getRandomMovie(randomPage, filter);
+                                return;
+                            }
+                            Log.d(TAG, "APIConnector: lack of info for movie with id: " + randomMovie.id);
+                            randomInt = random.nextInt(moviesList.results.size());
+                            randomMovie = moviesList.results.get(randomInt);
+                            counter++;
+                        }
+                        Log.d(TAG, "APIConnector: got movie: " + randomMovie);
+                        getMovieDetails(randomMovie.id);
+                    }
                 }
-
-                Log.d(TAG, "onResponse: Single movie data is: " + movie);
-                getMovieDetails(movie.id);
             }
         });
     }
 
     public void getMovieDetails(int id) {
-        final Request request = new Request.Builder()
-                .url(api.getHostUrl()+"/3/movie/"+id+"?language=pl-PL&api_key="+api.getApiKey())
-                .build();
+        //Create request url
+        Request.Builder requestBuilder = new Request.Builder();
+        requestBuilder.url(requestHelper.createMovieDetailsRequest(id));
+        Request request = requestBuilder.build();
+        Log.d(TAG, "APIConnector: Details url is: " + request.toString());
+
 
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(@NotNull Call call, @NotNull IOException e) {
                 startPresenter.reportError(e.getMessage());
-
             }
 
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 String jsonOutput = response.body().string();
-                Log.d(TAG, "onResponse: movie details: " + jsonOutput);
-
                 SingleMovieDetails movieDetails = gson.fromJson(jsonOutput,SingleMovieDetails.class);
-                Log.d(TAG, "onResponse: SingleMovieDetails class details: " + movieDetails.toString());
                 startPresenter.callbackRandomMovie(movieDetails);
             }
         });
     }
 
-    public Request getRandomMovieRequest() {
-        Random random = new Random();
-        int page = random.nextInt(500);
-
-        final Request request = new Request.Builder()
-                .url(api.getHostUrl()+"/3/discover/movie?language=pl-PL&page="
-                        +page
-                        +"&api_key="
-                        +api.getApiKey())
-                .build();
-
-        return request;
-    }
 }

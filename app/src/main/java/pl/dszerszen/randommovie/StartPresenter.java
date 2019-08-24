@@ -36,8 +36,8 @@ public class StartPresenter implements StartInterface.Presenter, Serializable {
     }
 
     @Override
-    public void getRandomMovie() {
-        model.getRandomMovie();
+    public void getRandomMovie(int page, String filter) {
+        model.getRandomMovie(page,filter);
     }
 
     @Override

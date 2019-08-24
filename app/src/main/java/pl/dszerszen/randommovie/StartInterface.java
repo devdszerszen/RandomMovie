@@ -15,13 +15,13 @@ public interface StartInterface {
     interface Presenter {
         void reportError(String message);
         void sendGenresList(List<Genre> list);
-        void getRandomMovie();
+        void getRandomMovie(int page, String filter);
         void getGenresList();
         void callbackRandomMovie(SingleMovieDetails movie);
     }
 
     interface Model {
         void getGenresList();
-        void getRandomMovie();
+        void getRandomMovie(int page, String filter);
     }
 }

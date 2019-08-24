@@ -55,9 +55,6 @@ public class StartActivity extends AppCompatActivity implements StartInterface.V
     List<Genre> recyclerList;
     RecyclerAdapter adapter;
 
-    boolean movieShowed = false;
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -90,7 +87,7 @@ public class StartActivity extends AppCompatActivity implements StartInterface.V
     @OnClick(R.id.randomButton)
     public void getRandomMovie() {
         startLoader();
-        presenter.getRandomMovie();
+        presenter.getRandomMovie(500,Api.NO_FILTER);
     }
 
     public void startLoader() {
