@@ -55,6 +55,8 @@ public class StartActivity extends AppCompatActivity implements StartInterface.V
     List<Genre> recyclerList;
     RecyclerAdapter adapter;
 
+    boolean movieShowed = false;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,7 +79,6 @@ public class StartActivity extends AppCompatActivity implements StartInterface.V
     @Override
     protected void onStop() {
         super.onStop();
-        stopLoader();
     }
 
 //    @Override
