@@ -1,9 +1,12 @@
 <resources>
-    <string name="app_name">RandomMovie</string>
+    <string name="app_name">Random Movie</string>
     <string name="random_movie">Get random movie</string>
     <string name="no_desc">There is no description for this movie.</string>
     <string name="movie_duration">Duration</string>
     <string name="language_key">en-US</string>
     <string name="filter_genre">Genre</string>
     <string name="filter_year">Year</string>
+    <string name="dialog_pos_btn">Save</string>
+    <string name="dialog_neg_btn">Cancel</string>
+    <string name="toast_filter_ok">Filter saved succesfully</string>
 </resources>

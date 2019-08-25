@@ -174,5 +174,6 @@ public class StartActivity extends AppCompatActivity implements StartInterface.V
     public void onFiltersSaved(FilterData filterData) {
         this.filter = filterData;
         Log.d(TAG, "onFiltersSaved: saved filter with genre:" + filterData.genreId);
+        Toast.makeText(this, getResources().getString(R.string.toast_filter_ok), Toast.LENGTH_SHORT).show();
     }
 }

@@ -49,6 +49,11 @@ public class FiltersDialog extends Dialog {
                 this.dismiss();
             }
         });
+
+        Button negativeButton = findViewById(R.id.dialog_negative_btn);
+        negativeButton.setOnClickListener(v ->{
+            this.dismiss();
+        });
     }
 
 //    private void applyFilter() {
