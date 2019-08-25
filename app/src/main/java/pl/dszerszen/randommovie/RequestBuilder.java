@@ -1,5 +1,7 @@
 package pl.dszerszen.randommovie;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -8,8 +10,13 @@ public class RequestBuilder {
 
     public static final String TAG = "Damian";
 
-    private String language = "pl-PL";
+    private String language;
     ArrayList<SingleParam> parameters = new ArrayList<>();
+
+    public RequestBuilder(String language) {
+        Log.d(TAG, "RequestBuilder: initiated with language:" + language);
+        this.language = language;
+    }
 
     public void addParameter(String key, String value) {
         parameters.add(new SingleParam(key, value));

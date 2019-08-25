@@ -14,7 +14,7 @@ public class StartPresenter implements StartInterface.Presenter, Serializable {
 
     public StartPresenter(StartInterface.View view, String languageKey) {
         this.view = view;
-        this.model = new ApiConnector(this);
+        this.model = new ApiConnector(this, languageKey);
     }
 
     @Override

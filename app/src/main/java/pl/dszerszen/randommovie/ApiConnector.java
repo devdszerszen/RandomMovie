@@ -29,14 +29,16 @@ public class ApiConnector implements StartInterface.Model{
     private OkHttpClient client;
     private Gson gson;
     private StartInterface.Presenter startPresenter;
-    private RequestBuilder requestHelper = new RequestBuilder();
+    private RequestBuilder requestHelper;
+    private String languageKey;
 
 
-    public ApiConnector(StartInterface.Presenter presenter) {
+    public ApiConnector(StartInterface.Presenter presenter, String language) {
         this.client = new OkHttpClient();
         this.gson = new Gson();
         this.startPresenter = presenter;
-        this.requestHelper = new RequestBuilder();
+        this.languageKey = language;
+        this.requestHelper = new RequestBuilder(language);
     }
 
 //    public NewApiConnector() {
@@ -115,6 +117,9 @@ public class ApiConnector implements StartInterface.Model{
                     if (moviesList.page > moviesList.totalPages || moviesList.results.size() == 0) {
                         Log.d(TAG, "APIConnector: should call method again with correct page");
                         int randomPage = random.nextInt(moviesList.totalPages);
+                        if (randomPage>500) {
+                            randomPage = 500;
+                        }
                         getRandomMovie(randomPage, filter);
                         return;
 
@@ -129,6 +134,9 @@ public class ApiConnector implements StartInterface.Model{
                             if (counter > 3) {
                                 Log.d(TAG, "APIConnector: try another page");
                                 int randomPage = random.nextInt(moviesList.totalPages);
+                                if (randomPage>500) {
+                                    randomPage = 500;
+                                }
                                 getRandomMovie(randomPage, filter);
                                 return;
                             }

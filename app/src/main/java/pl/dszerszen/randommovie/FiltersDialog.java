@@ -18,7 +18,6 @@ public class FiltersDialog extends Dialog {
 
     List<Genre> list;
     RecyclerAdapter adapter;
-    RequestBuilder requestBuilder;
     StartActivityFilter activity;
     FilterData filterData;
 
@@ -29,7 +28,6 @@ public class FiltersDialog extends Dialog {
         this.setContentView(R.layout.dialog_filter_view);
         this.show();
         this.list = list;
-        this.requestBuilder = new RequestBuilder();
         this.adapter = new RecyclerAdapter(this.list);
         RecyclerView genresList = findViewById(R.id.dialog_recycler);
         genresList.setAdapter(adapter);
