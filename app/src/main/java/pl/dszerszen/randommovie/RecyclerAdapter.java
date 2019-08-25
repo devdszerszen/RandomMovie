@@ -31,13 +31,11 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public TextView textView;
-        public CheckBox checkBox;
         public RadioButton radioButton;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             textView = itemView.findViewById(R.id.row_text);
-            checkBox = itemView.findViewById(R.id.row_checkbox);
             radioButton = itemView.findViewById(R.id.row_radiobutton);
 
             radioButton.setOnClickListener(v -> {
