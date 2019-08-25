@@ -41,6 +41,11 @@ public class StartPresenter implements StartInterface.Presenter, Serializable {
     }
 
     @Override
+    public void getMovieDetails(int id) {
+        model.getMovieDetails(id);
+    }
+
+    @Override
     public void callbackRandomMovie(SingleMovieDetails movie) {
         view.showRandomMovie(movie);
     }

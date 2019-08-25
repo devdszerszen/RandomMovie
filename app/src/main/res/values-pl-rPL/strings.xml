@@ -10,4 +10,5 @@
     <string name="dialog_pos_btn">Zapisz</string>
     <string name="dialog_neg_btn">Anuluj</string>
     <string name="toast_filter_ok">Filtr zapisany prawidłowo</string>
+    <string name="btn_previous">Poprzedni</string>
 </resources>

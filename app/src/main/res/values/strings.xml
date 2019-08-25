@@ -9,4 +9,5 @@
     <string name="dialog_pos_btn">Save</string>
     <string name="dialog_neg_btn">Cancel</string>
     <string name="toast_filter_ok">Filter saved succesfully</string>
+    <string name="btn_previous">Previous</string>
 </resources>

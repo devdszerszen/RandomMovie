@@ -34,6 +34,7 @@ public class StartActivity extends AppCompatActivity implements StartInterface.V
     @BindView(R.id.recyclerView) RecyclerView recyclerView;
     @BindView(R.id.loader) ProgressBar loader;
     @BindView(R.id.randomButton) Button randomButton;
+    @BindView(R.id.previousButton) Button previousButton;
     @BindView(R.id.details_title) TextView title;
     @BindView(R.id.details_desc) TextView desc;
     @BindView(R.id.details_poster) ImageView posterView;
@@ -53,6 +54,10 @@ public class StartActivity extends AppCompatActivity implements StartInterface.V
 
     //Filters
     FilterData filter;
+
+    //Previous movie
+    ArrayList<Integer> previousMovies = new ArrayList<>();
+    boolean isPreviousMovie = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,6 +90,7 @@ public class StartActivity extends AppCompatActivity implements StartInterface.V
 
     @OnClick(R.id.randomButton)
     public void getRandomMovie() {
+        isPreviousMovie = true;
         startLoader();
         presenter.getRandomMovie(500,filter);
     }
@@ -92,10 +98,14 @@ public class StartActivity extends AppCompatActivity implements StartInterface.V
     public void startLoader() {
         loader.setVisibility(View.VISIBLE);
         detailsLayout.setVisibility(GONE);
+        randomButton.setClickable(false);
+        previousButton.setClickable(false);
     }
     public void stopLoader() {
         loader.setVisibility(GONE);
         detailsLayout.setVisibility(View.VISIBLE);
+        randomButton.setClickable(true);
+        previousButton.setClickable(true);
     }
 
     @Override
@@ -103,8 +113,48 @@ public class StartActivity extends AppCompatActivity implements StartInterface.V
         StartActivity.this.runOnUiThread(() -> {
             stopLoader();
             populateMovieView(movie);
-        });
+            previousMovies.add(movie.id);
 
+//            // Handling previous movie - approach 1
+//            if (previousMovies.size()==0) {
+//                previousMovies.add(movie.id);
+//            } else {
+//                if (movie.id != previousMovies.get(previousMovies.size()-1)) {
+//                    previousMovies.add(movie.id);
+//                }
+//            }
+            setPreviousMovieButton();
+        });
+    }
+
+    private void setPreviousMovieButton() {
+        if (previousMovies.size()>1 && isPreviousMovie) {
+            previousButton.setVisibility(View.VISIBLE);
+        } else {
+            previousButton.setVisibility(GONE);
+        }
+    }
+
+    @OnClick(R.id.previousButton)
+    public void onPreviousButtonClicked() {
+//        //Approach 1
+//        Log.d(TAG, "PREV: ----------- clicked PREVIOUS btn -------------------");
+//        currentMovie--;
+//        Log.d(TAG, "PREV: currentMovie value is " + currentMovie);
+//        for (int i = currentMovie+1;i<previousMovies.size();i++) {
+//            Log.d(TAG, "PREV: before deleting list size is: " + previousMovies.size());
+//            Log.d(TAG, "PREV: deleted movie on index:" + i);
+//            previousMovies.remove(i);
+//            Log.d(TAG, "PREV: after deleting list size is: " + previousMovies.size());
+//            for (int id: previousMovies) {
+//                Log.d(TAG, "PREV: list item is: " + id);
+//            }
+//        }
+//        presenter.getMovieDetails(previousMovies.get(currentMovie));
+//        currentMovie--;
+//        Log.d(TAG, "PREV: currentMovie value is " + currentMovie);
+        isPreviousMovie = false;
+        presenter.getMovieDetails(previousMovies.get(previousMovies.size()-2));
     }
 
     public void populateMovieView(SingleMovieDetails movie) {

@@ -153,6 +153,7 @@ public class ApiConnector implements StartInterface.Model{
         });
     }
 
+    @Override
     public void getMovieDetails(int id) {
         //Create request url
         Request.Builder requestBuilder = new Request.Builder();

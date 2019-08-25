@@ -16,6 +16,7 @@ public interface StartInterface {
         void reportError(String message);
         void sendGenresList(List<Genre> list);
         void getRandomMovie(int page, FilterData filter);
+        void getMovieDetails(int id);
         void getGenresList();
         void callbackRandomMovie(SingleMovieDetails movie);
     }
@@ -23,5 +24,6 @@ public interface StartInterface {
     interface Model {
         void getGenresList();
         void getRandomMovie(int page, FilterData filter);
+        void getMovieDetails(int id);
     }
 }
