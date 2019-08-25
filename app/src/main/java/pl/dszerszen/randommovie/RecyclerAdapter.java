@@ -7,6 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.RadioButton;
 import android.widget.TextView;
 
 import org.w3c.dom.Text;
@@ -19,22 +21,32 @@ import pl.dszerszen.randommovie.GSON.Genre;
 
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
 
-    final String TAG = "DAMIAN";
+    final String TAG = "Damian";
+
+    private List<Genre> list;
+
+    //Radiobutton
+    private int selectedItem = -1;
+
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public TextView textView;
         public CheckBox checkBox;
+        public RadioButton radioButton;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             textView = itemView.findViewById(R.id.row_text);
             checkBox = itemView.findViewById(R.id.row_checkbox);
+            radioButton = itemView.findViewById(R.id.row_radiobutton);
+
+            radioButton.setOnClickListener(v -> {
+                selectedItem = getAdapterPosition();
+                Log.d(TAG, "ViewHolder: Selected category is: " + list.get(selectedItem).getName());
+                notifyDataSetChanged();
+            });
         }
     }
-
-    private List<Genre> list;
-    private AdapterView.OnItemClickListener listener;
-
 
     public RecyclerAdapter(List<Genre> list) {
         this.list = list;
@@ -43,21 +55,18 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        Log.d(TAG, "onCreateViewHolder: called");
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recycler_row,parent,false);
+
         return new RecyclerAdapter.ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Log.d(TAG, "onBindViewHolder: called");
         Genre genre = list.get(position);
 
-        TextView textView = holder.textView;
-        CheckBox checkBox = holder.checkBox;
+        holder.textView.setText(genre.getName());
+        holder.radioButton.setChecked(position == selectedItem);
 
-        textView.setText(genre.getName());
-        checkBox.setChecked(false);
     }
 
     @Override
@@ -65,5 +74,10 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         return list.size();
     }
 
-
+    public int getGenres() {
+        if (selectedItem>-1) {
+            return list.get(selectedItem).getId();
+        }
+        return 0;
+    }
 }

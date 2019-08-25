@@ -27,4 +27,12 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0" />
+
+    <RadioButton
+        android:id="@+id/row_radiobutton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="24dp"
+        app:layout_constraintEnd_toStartOf="@+id/row_checkbox"
+        app:layout_constraintTop_toTopOf="@+id/row_checkbox" />
 </androidx.constraintlayout.widget.ConstraintLayout>

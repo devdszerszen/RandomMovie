@@ -9,6 +9,8 @@ public class Api {
     private static String genresPath = "/3/genre/movie/list";
     private static String imageUrl = "https://image.tmdb.org/t/p/original/";
     private static String movieDetailsPath = "/3/movie/";
+    private static String filterGenre = "with_genres";
+
     public static String NO_FILTER = "emptyFilter";
 
     public static String getHostUrl() {
@@ -41,5 +43,9 @@ public class Api {
 
     public static String getGenresPath() {
         return genresPath;
+    }
+
+    public static String getFilterGenre() {
+        return filterGenre;
     }
 }

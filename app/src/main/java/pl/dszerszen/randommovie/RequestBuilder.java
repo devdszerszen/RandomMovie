@@ -18,7 +18,7 @@ public class RequestBuilder {
     // Standard url to get random movie
     public String createRandomMovieRequest(int maxPage, String filter) {
         Random random = new Random();
-        String page = String.valueOf(random.nextInt(maxPage));
+        String page = String.valueOf(random.nextInt(maxPage-1)+1);
 
         StringBuilder builder = new StringBuilder();
         builder.append(Api.getHostUrl())

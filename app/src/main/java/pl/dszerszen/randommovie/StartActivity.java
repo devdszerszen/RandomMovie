@@ -1,11 +1,9 @@
 package pl.dszerszen.randommovie;
 
-import android.app.Dialog;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,10 +17,8 @@ import com.bumptech.glide.Glide;
 import java.util.ArrayList;
 import java.util.List;
 import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -31,9 +27,9 @@ import pl.dszerszen.randommovie.GSON.Genre;
 
 import static android.view.View.GONE;
 
-public class StartActivity extends AppCompatActivity implements StartInterface.View {
+public class StartActivity extends AppCompatActivity implements StartInterface.View, StartActivityFilter {
     
-    final String TAG = "DAMIAN";
+    final String TAG = "Damian";
 
     @BindView(R.id.recyclerView) RecyclerView recyclerView;
     @BindView(R.id.loader) ProgressBar loader;
@@ -52,8 +48,11 @@ public class StartActivity extends AppCompatActivity implements StartInterface.V
     private StartInterface.Presenter presenter;
 
     //Recycler view
-    List<Genre> recyclerList;
+    List<Genre> recyclerList = new ArrayList<>();
     RecyclerAdapter adapter;
+
+    //Filters
+    FilterData filter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,7 +64,7 @@ public class StartActivity extends AppCompatActivity implements StartInterface.V
         presenter = new StartPresenter(this, languageKey);
         detailsLayout.setVisibility(GONE);
         tmdbImage.setVisibility(View.VISIBLE);
-        //presenter.getGenresList();
+        presenter.getGenresList();
     }
 
     public void setupActionBar() {
@@ -78,16 +77,16 @@ public class StartActivity extends AppCompatActivity implements StartInterface.V
         super.onStop();
     }
 
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        getMenuInflater().inflate(R.menu.menu_main,menu);
-//        return true;
-//    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main,menu);
+        return true;
+    }
 
     @OnClick(R.id.randomButton)
     public void getRandomMovie() {
         startLoader();
-        presenter.getRandomMovie(500,Api.NO_FILTER);
+        presenter.getRandomMovie(500,filter);
     }
 
     public void startLoader() {
@@ -147,40 +146,33 @@ public class StartActivity extends AppCompatActivity implements StartInterface.V
 
     @Override
     public void showError(String message) {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+        StartActivity.this.runOnUiThread(() -> Toast.makeText(StartActivity.this, message, Toast.LENGTH_SHORT).show());
     }
 
 
     // Used to get genres list
-    public void initRecyclerView() {
-        Log.d(TAG, "initRecyclerView: called");
-        recyclerList = new ArrayList<>();
-        adapter = new RecyclerAdapter(recyclerList);
-        recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-    }
+
+
     @Override
     public void populateGenresList(List<Genre> genres) {
-        Log.d(TAG, "populateGenresList: called");
-        Log.d(TAG, "populateGenresList: send from model list size is: " + genres.size());
         StartActivity.this.runOnUiThread(() -> {
-            adapter = new RecyclerAdapter(genres);
-            recyclerView.setAdapter(adapter);
-            adapter.notifyDataSetChanged();
-            //stopLoader();
-            Log.d(TAG, "run: updated recycler list size is: " + recyclerList.size());
+            recyclerList = genres;
         });
 
     }
 
     public void onFilterIconClicked (MenuItem item) {
-        Dialog dialog = new Dialog(this);
-        dialog.setContentView(R.layout.dialog_filter_view);
-        dialog.show();
+        FiltersDialog dialog = new FiltersDialog(this, recyclerList, filter);
 
         int width = (int)(getResources().getDisplayMetrics().widthPixels*0.90);
-        int height = (int)(getResources().getDisplayMetrics().heightPixels*0.80);
-
+        int height = (int)(getResources().getDisplayMetrics().heightPixels*0.90);
         dialog.getWindow().setLayout(width, height);
+    }
+
+
+    @Override
+    public void onFiltersSaved(FilterData filterData) {
+        this.filter = filterData;
+        Log.d(TAG, "onFiltersSaved: saved filter with genre:" + filterData.genreId);
     }
 }

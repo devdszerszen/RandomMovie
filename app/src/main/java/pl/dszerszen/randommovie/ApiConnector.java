@@ -77,13 +77,20 @@ public class ApiConnector implements StartInterface.Model{
     }
 
     @Override
-    public void getRandomMovie(int page, String filter) {
+    public void getRandomMovie(int page, FilterData filter) {
         //Create random
         Random random = new Random();
+        String filterString = Api.NO_FILTER;
+
+        //Check filter
+        if (filter!=null) {
+            requestHelper.addParameter(Api.getFilterGenre(),String.valueOf(filter.genreId));
+            filterString = requestHelper.createFilterPath();
+        }
 
         //Create request url
         Request.Builder requestBuilder = new Request.Builder();
-        requestBuilder.url(requestHelper.createRandomMovieRequest(page, filter));
+        requestBuilder.url(requestHelper.createRandomMovieRequest(page, filterString));
         Request request = requestBuilder.build();
         Log.d(TAG, "APIConnector: Random movie url is: " + request.toString());
 
@@ -98,7 +105,7 @@ public class ApiConnector implements StartInterface.Model{
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 Log.d(TAG, "APIConnector: response code is: " + response.code());
                 if (response.code() != 200) {
-                    //handle error
+                    Log.d(TAG, "onResponse: wrong response code:" + response.body().toString());
                 } else {
                     String jsonOutput = response.body().string();
                     MoviesList moviesList = gson.fromJson(jsonOutput, MoviesList.class);
