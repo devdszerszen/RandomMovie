@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.bumptech.glide.Glide;
@@ -44,6 +45,7 @@ public class StartActivity extends AppCompatActivity implements StartInterface.V
     @BindView(R.id.details_time_value) TextView timeValue;
     @BindView(R.id.details_rating) TextView rating;
     @BindView(R.id.tmdb_image) ImageView tmdbImage;
+    @BindView(R.id.scroll_movieDesc) ScrollView scrolledMovieDescView;
     ActionBar actionBar;
 
     private StartInterface.Presenter presenter;
@@ -171,9 +173,6 @@ public class StartActivity extends AppCompatActivity implements StartInterface.V
             title.setText(movie.title);
             detailsLayout.bringChildToFront(title);
 
-            //Description
-            desc.setText(movie.overview);
-
             //Genres
             genresLayout.removeAllViews();
             for (int i = 0; i<movie.genres.size(); i++) {
@@ -189,6 +188,11 @@ public class StartActivity extends AppCompatActivity implements StartInterface.V
 
             //Time
             timeValue.setText(String.valueOf(movie.runtime)+ " min");
+
+            //Description
+            desc.setText(movie.overview);
+            desc.scrollTo(0,0);
+            scrolledMovieDescView.scrollTo(0,0);
 
             //Rating
             rating.setText(String.valueOf(movie.voteAverage));
