@@ -79,14 +79,14 @@ public class ApiConnector implements StartInterface.Model{
     }
 
     @Override
-    public void getRandomMovie(int page, FilterData filter) {
+    public void getRandomMovie(int page, FilterData filterData) {
         //Create random
         Random random = new Random();
         String filterString = Api.NO_FILTER;
 
-        //Check filter
-        if (filter!=null) {
-            requestHelper.addParameter(Api.getFilterGenre(),String.valueOf(filter.genreId));
+        //Check filterData
+        if (filterData.isSet()) {
+            requestHelper.addParameter(Api.getFilterGenre(),String.valueOf(filterData.genreId));
             filterString = requestHelper.createFilterPath();
         }
 
@@ -120,7 +120,7 @@ public class ApiConnector implements StartInterface.Model{
                         if (randomPage>500) {
                             randomPage = 500;
                         }
-                        getRandomMovie(randomPage, filter);
+                        getRandomMovie(randomPage, filterData);
                         return;
 
                         // Movie page is OK, get random movie from that page
@@ -137,7 +137,7 @@ public class ApiConnector implements StartInterface.Model{
                                 if (randomPage>500) {
                                     randomPage = 500;
                                 }
-                                getRandomMovie(randomPage, filter);
+                                getRandomMovie(randomPage, filterData);
                                 return;
                             }
                             Log.d(TAG, "APIConnector: lack of info for movie with id: " + randomMovie.id);

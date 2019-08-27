@@ -28,26 +28,17 @@ public class FiltersDialog extends Dialog {
         this.setContentView(R.layout.dialog_filter_view);
         this.show();
         this.list = list;
-        this.adapter = new RecyclerAdapter(this.list);
+        this.adapter = new RecyclerAdapter(this.list, this.filterData);
         RecyclerView genresList = findViewById(R.id.dialog_recycler);
         genresList.setAdapter(adapter);
         genresList.setLayoutManager(new LinearLayoutManager(context));
-//        if (filterData!=null) {
-//            applyFilter();
-//        }
-
 
 
         //
         Button positiveButton = findViewById(R.id.dialog_positive_btn);
         positiveButton.setOnClickListener(v -> {
-            int genre = adapter.getGenres();
-            if (genre != 0) {
-                filterData = new FilterData();
-                filterData.genreId = genre;
-                activity.onFiltersSaved(filterData);
-                this.dismiss();
-            }
+            activity.onFiltersSaved(adapter.getFilters());
+            this.dismiss();
         });
 
         Button negativeButton = findViewById(R.id.dialog_negative_btn);
@@ -55,10 +46,4 @@ public class FiltersDialog extends Dialog {
             this.dismiss();
         });
     }
-
-//    private void applyFilter() {
-//        if (filterData!=null) {
-//            int genre = filterData.genreId;
-//        }
-//    }
 }

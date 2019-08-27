@@ -53,7 +53,7 @@ public class StartActivity extends AppCompatActivity implements StartInterface.V
     RecyclerAdapter adapter;
 
     //Filters
-    FilterData filter;
+    FilterData filterData;
 
     //Previous movie
     ArrayList<Integer> previousMovies = new ArrayList<>();
@@ -67,6 +67,7 @@ public class StartActivity extends AppCompatActivity implements StartInterface.V
         setupActionBar();
         String languageKey = getResources().getString(R.string.language_key);
         presenter = new StartPresenter(this, languageKey);
+        this.filterData = new FilterData();
         detailsLayout.setVisibility(GONE);
         tmdbImage.setVisibility(View.VISIBLE);
         presenter.getGenresList();
@@ -92,7 +93,7 @@ public class StartActivity extends AppCompatActivity implements StartInterface.V
     public void getRandomMovie() {
         isPreviousMovie = true;
         startLoader();
-        presenter.getRandomMovie(500,filter);
+        presenter.getRandomMovie(500, filterData);
     }
 
     public void startLoader() {
@@ -212,7 +213,7 @@ public class StartActivity extends AppCompatActivity implements StartInterface.V
     }
 
     public void onFilterIconClicked (MenuItem item) {
-        FiltersDialog dialog = new FiltersDialog(this, recyclerList, filter);
+        FiltersDialog dialog = new FiltersDialog(this, recyclerList, filterData);
 
         int width = (int)(getResources().getDisplayMetrics().widthPixels*0.90);
         int height = (int)(getResources().getDisplayMetrics().heightPixels*0.90);
@@ -222,8 +223,7 @@ public class StartActivity extends AppCompatActivity implements StartInterface.V
 
     @Override
     public void onFiltersSaved(FilterData filterData) {
-        this.filter = filterData;
-        Log.d(TAG, "onFiltersSaved: saved filter with genre:" + filterData.genreId);
+        this.filterData = filterData;
         Toast.makeText(this, getResources().getString(R.string.toast_filter_ok), Toast.LENGTH_SHORT).show();
     }
 }

@@ -1,17 +1,11 @@
 package pl.dszerszen.randommovie;
 
-import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.RadioButton;
 import android.widget.TextView;
-
-import org.w3c.dom.Text;
 
 import java.util.List;
 
@@ -25,8 +19,10 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 
     private List<Genre> list;
 
+    private FilterData filterData;
+
     //Radiobutton
-    private int selectedItem = -1;
+    private int selectedCategoryPosition = -1;
 
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -39,15 +35,23 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
             radioButton = itemView.findViewById(R.id.row_radiobutton);
 
             radioButton.setOnClickListener(v -> {
-                selectedItem = getAdapterPosition();
-                Log.d(TAG, "ViewHolder: Selected category is: " + list.get(selectedItem).getName());
+                selectedCategoryPosition = getAdapterPosition();
+
+                //Saving filter
+                filterData.genrePosition = selectedCategoryPosition;
+                filterData.genreId = list.get(selectedCategoryPosition).getId();
                 notifyDataSetChanged();
             });
         }
     }
 
-    public RecyclerAdapter(List<Genre> list) {
+    public RecyclerAdapter(List<Genre> list, FilterData filter) {
         this.list = list;
+        this.filterData = filter;
+
+        if (filter.isSet()) {
+            selectedCategoryPosition = filterData.genrePosition;
+        }
     }
 
     @NonNull
@@ -63,7 +67,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         Genre genre = list.get(position);
 
         holder.textView.setText(genre.getName());
-        holder.radioButton.setChecked(position == selectedItem);
+        holder.radioButton.setChecked(position == selectedCategoryPosition);
 
     }
 
@@ -72,10 +76,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         return list.size();
     }
 
-    public int getGenres() {
-        if (selectedItem>-1) {
-            return list.get(selectedItem).getId();
-        }
-        return 0;
+    public FilterData getFilters() {
+        return filterData;
     }
 }
