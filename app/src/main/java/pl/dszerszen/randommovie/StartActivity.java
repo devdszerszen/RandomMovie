@@ -24,6 +24,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import dagger.android.AndroidInjection;
+import dagger.android.support.DaggerAppCompatActivity;
 import pl.dszerszen.randommovie.GSON.Genre;
 
 import static android.view.View.GONE;
@@ -63,6 +65,7 @@ public class StartActivity extends AppCompatActivity implements StartInterface.V
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        AndroidInjection.inject(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
         ButterKnife.bind(this);

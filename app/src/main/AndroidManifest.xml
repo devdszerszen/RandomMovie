@@ -6,6 +6,7 @@
 
     <application
         android:allowBackup="true"
+        android:name=".Dagger.MyApplication"
         android:icon="@mipmap/rm_square"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/rm_circle"
