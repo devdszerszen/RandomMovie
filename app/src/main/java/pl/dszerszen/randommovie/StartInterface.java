@@ -13,5 +13,6 @@ public interface StartInterface {
 
     interface Presenter {
         void searchButtonClicked();
+        void favouritesButtonClicked();
     }
 }

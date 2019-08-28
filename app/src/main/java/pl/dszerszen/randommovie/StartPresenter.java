@@ -23,4 +23,9 @@ public class StartPresenter implements StartInterface.Presenter, Serializable {
     public void searchButtonClicked() {
         view.startDetailsActivity();
     }
+
+    @Override
+    public void favouritesButtonClicked() {
+        view.showError("Not implemented yet");
+    }
 }

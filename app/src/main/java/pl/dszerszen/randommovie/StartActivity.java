@@ -72,7 +72,7 @@ public class StartActivity extends AppCompatActivity implements StartInterface.V
 
     @Override
     public void showError(String message) {
-        StartActivity.this.runOnUiThread(() -> Toast.makeText(StartActivity.this, message, Toast.LENGTH_SHORT).show());
+        Toast.makeText(StartActivity.this, message, Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -85,6 +85,11 @@ public class StartActivity extends AppCompatActivity implements StartInterface.V
     @OnClick(R.id.start_search_btn)
     public void onDetailsButtonClicked() {
         presenter.searchButtonClicked();
+    }
+
+    @OnClick(R.id.start_favourites_btn)
+    public void onFavouritesButtonClicked() {
+        presenter.favouritesButtonClicked();
     }
 
 }
