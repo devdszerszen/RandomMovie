@@ -1,6 +1,5 @@
 package pl.dszerszen.randommovie;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,13 +10,12 @@ import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-import pl.dszerszen.randommovie.GSON.Genre;
 
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
 
-    final String TAG = "Damian";
+    final String TAG = "RandomMovie_log";
 
-    private List<Genre> list;
+    private List<ResponseGenre.Genre> list;
 
     private FilterData filterData;
 
@@ -39,13 +37,13 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 
                 //Saving filter
                 filterData.genrePosition = selectedCategoryPosition;
-                filterData.genreId = list.get(selectedCategoryPosition).getId();
+                filterData.genreId = list.get(selectedCategoryPosition).id;
                 notifyDataSetChanged();
             });
         }
     }
 
-    public RecyclerAdapter(List<Genre> list, FilterData filter) {
+    public RecyclerAdapter(List<ResponseGenre.Genre> list, FilterData filter) {
         this.list = list;
         this.filterData = filter;
 
@@ -64,9 +62,9 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Genre genre = list.get(position);
+        ResponseGenre.Genre genre = list.get(position);
 
-        holder.textView.setText(genre.getName());
+        holder.textView.setText(genre.name);
         holder.radioButton.setChecked(position == selectedCategoryPosition);
 
     }

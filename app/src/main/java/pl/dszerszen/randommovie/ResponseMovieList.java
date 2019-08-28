@@ -4,10 +4,10 @@ import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class MoviesList {
+public class ResponseMovieList {
     @Override
     public String toString() {
-        return "MoviesList{" +
+        return "ResponseMovieList{" +
                 "page=" + page +
                 ", totalResults=" + totalResults +
                 ", totalPages=" + totalPages +

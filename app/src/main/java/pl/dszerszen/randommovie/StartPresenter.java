@@ -1,52 +1,26 @@
 package pl.dszerszen.randommovie;
 
+import android.annotation.SuppressLint;
 import android.util.Log;
 import java.io.Serializable;
-import java.util.List;
-import pl.dszerszen.randommovie.GSON.Genre;
+import io.reactivex.observers.DisposableObserver;
+import pl.dszerszen.randommovie.Dagger.MyApplication;
+import pl.dszerszen.randommovie.Network.TmdbConnector;
 
 public class StartPresenter implements StartInterface.Presenter, Serializable {
 
-    final String TAG = "DAMIAN";
+    final String TAG = "RandomMovie_log";
 
     private StartInterface.View view;
-    private StartInterface.Model model;
+    private TmdbConnector connector;
 
-    public StartPresenter(StartInterface.View view, String languageKey) {
+    public StartPresenter(StartInterface.View view) {
         this.view = view;
-        this.model = new ApiConnector(this, languageKey);
+        this.connector = new TmdbConnector(MyApplication.getContext().getResources().getString(R.string.language_key));
     }
 
     @Override
-    public void getGenresList() {
-        Log.d(TAG, "getGenresList: called");
-        model.getGenresList();
-    }
-
-    @Override
-    public void reportError(String message) {
-        Log.d(TAG, "reportError: called");
-        view.showError(message);
-    }
-
-    @Override
-    public void sendGenresList(List<Genre> list) {
-        Log.d(TAG, "sendGenresList: called");
-        view.populateGenresList(list);
-    }
-
-    @Override
-    public void getRandomMovie(int page, FilterData filter) {
-        model.getRandomMovie(page,filter);
-    }
-
-    @Override
-    public void getMovieDetails(int id) {
-        model.getMovieDetails(id);
-    }
-
-    @Override
-    public void callbackRandomMovie(SingleMovieDetails movie) {
-        view.showRandomMovie(movie);
+    public void searchButtonClicked() {
+        view.startDetailsActivity();
     }
 }

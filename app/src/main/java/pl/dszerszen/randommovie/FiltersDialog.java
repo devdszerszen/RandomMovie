@@ -2,8 +2,6 @@ package pl.dszerszen.randommovie;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 
 import java.util.List;
@@ -11,17 +9,16 @@ import java.util.List;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import pl.dszerszen.randommovie.GSON.Genre;
 
 public class FiltersDialog extends Dialog {
-    public final String TAG = "Damian";
+    public final String TAG = "RandomMovie_log";
 
-    List<Genre> list;
+    List<ResponseGenre.Genre> list;
     RecyclerAdapter adapter;
     StartActivityFilter activity;
     FilterData filterData;
 
-    public FiltersDialog(@NonNull Context context, List<Genre> list, FilterData filter) {
+    public FiltersDialog(@NonNull Context context, List<ResponseGenre.Genre> list, FilterData filter) {
         super(context);
         this.activity = (StartActivityFilter)context;
         this.filterData = filter;

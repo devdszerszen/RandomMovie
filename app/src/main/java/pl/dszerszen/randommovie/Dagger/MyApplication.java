@@ -2,6 +2,7 @@ package pl.dszerszen.randommovie.Dagger;
 
 import android.app.Activity;
 import android.app.Application;
+import android.content.Context;
 
 import javax.inject.Inject;
 
@@ -12,6 +13,8 @@ import dagger.android.support.DaggerApplication;
 
 public class MyApplication extends Application implements HasActivityInjector {
 
+    private static Context context;
+
     @Inject
     DispatchingAndroidInjector<Activity> dispatchingAndroidInjector;
 
@@ -19,6 +22,11 @@ public class MyApplication extends Application implements HasActivityInjector {
     public void onCreate() {
         super.onCreate();
         DaggerMyApplicationComponent.create().inject(this);
+        MyApplication.context = getApplicationContext();
+    }
+
+    public static Context getContext() {
+        return context;
     }
 
     @Override

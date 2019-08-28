@@ -11,4 +11,6 @@
     <string name="dialog_neg_btn">Anuluj</string>
     <string name="toast_filter_ok">Filtr zapisany prawidłowo</string>
     <string name="btn_previous">Poprzedni</string>
+    <string name="search_btn">Szukaj filmów</string>
+    <string name="favourites_btn">Pokaż ulubione</string>
 </resources>

@@ -10,4 +10,9 @@
     <string name="dialog_neg_btn">Cancel</string>
     <string name="toast_filter_ok">Filter saved succesfully</string>
     <string name="btn_previous">Previous</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
+    <string name="search_btn">Search movies</string>
+    <string name="favourites_btn">Show favourites</string>
 </resources>
