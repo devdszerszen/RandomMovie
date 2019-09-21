@@ -1,7 +1,6 @@
 package pl.dszerszen.randommovie.Network;
 
 
-import java.util.List;
 import java.util.Random;
 
 import io.reactivex.Observable;
@@ -10,6 +9,7 @@ import io.reactivex.schedulers.Schedulers;
 import pl.dszerszen.randommovie.ResponseGenre;
 import pl.dszerszen.randommovie.ResponseMovieList;
 import pl.dszerszen.randommovie.SingleMovieDetails;
+import pl.dszerszen.randommovie.FilterData;
 
 public class TmdbConnector {
 
@@ -23,12 +23,22 @@ public class TmdbConnector {
         this.client = NetworkClient.getRetrofit().create(NetworkService.class);
     }
 
-    public Observable<ResponseMovieList> getMoviesList(String filter, int page) {
+    public Observable<ResponseMovieList> getMoviesList(int page) {
         Random random = new Random();
         int queryPage = random.nextInt(page);
 
+        FilterData filter = FilterData.getInstance();
 
-        return client.getMovies(API_KEY, LANGUAGE_KEY, filter, queryPage)
+
+        return client.getMovies(
+                API_KEY, LANGUAGE_KEY,
+                filter.getGenreId(),
+                filter.getMinYear(),
+                filter.getMaxYear(),
+                filter.getMinRuntime(),
+                filter.getMaxRunTime(),
+                queryPage)
+
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }

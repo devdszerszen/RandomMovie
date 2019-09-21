@@ -8,33 +8,63 @@ import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 public class FiltersDialog extends Dialog {
     public final String TAG = "RandomMovie_log";
 
-    List<ResponseGenre.Genre> list;
-    RecyclerAdapter adapter;
     StartActivityFilter activity;
+
+    //Filter
     FilterData filterData;
 
-    public FiltersDialog(@NonNull Context context, List<ResponseGenre.Genre> list, FilterData filter) {
+    //Genres
+    FilterExpandView genresHeader;
+    CustomRecyclerView genresRecyclerView;
+    List<ResponseGenre.Genre> genresList;
+    RecyclerAdapter genresAdapter;
+
+    //Years
+    FilterExpandView yearsHeader;
+    MinMaxView yearsSelector;
+
+    //Votes
+    FilterExpandView votesHeader;
+    MinMaxView votesSelector;
+
+
+    public FiltersDialog(@NonNull Context context, List<ResponseGenre.Genre> list) {
         super(context);
         this.activity = (StartActivityFilter)context;
-        this.filterData = filter;
+        this.filterData = FilterData.getInstance();
         this.setContentView(R.layout.dialog_filter_view);
         this.show();
-        this.list = list;
-        this.adapter = new RecyclerAdapter(this.list, this.filterData);
-        RecyclerView genresList = findViewById(R.id.dialog_recycler);
-        genresList.setAdapter(adapter);
-        genresList.setLayoutManager(new LinearLayoutManager(context));
 
+        //Genres
+        this.genresList = list;
+        this.genresAdapter = new RecyclerAdapter(this.genresList, this.filterData);
+        genresRecyclerView = findViewById(R.id.dialog_genres_recycler);
+        genresRecyclerView.setAdapter(genresAdapter);
+        genresRecyclerView.setLayoutManager(new LinearLayoutManager(context));
+        genresRecyclerView.setHasFixedSize(true);
+        genresHeader = findViewById(R.id.dialog_genres_header);
+        genresHeader.setParams(genresRecyclerView,FilterData.FilterType.GENRE);
 
-        //
+        //Years
+        yearsHeader = findViewById(R.id.dialog_years_header);
+        yearsSelector = findViewById(R.id.dialog_years_selector);
+        yearsHeader.setParams(yearsSelector,FilterData.FilterType.YEAR);
+        yearsSelector.setupSelectorType(FilterData.FilterType.YEAR);
+
+        // Votes
+        votesHeader = findViewById(R.id.dialog_vote_header);
+        votesSelector = findViewById(R.id.dialog_vote_selector);
+        votesHeader.setParams(votesSelector,FilterData.FilterType.VOTE);
+        votesSelector.setupSelectorType(FilterData.FilterType.VOTE);
+
+        //Buttons
         Button positiveButton = findViewById(R.id.dialog_positive_btn);
         positiveButton.setOnClickListener(v -> {
-            activity.onFiltersSaved(adapter.getFilters());
+            activity.onFiltersSaved(genresAdapter.getFilters());
             this.dismiss();
         });
 
@@ -42,5 +72,5 @@ public class FiltersDialog extends Dialog {
         negativeButton.setOnClickListener(v ->{
             this.dismiss();
         });
-    }
+        }
 }

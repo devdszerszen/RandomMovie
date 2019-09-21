@@ -1,5 +1,6 @@
 package pl.dszerszen.randommovie;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +12,7 @@ import java.util.List;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
+public class RecyclerAdapter extends CustomRecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
 
     final String TAG = "RandomMovie_log";
 
@@ -32,15 +33,24 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
             textView = itemView.findViewById(R.id.row_text);
             radioButton = itemView.findViewById(R.id.row_radiobutton);
 
-            radioButton.setOnClickListener(v -> {
-                selectedCategoryPosition = getAdapterPosition();
+            itemView.setOnClickListener(v -> {
+                saveSelectedItem(getAdapterPosition());
+            });
 
-                //Saving filter
-                filterData.genrePosition = selectedCategoryPosition;
-                filterData.genreId = list.get(selectedCategoryPosition).id;
-                notifyDataSetChanged();
+            radioButton.setOnClickListener(v -> {
+                saveSelectedItem(getAdapterPosition());
             });
         }
+    }
+
+    private void saveSelectedItem(int adapterPosition) {
+        selectedCategoryPosition = adapterPosition;
+
+        //Saving filter
+        filterData.genrePosition = selectedCategoryPosition;
+        filterData.setGenreId(list.get(selectedCategoryPosition).id);
+        filterData.genreName = list.get(selectedCategoryPosition).name;
+        notifyDataSetChanged();
     }
 
     public RecyclerAdapter(List<ResponseGenre.Genre> list, FilterData filter) {
@@ -76,5 +86,14 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 
     public FilterData getFilters() {
         return filterData;
+    }
+
+    public String getCurrentGenre() {
+        if (selectedCategoryPosition > -1) {
+            return list.get(selectedCategoryPosition).name;
+        } else {
+            return null;
+        }
+
     }
 }

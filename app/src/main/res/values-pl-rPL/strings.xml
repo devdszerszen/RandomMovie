@@ -6,11 +6,15 @@
     <string name="movie_duration">Czas trwania</string>
     <string name="language_key">pl-PL</string>
     <string name="filter_genre">Gatunek</string>
-    <string name="filter_year">Rok</string>
+    <string name="filter_year">Rok produkcji</string>
     <string name="dialog_pos_btn">Zapisz</string>
     <string name="dialog_neg_btn">Anuluj</string>
     <string name="toast_filter_ok">Filtr zapisany prawidłowo</string>
     <string name="btn_previous">Poprzedni</string>
     <string name="search_btn">Szukaj filmów</string>
     <string name="favourites_btn">Pokaż ulubione</string>
+    <string name="set_filters">Ustaw filtry</string>
+    <string name="min_year">Rok od</string>
+    <string name="max_year">Rok do</string>
+    <string name="filter_votes">Ocena</string>
 </resources>

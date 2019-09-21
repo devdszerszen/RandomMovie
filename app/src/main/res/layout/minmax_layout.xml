@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.jaygoo.widget.RangeSeekBar
+        android:id="@+id/minmax_seekbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        app:rsb_gravity="top"
+        app:rsb_indicator_height="wrap_content"
+        app:rsb_indicator_padding_bottom="2dp"
+        app:rsb_indicator_padding_left="3dp"
+        app:rsb_indicator_padding_right="3dp"
+        app:rsb_indicator_padding_top="2dp"
+        app:rsb_indicator_show_mode="alwaysShow"
+        app:rsb_indicator_width="8dp"
+        app:rsb_min_interval="2"
+        app:rsb_mode="range"
+        app:rsb_progress_default_color="@color/colorPrimary"
+        app:rsb_progress_height="2dp"
+        app:rsb_step_auto_bonding="true"
+        app:rsb_step_color="@color/colorPrimary"
+        app:rsb_tick_mark_mode="number" />
+
+    <LinearLayout
+        android:id="@+id/minmax_mainLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:id="@+id/minComponent"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <EditText
+                android:id="@+id/input_min"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:hint="@string/min_year"
+                android:inputType="number" />
+
+            <TextView
+                android:id="@+id/validation_min"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="TextView" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/maxComponent"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <EditText
+                android:id="@+id/input_max"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:hint="@string/max_year"
+                android:inputType="number" />
+
+            <TextView
+                android:id="@+id/validation_max"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="TextView" />
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+</LinearLayout>

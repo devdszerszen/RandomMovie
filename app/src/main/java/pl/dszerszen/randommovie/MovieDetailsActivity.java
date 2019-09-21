@@ -24,7 +24,7 @@ public class MovieDetailsActivity extends BaseActivity implements MovieDetailsIn
 
     ActionBar actionBar;
 
-    //Genres list
+    //Genres genresList
     List<ResponseGenre.Genre> genres = new ArrayList<>();
 
     //Filters
@@ -40,7 +40,7 @@ public class MovieDetailsActivity extends BaseActivity implements MovieDetailsIn
         super.onCreate(savedInstanceState);
 
         //Filter data
-        this.filterData = new FilterData();
+        this.filterData = FilterData.getInstance();
 
         //Presenter
         presenter = new MovieDetailsPresenter(this);
@@ -52,7 +52,7 @@ public class MovieDetailsActivity extends BaseActivity implements MovieDetailsIn
         //ActionBar
         setupActionBar();
 
-        //Genres list
+        //Genres genresList
         presenter.getGenresList();
     }
 
@@ -68,7 +68,7 @@ public class MovieDetailsActivity extends BaseActivity implements MovieDetailsIn
     }
 
     public void onFilterIconClicked (MenuItem item) {
-        FiltersDialog dialog = new FiltersDialog(this, genres, filterData);
+        FiltersDialog dialog = new FiltersDialog(this, genres);
 
         int width = (int)(getResources().getDisplayMetrics().widthPixels*0.90);
         int height = (int)(getResources().getDisplayMetrics().heightPixels*0.90);

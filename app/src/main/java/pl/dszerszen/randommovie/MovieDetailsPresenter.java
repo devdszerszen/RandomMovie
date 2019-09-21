@@ -3,7 +3,6 @@ package pl.dszerszen.randommovie;
 import android.annotation.SuppressLint;
 import android.util.Log;
 import java.util.Random;
-import java.util.logging.Filter;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -37,19 +36,12 @@ public class MovieDetailsPresenter implements MovieDetailsInterface.Presenter{
     public void getRandomMovie(FilterData filterData, int maxPage) {
         view.showLoader();
 
-        this.savedFilter = filterData;
-
         int page = 500;
-        String filter = null;
         if (maxPage<500) {
             page = maxPage;
         }
-        if (savedFilter!=null) {
-            if (savedFilter.isSet())
-                filter = String.valueOf(savedFilter.genreId);
-        }
 
-        connector.getMoviesList(filter, page).subscribeWith(getMoviesListObserver());
+        connector.getMoviesList(page).subscribeWith(getMoviesListObserver());
     }
 
     @SuppressLint("CheckResult")
@@ -100,7 +92,7 @@ public class MovieDetailsPresenter implements MovieDetailsInterface.Presenter{
     }
 
 
-    // Collecting movies list response + call api to get movie details
+    // Collecting movies genresList response + call api to get movie details
     private Observer<ResponseMovieList> getMoviesListObserver() {
 
         return new Observer<ResponseMovieList>() {
