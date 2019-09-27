@@ -2,21 +2,23 @@ package pl.dszerszen.randommovie.Filter;
 
 import android.util.Log;
 
+import java.util.Map;
+
 public class FilterData {
     final String TAG = "RandomMovie_log";
 
-    private int genreId = -1;
-    private int genrePosition = -1;
-    private String genreName = null;
+    public int genreId = -1;
+    public int genrePosition = -1;
+    public String genreName = null;
 
-    private int minYear = -1;
-    private int maxYear = -1;
+    public int minYear = -1;
+    public int maxYear = -1;
 
-    private int minRuntime = -1;
-    private int maxRunTime = -1;
+    public int minRuntime = -1;
+    public int maxRunTime = -1;
 
-    private int minVote = -1;
-    private int maxVote = -1;
+    public int minVote = -1;
+    public int maxVote = -1;
 
     public enum FilterType {
         GENRE,

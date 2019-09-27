@@ -73,4 +73,8 @@ public class MinMaxView extends LinearLayout implements FilterExpandView.Attache
 
     }
 
+    public void setSeekBarValues(int min, int max) {
+        rangeSeekBar.setProgress(min,max);
+    }
+
 }

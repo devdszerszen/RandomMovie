@@ -57,6 +57,10 @@ public class FilterExpandView extends LinearLayout {
     private void hideContent() {
         ((View)child).setVisibility(GONE);
         chevron.setRotation(0f);
+        setTitle();
+    }
+
+    public void setTitle() {
         StringBuilder builder = new StringBuilder();
         builder.append(title).append(": ").append(child.getCurrentValue());
         tv_title.setText(builder);
