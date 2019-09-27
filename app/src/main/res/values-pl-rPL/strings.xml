@@ -17,4 +17,5 @@
     <string name="min_year">Rok od</string>
     <string name="max_year">Rok do</string>
     <string name="filter_votes">Ocena</string>
+    <string name="filter_runtime">Czas trwania</string>
 </resources>

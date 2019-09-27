@@ -1,11 +1,10 @@
 package pl.dszerszen.randommovie;
 
 import androidx.appcompat.app.ActionBar;
-import androidx.recyclerview.widget.RecyclerView;
 import pl.dszerszen.randommovie.Base.BaseActivity;
+import pl.dszerszen.randommovie.Filter.FilterData;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -76,8 +75,8 @@ public class MovieDetailsActivity extends BaseActivity implements MovieDetailsIn
     }
 
     @Override
-    public void onFiltersSaved(FilterData filterData) {
-        this.filterData = filterData;
+    public void onFiltersSaved() {
+        this.filterData = FilterData.getInstance();
         Toast.makeText(this, getResources().getString(R.string.toast_filter_ok), Toast.LENGTH_SHORT).show();
     }
 
@@ -103,8 +102,17 @@ public class MovieDetailsActivity extends BaseActivity implements MovieDetailsIn
     }
 
     @Override
+    public void showErrorMessage(String message) {
+        runOnUiThread(() -> showToastMessage(message));
+    }
+
+    private void showToastMessage(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+    }
+
+    @Override
     public void getRandomMovie() {
-        presenter.getRandomMovie(filterData,500);
+        presenter.onRandomMovieButtonClicked();
     }
 
     @Override

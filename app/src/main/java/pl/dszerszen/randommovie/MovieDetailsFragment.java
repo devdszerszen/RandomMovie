@@ -46,6 +46,7 @@ public class MovieDetailsFragment extends Fragment {
     @BindView(R.id.df_layout) ConstraintLayout detailsLayout;
     @BindView(R.id.df_genres_layout) LinearLayout genresLayout;
     @BindView(R.id.df_time_value) TextView timeValue;
+    @BindView(R.id.df_year_value) TextView yearValue;
     @BindView(R.id.df_rating_value) TextView rating;
     @BindView(R.id.df_scrollView) ScrollView scrolledMovieDescView;
     @BindView(R.id.df_loader) ProgressBar loader;
@@ -150,6 +151,9 @@ public class MovieDetailsFragment extends Fragment {
                 tmpTxtView.setText(movieDetails.genres.get(i).name.toLowerCase());
                 genresLayout.addView(tmpTxtView);
             }
+
+            //Year
+            yearValue.setText(String.valueOf(movieDetails.releaseDate).substring(0,4));
 
             //Time
             timeValue.setText(String.valueOf(movieDetails.runtime) + " min");

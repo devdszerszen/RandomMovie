@@ -11,6 +11,8 @@ import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+import pl.dszerszen.randommovie.CustomViews.CustomRecyclerView;
+import pl.dszerszen.randommovie.Filter.FilterData;
 
 public class RecyclerAdapter extends CustomRecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
 
@@ -45,11 +47,11 @@ public class RecyclerAdapter extends CustomRecyclerView.Adapter<RecyclerAdapter.
 
     private void saveSelectedItem(int adapterPosition) {
         selectedCategoryPosition = adapterPosition;
-
-        //Saving filter
-        filterData.genrePosition = selectedCategoryPosition;
-        filterData.setGenreId(list.get(selectedCategoryPosition).id);
-        filterData.genreName = list.get(selectedCategoryPosition).name;
+//
+//        //Saving filter
+//        filterData.genrePosition = selectedCategoryPosition;
+//        filterData.setGenreId(list.get(selectedCategoryPosition).id);
+//        filterData.genreName = list.get(selectedCategoryPosition).name;
         notifyDataSetChanged();
     }
 
@@ -58,7 +60,7 @@ public class RecyclerAdapter extends CustomRecyclerView.Adapter<RecyclerAdapter.
         this.filterData = filter;
 
         if (filter.isSet()) {
-            selectedCategoryPosition = filterData.genrePosition;
+            selectedCategoryPosition = filterData.getGenrePosition();
         }
     }
 
@@ -88,12 +90,23 @@ public class RecyclerAdapter extends CustomRecyclerView.Adapter<RecyclerAdapter.
         return filterData;
     }
 
-    public String getCurrentGenre() {
+    public String getCurrentGenreName() {
         if (selectedCategoryPosition > -1) {
             return list.get(selectedCategoryPosition).name;
         } else {
             return null;
         }
+    }
 
+    public int getCurrentGenreId() {
+        if (selectedCategoryPosition>-1) {
+            return list.get(selectedCategoryPosition).id;
+        } else {
+            return -1;
+        }
+    }
+
+    public int getCurrentGenrePosition() {
+        return selectedCategoryPosition;
     }
 }

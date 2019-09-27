@@ -1,15 +1,22 @@
-package pl.dszerszen.randommovie;
+package pl.dszerszen.randommovie.Filter;
+
+import android.util.Log;
 
 public class FilterData {
+    final String TAG = "RandomMovie_log";
+
     private int genreId = -1;
-    public int genrePosition = -1;
-    public String genreName = null;
+    private int genrePosition = -1;
+    private String genreName = null;
 
     private int minYear = -1;
     private int maxYear = -1;
 
     private int minRuntime = -1;
     private int maxRunTime = -1;
+
+    private int minVote = -1;
+    private int maxVote = -1;
 
     public enum FilterType {
         GENRE,
@@ -56,6 +63,10 @@ public class FilterData {
         return result;
     }
 
+    public int getGenrePosition() {
+        return genrePosition;
+    }
+
     public String getMinRuntime() {
         String result = null;
         if (minRuntime>-1)
@@ -70,15 +81,23 @@ public class FilterData {
         return result;
     }
 
-    public void setGenreId(int genreId) {
-        this.genreId = genreId;
-    }
 
-    public void setMinYear(int minYear) {
-        this.minYear = minYear;
-    }
+    public void setFilter (SingleFilter singleFilter) {
 
-    public void setMaxYear(int maxYear) {
-        this.maxYear = maxYear;
+        if (singleFilter.type.equals(FilterType.GENRE)) {
+            this.genreId = singleFilter.genreId;
+            this.genrePosition = singleFilter.genrePosition;
+            this.genreName = singleFilter.genreName;
+            Log.d(TAG, "GENREFILTER: Filter data saves genreId: " + singleFilter.genreId);
+        } else if (singleFilter.type.equals(FilterType.RUNTIME)){
+            this.minRuntime = singleFilter.min;
+            this.maxRunTime = singleFilter.max;
+        } else if (singleFilter.type.equals(FilterType.VOTE)){
+            this.minVote = singleFilter.min;
+            this.maxVote = singleFilter.max;
+        } else if (singleFilter.type.equals(FilterType.YEAR)){
+            this.minYear = singleFilter.min;
+            this.maxYear = singleFilter.max;
+        }
     }
 }

@@ -16,12 +16,13 @@ public interface NetworkService {
     @GET("discover/movie")
     Observable<ResponseMovieList> getMovies(@Query("api_key") String api_key,
                                             @Query("language") String language,
+                                            @Query("page") int page,
+                                            @Query("primary_release_date.gte") String minYear,
+                                            @Query("primary_release_date.lte") String maxYear,
                                             @Query("with_genres") String filter,
-                                            @Query("release_date_gte") String minYear,
-                                            @Query("release_date_lte") String maxYear,
                                             @Query("with_runtime.gte") String minRuntime,
-                                            @Query("with_runtime.lte") String maxRuntime,
-                                            @Query("page") int page);
+                                            @Query("with_runtime.lte") String maxRuntime
+                                            );
 
     @GET("genre/movie/list")
     Observable<ResponseGenre> getGenres(@Query("api_key") String api_key, @Query("language") String language);

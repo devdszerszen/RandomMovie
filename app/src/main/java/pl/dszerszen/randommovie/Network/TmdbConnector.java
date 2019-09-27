@@ -9,7 +9,7 @@ import io.reactivex.schedulers.Schedulers;
 import pl.dszerszen.randommovie.ResponseGenre;
 import pl.dszerszen.randommovie.ResponseMovieList;
 import pl.dszerszen.randommovie.SingleMovieDetails;
-import pl.dszerszen.randommovie.FilterData;
+import pl.dszerszen.randommovie.Filter.FilterData;
 
 public class TmdbConnector {
 
@@ -25,19 +25,24 @@ public class TmdbConnector {
 
     public Observable<ResponseMovieList> getMoviesList(int page) {
         Random random = new Random();
-        int queryPage = random.nextInt(page);
+        int queryPage = 1;
+        if (page>1) {
+            queryPage = random.nextInt(page-1)+1;
+        }
+
 
         FilterData filter = FilterData.getInstance();
 
 
         return client.getMovies(
                 API_KEY, LANGUAGE_KEY,
-                filter.getGenreId(),
+                queryPage,
                 filter.getMinYear(),
                 filter.getMaxYear(),
+                filter.getGenreId(),
                 filter.getMinRuntime(),
-                filter.getMaxRunTime(),
-                queryPage)
+                filter.getMaxRunTime()
+                )
 
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());

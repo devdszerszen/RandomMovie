@@ -1,16 +1,19 @@
-package pl.dszerszen.randommovie;
+package pl.dszerszen.randommovie.CustomViews;
 
 import android.content.Context;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
-import android.widget.Filter;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import java.util.Map;
+
 import androidx.annotation.Nullable;
+import pl.dszerszen.randommovie.Filter.FilterData;
+import pl.dszerszen.randommovie.Filter.SingleFilter;
+import pl.dszerszen.randommovie.R;
 
 public class FilterExpandView extends LinearLayout {
 
@@ -67,6 +70,7 @@ public class FilterExpandView extends LinearLayout {
 
     public void setParams(AttachedView child, FilterData.FilterType filterType) {
         this.child = child;
+        this.filterType = filterType;
         switch (filterType) {
             case GENRE: {
                 title = getResources().getString(R.string.filter_genre);
@@ -77,13 +81,21 @@ public class FilterExpandView extends LinearLayout {
             } case VOTE: {
                 title = getResources().getString(R.string.filter_votes);
                 break;
+            } case RUNTIME: {
+                title = getResources().getString(R.string.filter_runtime);
+                break;
             }
         }
         tv_title.setText(title);
         ((View)child).setVisibility(GONE);
     }
 
+    public SingleFilter getFilter() {
+        return child.getFilter();
+    }
+
     public interface AttachedView {
         String getCurrentValue();
+        SingleFilter getFilter();
     }
 }

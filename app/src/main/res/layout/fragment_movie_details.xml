@@ -87,6 +87,22 @@
             app:layout_constraintTop_toBottomOf="@+id/df_poster">
 
             <LinearLayout
+                android:id="@+id/df_year_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="0.5"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/df_year_value"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:textColor="@android:color/background_light"
+                    android:textSize="14dp" />
+            </LinearLayout>
+
+            <LinearLayout
                 android:id="@+id/df_genres_layout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"

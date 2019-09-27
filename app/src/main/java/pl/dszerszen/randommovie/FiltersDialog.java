@@ -8,6 +8,10 @@ import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import pl.dszerszen.randommovie.CustomViews.CustomRecyclerView;
+import pl.dszerszen.randommovie.CustomViews.FilterExpandView;
+import pl.dszerszen.randommovie.CustomViews.MinMaxView;
+import pl.dszerszen.randommovie.Filter.FilterData;
 
 public class FiltersDialog extends Dialog {
     public final String TAG = "RandomMovie_log";
@@ -30,6 +34,10 @@ public class FiltersDialog extends Dialog {
     //Votes
     FilterExpandView votesHeader;
     MinMaxView votesSelector;
+
+    //Runtime
+    FilterExpandView runtimeHeader;
+    MinMaxView runtimeSelector;
 
 
     public FiltersDialog(@NonNull Context context, List<ResponseGenre.Genre> list) {
@@ -55,16 +63,23 @@ public class FiltersDialog extends Dialog {
         yearsHeader.setParams(yearsSelector,FilterData.FilterType.YEAR);
         yearsSelector.setupSelectorType(FilterData.FilterType.YEAR);
 
-        // Votes
+        //Votes
         votesHeader = findViewById(R.id.dialog_vote_header);
         votesSelector = findViewById(R.id.dialog_vote_selector);
         votesHeader.setParams(votesSelector,FilterData.FilterType.VOTE);
         votesSelector.setupSelectorType(FilterData.FilterType.VOTE);
 
+        //Runtime
+        runtimeHeader = findViewById(R.id.dialog_runtime_header);
+        runtimeSelector = findViewById(R.id.dialog_runtime_selector);
+        runtimeHeader.setParams(runtimeSelector,FilterData.FilterType.RUNTIME);
+        runtimeSelector.setupSelectorType(FilterData.FilterType.RUNTIME);
+
         //Buttons
         Button positiveButton = findViewById(R.id.dialog_positive_btn);
         positiveButton.setOnClickListener(v -> {
-            activity.onFiltersSaved(genresAdapter.getFilters());
+            saveFilters();
+            activity.onFiltersSaved();
             this.dismiss();
         });
 
@@ -72,5 +87,12 @@ public class FiltersDialog extends Dialog {
         negativeButton.setOnClickListener(v ->{
             this.dismiss();
         });
+        }
+
+        public void saveFilters() {
+            filterData.setFilter(genresHeader.getFilter());
+            filterData.setFilter(yearsHeader.getFilter());
+            filterData.setFilter(votesHeader.getFilter());
+            filterData.setFilter(runtimeHeader.getFilter());
         }
 }

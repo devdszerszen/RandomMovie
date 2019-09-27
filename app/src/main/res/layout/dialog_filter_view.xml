@@ -39,12 +39,12 @@
             android:animateLayoutChanges="true"
             android:orientation="vertical">
 
-            <pl.dszerszen.randommovie.FilterExpandView
+            <pl.dszerszen.randommovie.CustomViews.FilterExpandView
                 android:id="@+id/dialog_genres_header"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"></pl.dszerszen.randommovie.FilterExpandView>
+                android:layout_height="wrap_content"></pl.dszerszen.randommovie.CustomViews.FilterExpandView>
 
-            <pl.dszerszen.randommovie.CustomRecyclerView
+            <pl.dszerszen.randommovie.CustomViews.CustomRecyclerView
                 android:id="@+id/dialog_genres_recycler"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -59,29 +59,42 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/expand_title" />
 
-            <pl.dszerszen.randommovie.FilterExpandView
+            <pl.dszerszen.randommovie.CustomViews.FilterExpandView
                 android:id="@+id/dialog_years_header"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"></pl.dszerszen.randommovie.FilterExpandView>
+                android:layout_marginTop="8dp"></pl.dszerszen.randommovie.CustomViews.FilterExpandView>
 
-            <pl.dszerszen.randommovie.MinMaxView
+            <pl.dszerszen.randommovie.CustomViews.MinMaxView
                 android:id="@+id/dialog_years_selector"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingLeft="4dp"
-                android:paddingRight="4dp"></pl.dszerszen.randommovie.MinMaxView>
+                android:paddingRight="4dp"></pl.dszerszen.randommovie.CustomViews.MinMaxView>
 
-            <pl.dszerszen.randommovie.FilterExpandView
+            <pl.dszerszen.randommovie.CustomViews.FilterExpandView
                 android:id="@+id/dialog_vote_header"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"></pl.dszerszen.randommovie.FilterExpandView>
+                android:layout_marginTop="8dp"></pl.dszerszen.randommovie.CustomViews.FilterExpandView>
 
-            <pl.dszerszen.randommovie.MinMaxView
+            <pl.dszerszen.randommovie.CustomViews.MinMaxView
                 android:id="@+id/dialog_vote_selector"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"></pl.dszerszen.randommovie.MinMaxView>
+                android:layout_height="wrap_content"></pl.dszerszen.randommovie.CustomViews.MinMaxView>
+
+            <pl.dszerszen.randommovie.CustomViews.FilterExpandView
+                android:id="@+id/dialog_runtime_header"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:visibility="visible"></pl.dszerszen.randommovie.CustomViews.FilterExpandView>
+
+            <pl.dszerszen.randommovie.CustomViews.MinMaxView
+                android:id="@+id/dialog_runtime_selector"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="visible"></pl.dszerszen.randommovie.CustomViews.MinMaxView>
 
 
         </LinearLayout>
