@@ -4,6 +4,7 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -26,6 +27,7 @@ public class FilterExpandView extends LinearLayout {
     LinearLayout header;
     TextView tv_title;
     ImageView chevron;
+    CheckBox checkBox;
 
     AttachedView child;
 
@@ -37,6 +39,8 @@ public class FilterExpandView extends LinearLayout {
         header = findViewById(R.id.expand_header);
         tv_title = findViewById(R.id.expand_title);
         chevron = findViewById(R.id.expand_chevron);
+        checkBox = findViewById(R.id.expand_checkbox);
+        checkBox.setChecked(true);
 
         header.setOnClickListener(v -> {
             if (child != null) {
@@ -61,15 +65,24 @@ public class FilterExpandView extends LinearLayout {
     }
 
     public void setTitle() {
-        StringBuilder builder = new StringBuilder();
-        builder.append(title).append(": ").append(child.getCurrentValue());
-        tv_title.setText(builder);
+        String currentFilterValue = child.getCurrentValue();
+        if (currentFilterValue!=null) {
+            StringBuilder builder = new StringBuilder();
+            builder.append(title).append(": ").append(currentFilterValue);
+            tv_title.setText(builder);
+            tv_title.setTextColor(getResources().getColor(R.color.colorPrimary,null));
+        }
     }
 
     private void showContent() {
         ((View)child).setVisibility(VISIBLE);
         chevron.setRotation(180f);
         tv_title.setText(title);
+        tv_title.setTextColor(getResources().getColor(R.color.colorGray,null));
+    }
+
+    public boolean isChecked() {
+        return checkBox.isChecked();
     }
 
     public void setParams(AttachedView child, FilterData.FilterType filterType) {

@@ -2,8 +2,12 @@ package pl.dszerszen.randommovie.CustomViews;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.Log;
+import android.view.View;
 import android.widget.Filter;
 import android.widget.LinearLayout;
+
+import com.jaygoo.widget.OnRangeChangedListener;
 import com.jaygoo.widget.RangeSeekBar;
 import java.util.Calendar;
 
@@ -15,9 +19,12 @@ import pl.dszerszen.randommovie.R;
 public class MinMaxView extends LinearLayout implements FilterExpandView.AttachedView {
 
     public static final String TAG = "RandomMovie_log";
+
     RangeSeekBar rangeSeekBar;
 
     FilterData.FilterType filterType;
+
+    boolean isChanged = false;
 
 
     public MinMaxView(Context context, @Nullable AttributeSet attrs) {
@@ -29,6 +36,7 @@ public class MinMaxView extends LinearLayout implements FilterExpandView.Attache
     public void initComponents(Context context) {
         rangeSeekBar = findViewById(R.id.minmax_seekbar);
         rangeSeekBar.setIndicatorTextDecimalFormat("1");
+        addListener();
     }
 
     public void setupSelectorType (FilterData.FilterType filterType) {
@@ -37,11 +45,6 @@ public class MinMaxView extends LinearLayout implements FilterExpandView.Attache
             case YEAR: {
                 rangeSeekBar.setRange(1980,Calendar.getInstance().get(Calendar.YEAR),6f);
                 rangeSeekBar.setProgress(1980,Calendar.getInstance().get(Calendar.YEAR));
-                break;
-            }
-            case RUNTIME: {
-                rangeSeekBar.setRange(60,240,20f);
-                rangeSeekBar.setProgress(60,240);
                 break;
             }
             case VOTE: {
@@ -54,27 +57,53 @@ public class MinMaxView extends LinearLayout implements FilterExpandView.Attache
 
     @Override
     public String getCurrentValue() {
-        StringBuilder builder = new StringBuilder();
-        int leftValue = Math.round(rangeSeekBar.getLeftSeekBar().getProgress());
-        int rightValue = Math.round(rangeSeekBar.getRightSeekBar().getProgress());
-        builder.append(leftValue).append("-").append(rightValue);
-        return builder.toString();
+        if (isChanged) {
+            StringBuilder builder = new StringBuilder();
+            int leftValue = Math.round(rangeSeekBar.getLeftSeekBar().getProgress());
+            int rightValue = Math.round(rangeSeekBar.getRightSeekBar().getProgress());
+            builder.append(leftValue).append("-").append(rightValue);
+            return builder.toString();
+        }
+        return null;
     }
 
     @Override
     public SingleFilter getFilter() {
-        SingleFilter singleFilter = new SingleFilter();
-        if (filterType!=null) {
-            singleFilter.type = filterType;
-            singleFilter.min = Math.round(rangeSeekBar.getLeftSeekBar().getProgress());
-            singleFilter.max = Math.round(rangeSeekBar.getRightSeekBar().getProgress());
+        if (isChanged) {
+            SingleFilter singleFilter = new SingleFilter();
+            if (filterType != null) {
+                singleFilter.type = filterType;
+                singleFilter.min = Math.round(rangeSeekBar.getLeftSeekBar().getProgress());
+                singleFilter.max = Math.round(rangeSeekBar.getRightSeekBar().getProgress());
+            }
+            return singleFilter;
         }
-        return singleFilter;
-
+        return null;
     }
 
     public void setSeekBarValues(int min, int max) {
         rangeSeekBar.setProgress(min,max);
+        if (min>rangeSeekBar.getMinProgress() || max<rangeSeekBar.getMaxProgress()) {
+            isChanged = true;
+        }
     }
 
+    private void addListener() {
+        rangeSeekBar.setOnRangeChangedListener(new OnRangeChangedListener() {
+            @Override
+            public void onRangeChanged(RangeSeekBar view, float leftValue, float rightValue, boolean isFromUser) {
+
+            }
+
+            @Override
+            public void onStartTrackingTouch(RangeSeekBar view, boolean isLeft) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(RangeSeekBar view, boolean isLeft) {
+                isChanged = true;
+            }
+        });
+    }
 }

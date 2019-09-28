@@ -64,11 +64,19 @@ public class MovieDetailsPresenter implements MovieDetailsInterface.Presenter{
                     int movieId = getValidMovieId(responseMovieList);
                     if (movieId>-1) {
                         getMovieDetails(movieId);
+
+                        //Debug only
+                        String message = String.format("Current: %d; Total: %d",
+                                responseMovieList.page,
+                                responseMovieList.totalPages);
+                        view.showErrorMessage(message);
+
                     } else {
                         getRandomMovie(responseMovieList.totalPages);
                     }
                 }
             }
+
 
             @Override
             public void onError(Throwable e) {
@@ -83,6 +91,7 @@ public class MovieDetailsPresenter implements MovieDetailsInterface.Presenter{
             }
         });
     }
+
 
     private int getValidMovieId(ResponseMovieList moviesList) {
         Random random = new Random();

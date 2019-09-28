@@ -35,9 +35,6 @@ public class FiltersDialog extends Dialog {
     FilterExpandView votesHeader;
     MinMaxView votesSelector;
 
-    //Runtime
-    FilterExpandView runtimeHeader;
-    MinMaxView runtimeSelector;
 
 
     public FiltersDialog(@NonNull Context context, List<ResponseGenre.Genre> list) {
@@ -76,15 +73,6 @@ public class FiltersDialog extends Dialog {
             setSeekbarValues(votesSelector,FilterData.FilterType.VOTE);
         }
 
-        //Runtime
-        runtimeHeader = findViewById(R.id.dialog_runtime_header);
-        runtimeSelector = findViewById(R.id.dialog_runtime_selector);
-        runtimeHeader.setParams(runtimeSelector,FilterData.FilterType.RUNTIME);
-        runtimeSelector.setupSelectorType(FilterData.FilterType.RUNTIME);
-        if (isFilterSet(FilterData.FilterType.RUNTIME)) {
-            setSeekbarValues(runtimeSelector,FilterData.FilterType.RUNTIME);
-        }
-
         //Buttons
         Button positiveButton = findViewById(R.id.dialog_positive_btn);
         positiveButton.setOnClickListener(v -> {
@@ -100,10 +88,9 @@ public class FiltersDialog extends Dialog {
         }
 
         public void saveFilters() {
-            filterData.setFilter(genresHeader.getFilter());
-            filterData.setFilter(yearsHeader.getFilter());
-            filterData.setFilter(votesHeader.getFilter());
-            filterData.setFilter(runtimeHeader.getFilter());
+            filterData.setFilter(genresHeader.getFilter(),genresHeader.isChecked());
+            filterData.setFilter(yearsHeader.getFilter(),yearsHeader.isChecked());
+            filterData.setFilter(votesHeader.getFilter(),votesHeader.isChecked());
         }
 
         private boolean isFilterSet(FilterData.FilterType type) {
@@ -112,8 +99,6 @@ public class FiltersDialog extends Dialog {
                     return filterData.minYear>-1 && filterData.maxYear>-1;
                 } case GENRE: {
                     return filterData.genreId>-1;
-                } case RUNTIME: {
-                    return filterData.minRuntime>-1 && filterData.maxRunTime > -1;
                 } case VOTE: {
                     return filterData.minVote>-1 && filterData.maxVote>-1;
                 }
@@ -127,11 +112,8 @@ public class FiltersDialog extends Dialog {
                     view.setSeekBarValues(filterData.minVote,filterData.maxVote);
                     votesHeader.setTitle();
                     break;
-                } case RUNTIME: {
-                    view.setSeekBarValues(filterData.minRuntime,filterData.maxRunTime);
-                    runtimeHeader.setTitle();
-                    break;
-                } case YEAR: {
+                }
+                case YEAR: {
                     view.setSeekBarValues(filterData.minYear,filterData.maxYear);
                     yearsHeader.setTitle();
                     break;

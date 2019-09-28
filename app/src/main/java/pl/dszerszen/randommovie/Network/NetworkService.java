@@ -19,9 +19,7 @@ public interface NetworkService {
                                             @Query("page") int page,
                                             @Query("primary_release_date.gte") String minYear,
                                             @Query("primary_release_date.lte") String maxYear,
-                                            @Query("with_genres") String filter,
-                                            @Query("with_runtime.gte") String minRuntime,
-                                            @Query("with_runtime.lte") String maxRuntime
+                                            @Query("with_genres") String filter
                                             );
 
     @GET("genre/movie/list")

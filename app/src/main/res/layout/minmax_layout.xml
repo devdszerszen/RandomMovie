@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <com.jaygoo.widget.RangeSeekBar
         android:id="@+id/minmax_seekbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="8dp"
+        android:layout_height="50dp"
+        android:padding="12dp"
         app:rsb_gravity="top"
+        app:rsb_indicator_background_color="@color/colorPrimary"
         app:rsb_indicator_height="wrap_content"
         app:rsb_indicator_padding_bottom="2dp"
         app:rsb_indicator_padding_left="3dp"
@@ -19,11 +21,15 @@
         app:rsb_indicator_width="8dp"
         app:rsb_min_interval="5"
         app:rsb_mode="range"
-        app:rsb_progress_default_color="@color/colorPrimary"
+        app:rsb_progress_color="@color/colorAccent"
+        app:rsb_progress_default_color="@android:color/darker_gray"
         app:rsb_progress_height="2dp"
         app:rsb_step_auto_bonding="true"
-        app:rsb_step_color="@color/colorPrimary"
-        app:rsb_tick_mark_mode="number" />
+        app:rsb_thumb_drawable="@drawable/seekbar_circle"
+        app:rsb_thumb_height="19dp"
+        app:rsb_thumb_width="19dp"
+        app:rsb_tick_mark_mode="number"
+        tools:rsb_indicator_background_color="@color/colorPrimary" />
 
     <LinearLayout
         android:id="@+id/minmax_mainLayout"

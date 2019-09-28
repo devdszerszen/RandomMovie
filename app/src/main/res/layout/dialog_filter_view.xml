@@ -88,13 +88,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:visibility="visible"></pl.dszerszen.randommovie.CustomViews.FilterExpandView>
+                android:visibility="gone"></pl.dszerszen.randommovie.CustomViews.FilterExpandView>
 
             <pl.dszerszen.randommovie.CustomViews.MinMaxView
                 android:id="@+id/dialog_runtime_selector"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:visibility="visible"></pl.dszerszen.randommovie.CustomViews.MinMaxView>
+                android:visibility="gone"></pl.dszerszen.randommovie.CustomViews.MinMaxView>
 
 
         </LinearLayout>
