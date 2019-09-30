@@ -88,6 +88,7 @@ public class FiltersDialog extends Dialog {
         }
 
         public void saveFilters() {
+            filterData.clearFilters();
             filterData.setFilter(genresHeader.getFilter(),genresHeader.isChecked());
             filterData.setFilter(yearsHeader.getFilter(),yearsHeader.isChecked());
             filterData.setFilter(votesHeader.getFilter(),votesHeader.isChecked());

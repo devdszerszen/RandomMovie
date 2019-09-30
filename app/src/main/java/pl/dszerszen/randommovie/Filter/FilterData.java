@@ -84,6 +84,15 @@ public class FilterData {
         return genrePosition;
     }
 
+    public int getFiltersCount() {
+        int count = 0;
+        if (minYear != F_MIN_YEAR || maxYear != F_MAX_YEAR) count++;
+        if (minVote != F_MIN_VOTE || maxVote != F_MAX_VOTE) count++;
+        if (genreId != F_GENRE_ID) count++;
+
+        return count;
+    }
+
     public void setFilter (SingleFilter singleFilter, boolean filterEnabled) {
 
         if (singleFilter != null) {
@@ -102,7 +111,17 @@ public class FilterData {
                 this.maxYear = singleFilter.max;
             }
         }
+    }
 
+    public void clearFilters() {
+        genreId = F_GENRE_ID;
+        genrePosition = F_GENRE_POS;
+        genreName = null;
 
+        minYear = F_MIN_YEAR;
+        maxYear = F_MAX_YEAR;
+
+        minVote = F_MIN_VOTE;
+        maxVote = F_MAX_VOTE;
     }
 }

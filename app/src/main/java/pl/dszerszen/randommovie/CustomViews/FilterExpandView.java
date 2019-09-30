@@ -1,6 +1,7 @@
 package pl.dszerszen.randommovie.CustomViews;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
@@ -8,9 +9,6 @@ import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
-import java.util.Map;
-
 import androidx.annotation.Nullable;
 import pl.dszerszen.randommovie.Filter.FilterData;
 import pl.dszerszen.randommovie.Filter.SingleFilter;
@@ -71,6 +69,7 @@ public class FilterExpandView extends LinearLayout {
             builder.append(title).append(": ").append(currentFilterValue);
             tv_title.setText(builder);
             tv_title.setTextColor(getResources().getColor(R.color.colorPrimary,null));
+            tv_title.setTypeface(null,Typeface.BOLD);
         }
     }
 
@@ -79,6 +78,7 @@ public class FilterExpandView extends LinearLayout {
         chevron.setRotation(180f);
         tv_title.setText(title);
         tv_title.setTextColor(getResources().getColor(R.color.colorGray,null));
+        tv_title.setTypeface(null,Typeface.NORMAL);
     }
 
     public boolean isChecked() {

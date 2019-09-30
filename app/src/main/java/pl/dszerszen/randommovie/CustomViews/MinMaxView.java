@@ -36,7 +36,6 @@ public class MinMaxView extends LinearLayout implements FilterExpandView.Attache
     public void initComponents(Context context) {
         rangeSeekBar = findViewById(R.id.minmax_seekbar);
         rangeSeekBar.setIndicatorTextDecimalFormat("1");
-        addListener();
     }
 
     public void setupSelectorType (FilterData.FilterType filterType) {
@@ -55,20 +54,10 @@ public class MinMaxView extends LinearLayout implements FilterExpandView.Attache
         }
     }
 
-    @Override
-    public String getCurrentValue() {
-        if (isChanged) {
-            StringBuilder builder = new StringBuilder();
-            int leftValue = Math.round(rangeSeekBar.getLeftSeekBar().getProgress());
-            int rightValue = Math.round(rangeSeekBar.getRightSeekBar().getProgress());
-            builder.append(leftValue).append("-").append(rightValue);
-            return builder.toString();
-        }
-        return null;
-    }
 
     @Override
     public SingleFilter getFilter() {
+        saveSelection();
         if (isChanged) {
             SingleFilter singleFilter = new SingleFilter();
             if (filterType != null) {
@@ -88,22 +77,25 @@ public class MinMaxView extends LinearLayout implements FilterExpandView.Attache
         }
     }
 
-    private void addListener() {
-        rangeSeekBar.setOnRangeChangedListener(new OnRangeChangedListener() {
-            @Override
-            public void onRangeChanged(RangeSeekBar view, float leftValue, float rightValue, boolean isFromUser) {
+    @Override
+    public String getCurrentValue() {
+        saveSelection();
+        if (isChanged) {
+            StringBuilder builder = new StringBuilder();
+            int leftValue = Math.round(rangeSeekBar.getLeftSeekBar().getProgress());
+            int rightValue = Math.round(rangeSeekBar.getRightSeekBar().getProgress());
+            builder.append(leftValue).append("-").append(rightValue);
+            return builder.toString();
+        }
+        return null;
+    }
 
-            }
-
-            @Override
-            public void onStartTrackingTouch(RangeSeekBar view, boolean isLeft) {
-
-            }
-
-            @Override
-            public void onStopTrackingTouch(RangeSeekBar view, boolean isLeft) {
-                isChanged = true;
-            }
-        });
+    public void saveSelection() {
+        if (rangeSeekBar.getLeftSeekBar().getProgress() != rangeSeekBar.getMinProgress()
+                || rangeSeekBar.getRightSeekBar().getProgress() != rangeSeekBar.getMaxProgress()) {
+            isChanged = true;
+        } else {
+            isChanged = false;
+        }
     }
 }

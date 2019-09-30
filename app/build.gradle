@@ -76,4 +76,10 @@ dependencies {
 
     //Seekbar
     implementation 'com.github.Jay-Goo:RangeSeekBar:v3.0.0'
+
+    //Icon with badge
+    implementation 'com.github.nikartm:image-support:1.0.5'
+
+    //EventBus
+    implementation 'org.greenrobot:eventbus:3.1.1'
 }

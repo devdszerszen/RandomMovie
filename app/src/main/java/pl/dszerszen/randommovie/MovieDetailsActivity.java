@@ -7,10 +7,16 @@ import pl.dszerszen.randommovie.Filter.FilterData;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static android.view.View.GONE;
 
 
 public class MovieDetailsActivity extends BaseActivity implements MovieDetailsInterface.View,
@@ -22,6 +28,7 @@ public class MovieDetailsActivity extends BaseActivity implements MovieDetailsIn
     MovieDetailsInterface.Presenter presenter;
 
     ActionBar actionBar;
+    TextView notificationBadge;
 
     //Genres genresList
     List<ResponseGenre.Genre> genres = new ArrayList<>();
@@ -63,10 +70,22 @@ public class MovieDetailsActivity extends BaseActivity implements MovieDetailsIn
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main,menu);
+        MenuItem filterAction = menu.getItem(0);
+        View actionView = filterAction.getActionView();
+        notificationBadge = actionView.findViewById(R.id.cart_badge);
+        setupBadge();
+
+        actionView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onFilterIconClicked();
+            }
+        });
+
         return true;
     }
 
-    public void onFilterIconClicked (MenuItem item) {
+    public void onFilterIconClicked () {
         FiltersDialog dialog = new FiltersDialog(this, genres);
 
         int width = (int)(getResources().getDisplayMetrics().widthPixels*0.90);
@@ -74,10 +93,23 @@ public class MovieDetailsActivity extends BaseActivity implements MovieDetailsIn
         dialog.getWindow().setLayout(width, height);
     }
 
+    public void setupBadge() {
+        int notificationsCount = filterData.getFiltersCount();
+        if (notificationBadge!=null) {
+            if (notificationsCount>0) {
+                notificationBadge.setVisibility(View.VISIBLE);
+                notificationBadge.setText(Integer.toString(notificationsCount));
+            } else {
+                notificationBadge.setVisibility(GONE);
+            }
+        }
+    }
+
     @Override
     public void onFiltersSaved() {
         this.filterData = FilterData.getInstance();
         Toast.makeText(this, getResources().getString(R.string.toast_filter_ok), Toast.LENGTH_SHORT).show();
+        setupBadge();
     }
 
 
