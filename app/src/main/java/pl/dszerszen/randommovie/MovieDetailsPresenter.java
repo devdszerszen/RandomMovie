@@ -26,6 +26,9 @@ public class MovieDetailsPresenter implements MovieDetailsInterface.Presenter{
     @Inject @Named("language")
     String language;
 
+    int apiCallsCounter = 0;
+    final int MAX_API_CALLS = 10;
+
     public MovieDetailsPresenter(MovieDetailsInterface.View view) {
         this.view = view;
         this.connector = new TmdbConnector(MyApplication.getContext().getResources().getString(R.string.language_key));
@@ -33,12 +36,21 @@ public class MovieDetailsPresenter implements MovieDetailsInterface.Presenter{
 
     @Override
     public void onRandomMovieButtonClicked() {
+        apiCallsCounter = 0;
+        view.showLoader();
         getRandomMovie(500);
     }
 
     @SuppressLint("CheckResult")
     public void getRandomMovie(int maxPage) {
-        view.showLoader();
+
+
+        apiCallsCounter++;
+        if (apiCallsCounter >MAX_API_CALLS) {
+            view.showErrorMessage("Something went wrong, sorry");
+            view.hideLoader();
+            return;
+        }
 
         int page = 500;
         if (maxPage<500) {
@@ -92,8 +104,10 @@ public class MovieDetailsPresenter implements MovieDetailsInterface.Presenter{
         List<ResponseMovieList.Result> goodMoviesList = new ArrayList<>();
 
         for (ResponseMovieList.Result resultMovie: moviesList.results) {
-            if (!resultMovie.overview.equals("") && resultMovie.backdropPath!=null) {
-                goodMoviesList.add(resultMovie);
+            if (resultMovie != null) {
+                if (!resultMovie.overview.equals("") && resultMovie.backdropPath != null) {
+                    goodMoviesList.add(resultMovie);
+                }
             }
         }
         Log.d(TAG, "logRX getValidMovieId: goodMovies size:"+goodMoviesList.size());
