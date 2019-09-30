@@ -28,6 +28,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 import static android.view.View.GONE;
 
@@ -156,7 +157,12 @@ public class MovieDetailsFragment extends Fragment {
             yearValue.setText(String.valueOf(movieDetails.releaseDate).substring(0,4));
 
             //Time
-            timeValue.setText(String.valueOf(movieDetails.runtime) + " min");
+            if (movieDetails.runtime > 0) {
+                String timeWithMins = String.format(Locale.getDefault(),"%d min",movieDetails.runtime);
+                timeValue.setText(timeWithMins);
+            } else {
+                timeValue.setText("N/A");
+            }
 
             //Description
             desc.setText(movieDetails.overview);
