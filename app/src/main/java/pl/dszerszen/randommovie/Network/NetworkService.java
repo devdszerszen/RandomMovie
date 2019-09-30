@@ -19,7 +19,9 @@ public interface NetworkService {
                                             @Query("page") int page,
                                             @Query("primary_release_date.gte") String minYear,
                                             @Query("primary_release_date.lte") String maxYear,
-                                            @Query("with_genres") String filter
+                                            @Query("with_genres") String filter,
+                                            @Query("vote_average.gte") String minVote,
+                                            @Query("vote_average.lte") String maxVote
                                             );
 
     @GET("genre/movie/list")

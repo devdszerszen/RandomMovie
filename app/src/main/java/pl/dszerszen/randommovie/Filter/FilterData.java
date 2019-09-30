@@ -80,6 +80,20 @@ public class FilterData {
         return result;
     }
 
+    public String getMinVote() {
+        String result = null;
+        if (minVote > F_MIN_VOTE)
+            result = Integer.toString(minVote);
+        return result;
+    }
+
+    public String getMaxVote() {
+        String result = null;
+        if (maxVote < F_MAX_VOTE)
+            result = Integer.toString(maxVote);
+        return result;
+    }
+
     public int getGenrePosition() {
         return genrePosition;
     }

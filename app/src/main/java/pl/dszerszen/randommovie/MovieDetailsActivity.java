@@ -36,11 +36,6 @@ public class MovieDetailsActivity extends BaseActivity implements MovieDetailsIn
     //Filters
     FilterData filterData;
 
-    //Previous movie
-    ArrayList<Integer> previousMovies = new ArrayList<>();
-    boolean isPreviousMovie = false;
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -134,7 +129,7 @@ public class MovieDetailsActivity extends BaseActivity implements MovieDetailsIn
     }
 
     private void showToastMessage(String message) {
-        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
     @Override

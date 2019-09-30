@@ -39,7 +39,9 @@ public class TmdbConnector {
                 queryPage,
                 filter.getMinYear(),
                 filter.getMaxYear(),
-                filter.getGenreId()
+                filter.getGenreId(),
+                filter.getMinVote(),
+                filter.getMaxVote()
                 )
 
                 .subscribeOn(Schedulers.io())
