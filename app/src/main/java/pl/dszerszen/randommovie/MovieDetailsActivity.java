@@ -75,12 +75,7 @@ public class MovieDetailsActivity extends BaseActivity implements MovieDetailsIn
         notificationBadge = actionView.findViewById(R.id.cart_badge);
         setupBadge();
 
-        actionView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onFilterIconClicked();
-            }
-        });
+        actionView.setOnClickListener(v -> onFilterIconClicked());
 
         return true;
     }

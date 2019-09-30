@@ -83,6 +83,8 @@ public class FiltersDialog extends Dialog {
 
         Button negativeButton = findViewById(R.id.dialog_negative_btn);
         negativeButton.setOnClickListener(v ->{
+            filterData.clearFilters();
+            activity.onFiltersSaved();
             this.dismiss();
         });
         }

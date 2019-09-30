@@ -64,13 +64,6 @@ public class MovieDetailsPresenter implements MovieDetailsInterface.Presenter{
                     int movieId = getValidMovieId(responseMovieList);
                     if (movieId>-1) {
                         getMovieDetails(movieId);
-
-                        //Debug only
-                        String message = String.format("Current: %d; Total: %d",
-                                responseMovieList.page,
-                                responseMovieList.totalPages);
-                        view.showErrorMessage(message);
-
                     } else {
                         getRandomMovie(responseMovieList.totalPages);
                     }
@@ -112,70 +105,7 @@ public class MovieDetailsPresenter implements MovieDetailsInterface.Presenter{
         } else {
             return -1;
         }
-
-//        ResponseMovieList.Result randomMovie = moviesList.results.get(random.nextInt(20));
-//
-//        while (randomMovie.overview.equals(""))
-
-//        if (moviesList.page > moviesList.totalPages || moviesList.results.size() == 0) {
-//            int randomPage = random.nextInt(moviesList.totalPages);
-//            if (randomPage>500 || randomPage==0) {
-//                randomPage = 500;
-//            }
-//            getRandomMovie(randomPage);
-//            Log.d(TAG, "getValidMovieId: case -2 --");
-//            return -2;
-//
-//            // Movie page is OK, get random movie from that page
-//        } else {
-//            int randomInt = random.nextInt(moviesList.results.size());
-//            ResponseMovieList.Result randomMovie = moviesList.results.get(randomInt);
-//
-//            // Check description and picture
-//            int counter = 0;
-//            while (randomMovie.overview.equals("") || randomMovie.backdropPath == null) {
-//                if (counter > 3) {
-//                    int randomPage = random.nextInt(moviesList.totalPages);
-//                    if (randomPage>500) {
-//                        randomPage = 500;
-//                    }
-//                    getRandomMovie(randomPage);
-//                    Log.d(TAG, "getValidMovieId: case -1 --");
-//                    return -1;
-//                }
-//                randomInt = random.nextInt(moviesList.results.size());
-//                randomMovie = moviesList.results.get(randomInt);
-//                counter++;
-//            }
-//            Log.d(TAG, "getValidMovieId: case id:"+ randomMovie.id + "--");
-//            return randomMovie.id;
-//        }
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     @SuppressLint("CheckResult")
     @Override
@@ -224,33 +154,33 @@ public class MovieDetailsPresenter implements MovieDetailsInterface.Presenter{
         });
     }
 
-
-    // Collecting movies genresList response + call api to get movie details
-    private Observer<ResponseMovieList> getMoviesListObserver() {
-
-        return new Observer<ResponseMovieList>() {
-            @Override
-            public void onSubscribe(Disposable d) {
-
-            }
-
-            @Override
-            public void onNext(ResponseMovieList moviesList) {
-                int validMovieId = getValidMovieId(moviesList);
-                if (validMovieId > 0)
-                    getMovieDetails(validMovieId);
-            }
-
-            @Override
-            public void onError(Throwable e) {
-
-            }
-
-            @Override
-            public void onComplete() {
-            }
-        };
-    }
+//
+//    // Collecting movies genresList response + call api to get movie details
+//    private Observer<ResponseMovieList> getMoviesListObserver() {
+//
+//        return new Observer<ResponseMovieList>() {
+//            @Override
+//            public void onSubscribe(Disposable d) {
+//
+//            }
+//
+//            @Override
+//            public void onNext(ResponseMovieList moviesList) {
+//                int validMovieId = getValidMovieId(moviesList);
+//                if (validMovieId > 0)
+//                    getMovieDetails(validMovieId);
+//            }
+//
+//            @Override
+//            public void onError(Throwable e) {
+//
+//            }
+//
+//            @Override
+//            public void onComplete() {
+//            }
+//        };
+//    }
 
 
 }
