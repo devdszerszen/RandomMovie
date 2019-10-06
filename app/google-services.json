@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "35181507042",
+    "firebase_url": "https://randommovie-b7a66.firebaseio.com",
+    "project_id": "randommovie-b7a66",
+    "storage_bucket": "randommovie-b7a66.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:35181507042:android:909959a90139e8086409bb",
+        "android_client_info": {
+          "package_name": "pl.dszerszen.randommovie"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "35181507042-md279mpeps713or8sv3es9vmlj0k1i16.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "pl.dszerszen.randommovie",
+            "certificate_hash": "aae2a7d17c2b333e432cba8962b8425169785487"
+          }
+        },
+        {
+          "client_id": "35181507042-g5h0rn8kv5bvc9s6v2ncdeet6thi0dsp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBW2FQ6n2syN0H_ORdrMzCkc-Nt7-NT2DA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "35181507042-g5h0rn8kv5bvc9s6v2ncdeet6thi0dsp.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

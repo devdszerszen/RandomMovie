@@ -2,34 +2,25 @@ package pl.dszerszen.randommovie;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.ProgressBar;
-import android.widget.ScrollView;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.ArrayList;
-import java.util.List;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import dagger.android.AndroidInjection;
 
-import static android.view.View.GONE;
-
 public class StartActivity extends AppCompatActivity implements StartInterface.View{
     
     final String TAG = "RandomMovie_log";
+    final int RC_LOGIN = 187;
 
     @BindView(R.id.start_search_btn) Button randomButton;
-    @BindView(R.id.start_favourites_btn) Button favorites;
+    @BindView(R.id.start_fav_btn) Button favorites;
     @BindView(R.id.start_tmdb_image) ImageView tmdbImage;
     ActionBar actionBar;
 
@@ -52,10 +43,6 @@ public class StartActivity extends AppCompatActivity implements StartInterface.V
 
         //Presenter
         presenter = new StartPresenter(this);
-
-        // Favourites button
-        favorites.setEnabled(false);
-        favorites.setClickable(false);
 
     }
 
@@ -82,12 +69,25 @@ public class StartActivity extends AppCompatActivity implements StartInterface.V
         startActivity(intent);
     }
 
+    @Override
+    public void showLoginPrompt(Intent intent) {
+        startActivityForResult(intent, RC_LOGIN);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == RC_LOGIN) {
+            presenter.loginToFirebaseWithSelectedGoogleAccount(data);
+        }
+    }
+
     @OnClick(R.id.start_search_btn)
     public void onDetailsButtonClicked() {
         presenter.searchButtonClicked();
     }
 
-    @OnClick(R.id.start_favourites_btn)
+    @OnClick(R.id.start_fav_btn)
     public void onFavouritesButtonClicked() {
         presenter.favouritesButtonClicked();
     }
