@@ -9,6 +9,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.Calendar;
 import java.util.HashMap;
 
 import androidx.annotation.NonNull;
@@ -48,7 +49,10 @@ public class DatabaseManager implements FirebaseDBInterface {
     public void addUser(GoogleSignInAccount googleAccount) {
         FirebaseStoredUser user = new FirebaseStoredUser(googleAccount.getEmail(),googleAccount.getDisplayName());
         account = googleAccount;
-        String firebaseUserKey = users.push().getKey();
+        String firebaseUserKey = String.format("%s_%s_%tF",
+                account.getEmail().replaceAll("[^A-Za-z]+", ""),
+                android.os.Build.MODEL,
+                Calendar.getInstance().getTime());
         sharPrefsManager.setFirebaseKey(firebaseUserKey);
         users.child(firebaseUserKey).setValue(user);
     }
