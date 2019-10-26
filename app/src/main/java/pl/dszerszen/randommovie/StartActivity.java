@@ -58,7 +58,7 @@ public class StartActivity extends AppCompatActivity implements StartInterface.V
 
 
     @Override
-    public void showError(String message) {
+    public void showToast(String message) {
         Toast.makeText(StartActivity.this, message, Toast.LENGTH_SHORT).show();
     }
 

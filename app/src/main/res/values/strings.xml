@@ -21,4 +21,5 @@
     <string name="filter_votes">Rating</string>
     <string name="filter_runtime">Duration</string>
     <string name="clear_filter">Clear</string>
+    <string name="successful_login">Successfully logged in</string>
 </resources>

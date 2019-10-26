@@ -9,7 +9,7 @@ import pl.dszerszen.randommovie.Base.BasePresenter;
 public interface StartInterface {
 
     interface View{
-        void showError(String message);
+        void showToast(String message);
         void startDetailsActivity();
         void showLoginPrompt(Intent intent);
     }

@@ -39,10 +39,11 @@ public class StartPresenter implements StartInterface.Presenter, Serializable {
         this.firebaseDatabase = new DatabaseManager();
         this.sharPrefsManager = SharPrefsManager.getSharPrefsManager();
 
-        if (firebaseAuth.isUserSignedToFirebase()) {
+        if (isUserLogged()) {
             firebaseDatabase.incrementCounter();
+        } else {
+            showLoginPrompt();
         }
-
     }
 
     @Override
@@ -52,19 +53,14 @@ public class StartPresenter implements StartInterface.Presenter, Serializable {
 
     @Override
     public void favouritesButtonClicked() {
-        loginToFirebase();
+
     }
 
-    private void loginToFirebase() {
-        if (firebaseAuth.isUserSignedToGoogle() && firebaseAuth.isUserSignedToFirebase()) {
-            Log.d(TAG, "loginToFirebase: User is signed correctly");
-        } else {
+    private void showLoginPrompt() {
             view.showLoginPrompt(firebaseAuth.getSignInIntent());
-            Log.d(TAG, "favouritesButtonClicked: User not signed");
-        }
     }
 
-
+    //Used when user selects google account to be logged in
     @Override
     public void loginToFirebaseWithSelectedGoogleAccount(Intent data) {
         try {
@@ -96,5 +92,9 @@ public class StartPresenter implements StartInterface.Presenter, Serializable {
                 Log.d(TAG, "onError: Firebase login error: " + e.getMessage());
             }
         });
+    }
+
+    private boolean isUserLogged() {
+        return firebaseAuth.isUserSignedToGoogle() && firebaseAuth.isUserSignedToFirebase();
     }
 }

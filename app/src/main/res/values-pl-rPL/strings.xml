@@ -19,4 +19,5 @@
     <string name="filter_votes">Ocena</string>
     <string name="filter_runtime">Czas trwania</string>
     <string name="clear_filter">Wyczyść</string>
+    <string name="successful_login">Logowanie zakończone sukcesem</string>
 </resources>
