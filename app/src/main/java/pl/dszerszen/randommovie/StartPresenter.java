@@ -16,8 +16,11 @@ import io.reactivex.CompletableObserver;
 import io.reactivex.disposables.Disposable;
 import pl.dszerszen.randommovie.Dagger.MyApplication;
 import pl.dszerszen.randommovie.Firebase.AuthManager;
+import pl.dszerszen.randommovie.Firebase.DatabaseManager;
 import pl.dszerszen.randommovie.Firebase.FirebaseAuthInterface;
+import pl.dszerszen.randommovie.Firebase.FirebaseDBInterface;
 import pl.dszerszen.randommovie.Network.TmdbConnector;
+import pl.dszerszen.randommovie.SharPrefs.SharPrefsManager;
 
 public class StartPresenter implements StartInterface.Presenter, Serializable {
 
@@ -26,11 +29,20 @@ public class StartPresenter implements StartInterface.Presenter, Serializable {
     private StartInterface.View view;
     private TmdbConnector connector;
     private FirebaseAuthInterface firebaseAuth;
+    private FirebaseDBInterface firebaseDatabase;
+    private SharPrefsManager sharPrefsManager;
 
     public StartPresenter(StartInterface.View view) {
         this.view = view;
         this.connector = new TmdbConnector(MyApplication.getContext().getResources().getString(R.string.language_key));
         this.firebaseAuth = AuthManager.getInstance((Context)view);
+        this.firebaseDatabase = new DatabaseManager();
+        this.sharPrefsManager = SharPrefsManager.getSharPrefsManager();
+
+        if (firebaseAuth.isUserSignedToFirebase()) {
+            firebaseDatabase.incrementCounter();
+        }
+
     }
 
     @Override
@@ -60,6 +72,7 @@ public class StartPresenter implements StartInterface.Presenter, Serializable {
             GoogleSignInAccount account = task.getResult(ApiException.class);
             Log.d(TAG, "loginToFirebaseWithSelectedGoogleAccount: Logged successful on: " + account.getEmail());
             loginToFirebase(account);
+            firebaseAuth.updateGoogleAccount(account);
         } catch (ApiException e) {
             Log.d(TAG, "loginToFirebaseWithSelectedGoogleAccount: Error:" + e.getMessage());
         }
@@ -75,6 +88,7 @@ public class StartPresenter implements StartInterface.Presenter, Serializable {
             @Override
             public void onComplete() {
                 Log.d(TAG, "onComplete: Firebase login successful");
+                firebaseDatabase.addUser(firebaseAuth.getLoggedAccount());
             }
 
             @Override

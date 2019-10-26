@@ -49,6 +49,11 @@ public class AuthManager implements FirebaseAuthInterface {
     }
 
     @Override
+    public GoogleSignInAccount getLoggedAccount() {
+        return googleSignAccount;
+    }
+
+    @Override
     public Intent getSignInIntent() {
         return googleSignClient.getSignInIntent();
     }
@@ -79,6 +84,11 @@ public class AuthManager implements FirebaseAuthInterface {
 
             });
         });
+    }
+
+    @Override
+    public void updateGoogleAccount(GoogleSignInAccount account) {
+        this.googleSignAccount = account;
     }
 
 
