@@ -1,4 +1,4 @@
-package pl.dszerszen.randommovie;
+package pl.dszerszen.randommovie.Network;
 
 import java.util.List;
 import com.google.gson.annotations.Expose;

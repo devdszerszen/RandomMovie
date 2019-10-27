@@ -13,7 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".StartActivity"
+            android:name=".Activity.StartActivity.StartActivity"
             android:configChanges="keyboardHidden|orientation"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -22,8 +22,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MovieDetailsActivity" />
-        <activity android:name=".FavListActivity.FavListActivity"></activity>
+        <activity android:name=".Activity.MovieDetailsActivity.MovieDetailsActivity" />
+        <activity android:name=".Activity.FavListActivity.FavListActivity"></activity>
     </application>
 
 </manifest>

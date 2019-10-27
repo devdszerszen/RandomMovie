@@ -1,8 +1,9 @@
-package pl.dszerszen.randommovie;
+package pl.dszerszen.randommovie.Activity.MovieDetailsActivity;
 
 import java.util.List;
 
-import pl.dszerszen.randommovie.Filter.FilterData;
+import pl.dszerszen.randommovie.Network.ResponseGenre;
+import pl.dszerszen.randommovie.Network.SingleMovieDetails;
 
 public interface MovieDetailsInterface {
 
@@ -11,7 +12,7 @@ public interface MovieDetailsInterface {
         void showLoader();
         void hideLoader();
         void saveGenresList(List<ResponseGenre.Genre> genresList);
-        void showErrorMessage(String message);
+        void showMessage(String message);
     }
 
     interface Presenter {

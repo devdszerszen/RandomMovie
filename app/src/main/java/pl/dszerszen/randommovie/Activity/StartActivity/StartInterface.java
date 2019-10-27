@@ -1,10 +1,6 @@
-package pl.dszerszen.randommovie;
+package pl.dszerszen.randommovie.Activity.StartActivity;
 
 import android.content.Intent;
-
-import java.util.List;
-
-import pl.dszerszen.randommovie.Base.BasePresenter;
 
 public interface StartInterface {
 

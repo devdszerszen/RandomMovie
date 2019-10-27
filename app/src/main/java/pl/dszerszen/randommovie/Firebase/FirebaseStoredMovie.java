@@ -1,6 +1,6 @@
 package pl.dszerszen.randommovie.Firebase;
 
-import pl.dszerszen.randommovie.SingleMovieDetails;
+import pl.dszerszen.randommovie.Network.SingleMovieDetails;
 
 public class FirebaseStoredMovie {
     public String title;

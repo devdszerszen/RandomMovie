@@ -1,4 +1,4 @@
-package pl.dszerszen.randommovie;
+package pl.dszerszen.randommovie.Activity.StartActivity;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -13,15 +13,14 @@ import com.google.android.gms.tasks.Task;
 import java.io.Serializable;
 
 import io.reactivex.CompletableObserver;
-import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 import pl.dszerszen.randommovie.Dagger.MyApplication;
-import pl.dszerszen.randommovie.FavListActivity.FavListActivity;
 import pl.dszerszen.randommovie.Firebase.AuthManager;
 import pl.dszerszen.randommovie.Firebase.DatabaseManager;
 import pl.dszerszen.randommovie.Firebase.FirebaseAuthInterface;
 import pl.dszerszen.randommovie.Firebase.FirebaseDBInterface;
 import pl.dszerszen.randommovie.Network.TmdbConnector;
+import pl.dszerszen.randommovie.R;
 import pl.dszerszen.randommovie.SharPrefs.SharPrefsManager;
 
 public class StartPresenter implements StartInterface.Presenter, Serializable {

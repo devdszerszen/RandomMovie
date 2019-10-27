@@ -1,4 +1,4 @@
-package pl.dszerszen.randommovie.FavListActivity;
+package pl.dszerszen.randommovie.Activity.FavListActivity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;

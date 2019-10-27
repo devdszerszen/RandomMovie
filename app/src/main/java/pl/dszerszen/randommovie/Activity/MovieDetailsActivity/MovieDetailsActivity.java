@@ -1,8 +1,13 @@
-package pl.dszerszen.randommovie;
+package pl.dszerszen.randommovie.Activity.MovieDetailsActivity;
 
 import androidx.appcompat.app.ActionBar;
 import pl.dszerszen.randommovie.Base.BaseActivity;
 import pl.dszerszen.randommovie.Filter.FilterData;
+import pl.dszerszen.randommovie.Filter.FiltersDialog;
+import pl.dszerszen.randommovie.R;
+import pl.dszerszen.randommovie.Network.ResponseGenre;
+import pl.dszerszen.randommovie.Network.SingleMovieDetails;
+import pl.dszerszen.randommovie.Activity.StartActivity.StartActivityFilter;
 
 import android.os.Bundle;
 import android.view.Menu;
@@ -10,8 +15,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -139,7 +142,7 @@ public class MovieDetailsActivity extends BaseActivity implements MovieDetailsIn
     }
 
     @Override
-    public void showErrorMessage(String message) {
+    public void showMessage(String message) {
         runOnUiThread(() -> showToastMessage(message));
     }
 

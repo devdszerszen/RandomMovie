@@ -1,12 +1,6 @@
 package pl.dszerszen.randommovie.Network;
 
-import java.util.List;
-
 import io.reactivex.Observable;
-import io.reactivex.Single;
-import pl.dszerszen.randommovie.ResponseGenre;
-import pl.dszerszen.randommovie.ResponseMovieList;
-import pl.dszerszen.randommovie.SingleMovieDetails;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
 import retrofit2.http.Query;

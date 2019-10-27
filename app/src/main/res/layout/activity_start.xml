@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background"
-    tools:context=".StartActivity">
+    tools:context=".Activity.StartActivity.StartActivity">
 
     <ImageView
         android:id="@+id/start_tmdb_image"

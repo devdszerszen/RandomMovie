@@ -1,4 +1,4 @@
-package pl.dszerszen.randommovie;
+package pl.dszerszen.randommovie.Filter;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -11,7 +11,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import pl.dszerszen.randommovie.CustomViews.CustomRecyclerView;
 import pl.dszerszen.randommovie.CustomViews.FilterExpandView;
 import pl.dszerszen.randommovie.CustomViews.MinMaxView;
-import pl.dszerszen.randommovie.Filter.FilterData;
+import pl.dszerszen.randommovie.Activity.StartActivity.StartActivityFilter;
+import pl.dszerszen.randommovie.R;
+import pl.dszerszen.randommovie.Network.ResponseGenre;
 
 public class FiltersDialog extends Dialog {
     public final String TAG = "RandomMovie_log";
@@ -25,7 +27,7 @@ public class FiltersDialog extends Dialog {
     FilterExpandView genresHeader;
     CustomRecyclerView genresRecyclerView;
     List<ResponseGenre.Genre> genresList;
-    RecyclerAdapter genresAdapter;
+    GenreFilterAdapter genresAdapter;
 
     //Years
     FilterExpandView yearsHeader;
@@ -46,7 +48,7 @@ public class FiltersDialog extends Dialog {
 
         //Genres
         this.genresList = list;
-        this.genresAdapter = new RecyclerAdapter(this.genresList, this.filterData);
+        this.genresAdapter = new GenreFilterAdapter(this.genresList, this.filterData);
         genresRecyclerView = findViewById(R.id.dialog_genres_recycler);
         genresRecyclerView.setAdapter(genresAdapter);
         genresRecyclerView.setLayoutManager(new LinearLayoutManager(context));

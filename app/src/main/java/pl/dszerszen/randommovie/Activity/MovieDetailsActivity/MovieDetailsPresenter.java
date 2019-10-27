@@ -1,4 +1,4 @@
-package pl.dszerszen.randommovie;
+package pl.dszerszen.randommovie.Activity.MovieDetailsActivity;
 
 import android.annotation.SuppressLint;
 import android.util.Log;
@@ -13,11 +13,14 @@ import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.observers.DisposableObserver;
 import pl.dszerszen.randommovie.Dagger.MyApplication;
-import pl.dszerszen.randommovie.Filter.FilterData;
 import pl.dszerszen.randommovie.Firebase.DatabaseManager;
 import pl.dszerszen.randommovie.Firebase.FirebaseDBInterface;
 import pl.dszerszen.randommovie.Firebase.FirebaseStoredMovie;
 import pl.dszerszen.randommovie.Network.TmdbConnector;
+import pl.dszerszen.randommovie.R;
+import pl.dszerszen.randommovie.Network.ResponseGenre;
+import pl.dszerszen.randommovie.Network.ResponseMovieList;
+import pl.dszerszen.randommovie.Network.SingleMovieDetails;
 
 public class MovieDetailsPresenter implements MovieDetailsInterface.Presenter{
 
@@ -53,7 +56,7 @@ public class MovieDetailsPresenter implements MovieDetailsInterface.Presenter{
 
         apiCallsCounter++;
         if (apiCallsCounter >MAX_API_CALLS) {
-            view.showErrorMessage("Something went wrong, sorry");
+            view.showMessage("Something went wrong, sorry");
             view.hideLoader();
             return;
         }
@@ -73,7 +76,7 @@ public class MovieDetailsPresenter implements MovieDetailsInterface.Presenter{
 
                 if (responseMovieList.totalPages == 0) {
                     Log.d(TAG, "logRX onNext: No results");
-                    view.showErrorMessage("No results for query, change filters");
+                    view.showMessage("No results for query, change filters");
                 } else if (responseMovieList.page>responseMovieList.totalPages || responseMovieList.results.size()==0) {
                     Log.d(TAG, "logRX onNext: Current page greater than total pages");
                     getRandomMovie(responseMovieList.totalPages);

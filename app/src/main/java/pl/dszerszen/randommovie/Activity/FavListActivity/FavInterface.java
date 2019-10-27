@@ -1,4 +1,4 @@
-package pl.dszerszen.randommovie.FavListActivity;
+package pl.dszerszen.randommovie.Activity.FavListActivity;
 
 import java.util.ArrayList;
 

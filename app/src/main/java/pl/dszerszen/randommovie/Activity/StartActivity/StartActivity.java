@@ -1,4 +1,4 @@
-package pl.dszerszen.randommovie;
+package pl.dszerszen.randommovie.Activity.StartActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,7 +13,10 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import dagger.android.AndroidInjection;
-import pl.dszerszen.randommovie.FavListActivity.FavListActivity;
+import pl.dszerszen.randommovie.Activity.FavListActivity.FavListActivity;
+import pl.dszerszen.randommovie.Activity.MovieDetailsActivity.MovieDetailsActivity;
+import pl.dszerszen.randommovie.R;
+import pl.dszerszen.randommovie.Network.SingleMovieDetails;
 
 public class StartActivity extends AppCompatActivity implements StartInterface.View{
     

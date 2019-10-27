@@ -1,4 +1,4 @@
-package pl.dszerszen.randommovie;
+package pl.dszerszen.randommovie.Network;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -13,7 +13,7 @@ public class ResponseGenre implements Serializable {
     public List<Genre> genres = null;
 
 
-    class Genre implements Serializable {
+    public class Genre implements Serializable {
 
         @SerializedName("id")
         @Expose

@@ -9,7 +9,7 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 import pl.dszerszen.randommovie.Filter.FilterData;
 import pl.dszerszen.randommovie.Filter.SingleFilter;
-import pl.dszerszen.randommovie.RecyclerAdapter;
+import pl.dszerszen.randommovie.Filter.GenreFilterAdapter;
 
 public class CustomRecyclerView extends RecyclerView implements FilterExpandView.AttachedView {
     final String TAG = "RandomMovie_log";
@@ -28,13 +28,13 @@ public class CustomRecyclerView extends RecyclerView implements FilterExpandView
 
     @Override
     public String getCurrentValue() {
-        RecyclerAdapter adapter = (RecyclerAdapter)this.getAdapter();
+        GenreFilterAdapter adapter = (GenreFilterAdapter)this.getAdapter();
         return adapter.getCurrentGenreName();
     }
 
     @Override
     public SingleFilter getFilter() {
-        RecyclerAdapter adapter = (RecyclerAdapter)this.getAdapter();
+        GenreFilterAdapter adapter = (GenreFilterAdapter)this.getAdapter();
 
         SingleFilter singleFilter = new SingleFilter();
         singleFilter.type = FilterData.FilterType.GENRE;

@@ -1,6 +1,5 @@
-package pl.dszerszen.randommovie;
+package pl.dszerszen.randommovie.Filter;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,9 +11,10 @@ import java.util.List;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import pl.dszerszen.randommovie.CustomViews.CustomRecyclerView;
-import pl.dszerszen.randommovie.Filter.FilterData;
+import pl.dszerszen.randommovie.Network.ResponseGenre;
+import pl.dszerszen.randommovie.R;
 
-public class RecyclerAdapter extends CustomRecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
+public class GenreFilterAdapter extends CustomRecyclerView.Adapter<GenreFilterAdapter.ViewHolder> {
 
     final String TAG = "RandomMovie_log";
 
@@ -55,7 +55,7 @@ public class RecyclerAdapter extends CustomRecyclerView.Adapter<RecyclerAdapter.
         notifyDataSetChanged();
     }
 
-    public RecyclerAdapter(List<ResponseGenre.Genre> list, FilterData filter) {
+    public GenreFilterAdapter(List<ResponseGenre.Genre> list, FilterData filter) {
         this.list = list;
         this.filterData = filter;
 
@@ -69,7 +69,7 @@ public class RecyclerAdapter extends CustomRecyclerView.Adapter<RecyclerAdapter.
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recycler_row,parent,false);
 
-        return new RecyclerAdapter.ViewHolder(view);
+        return new GenreFilterAdapter.ViewHolder(view);
     }
 
     @Override

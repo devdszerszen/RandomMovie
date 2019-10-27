@@ -6,9 +6,6 @@ import java.util.Random;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
-import pl.dszerszen.randommovie.ResponseGenre;
-import pl.dszerszen.randommovie.ResponseMovieList;
-import pl.dszerszen.randommovie.SingleMovieDetails;
 import pl.dszerszen.randommovie.Filter.FilterData;
 
 public class TmdbConnector {

@@ -1,4 +1,4 @@
-package pl.dszerszen.randommovie;
+package pl.dszerszen.randommovie.Network;
 
 import java.io.Serializable;
 import java.util.List;

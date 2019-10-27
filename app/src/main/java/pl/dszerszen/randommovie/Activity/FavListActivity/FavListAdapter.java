@@ -1,4 +1,4 @@
-package pl.dszerszen.randommovie.FavListActivity;
+package pl.dszerszen.randommovie.Activity.FavListActivity;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -8,7 +8,6 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
