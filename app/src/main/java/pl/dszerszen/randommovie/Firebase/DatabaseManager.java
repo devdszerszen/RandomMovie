@@ -1,5 +1,6 @@
 package pl.dszerszen.randommovie.Firebase;
 
+import android.provider.Settings;
 import android.util.Log;
 
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -21,6 +22,7 @@ public class DatabaseManager implements FirebaseDBInterface {
     final String TAG = "RandomMovie_log";
 
     final String USERS_PATH = "users";
+    final String MOVIES_PATH = "movies";
 
     private static DatabaseManager databaseInstance = null;
     public static DatabaseManager getInstance() {
@@ -33,6 +35,7 @@ public class DatabaseManager implements FirebaseDBInterface {
     FirebaseDatabase mDatabase;
     DatabaseReference mReference;
     DatabaseReference users;
+    DatabaseReference movies;
     GoogleSignInAccount account;
     SharPrefsManager sharPrefsManager;
 
@@ -41,6 +44,8 @@ public class DatabaseManager implements FirebaseDBInterface {
         mDatabase = FirebaseDatabase.getInstance();
         mReference = mDatabase.getReference();
         users = mReference.child(USERS_PATH);
+        movies = mReference.child(MOVIES_PATH);
+
         sharPrefsManager = SharPrefsManager.getSharPrefsManager();
 
     }
@@ -73,5 +78,9 @@ public class DatabaseManager implements FirebaseDBInterface {
 
             }
         });
+    }
+
+    public void addMovie(FirebaseStoredMovie movie) {
+        movies.child(sharPrefsManager.getFirebaseKey()).child(String.valueOf(System.currentTimeMillis())).setValue(movie);
     }
 }

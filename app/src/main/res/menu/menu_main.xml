@@ -9,4 +9,9 @@
         android:title="Filter"
         app:actionLayout="@layout/badge_layout"
         app:showAsAction="always"></item>
+    <item
+        android:id="@+id/menu_favIcon"
+        android:icon="@android:drawable/btn_star_big_off"
+        android:title="Item"
+        app:showAsAction="always" />
 </menu>

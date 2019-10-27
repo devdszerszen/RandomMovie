@@ -18,5 +18,6 @@ public interface MovieDetailsInterface {
         void getMovieDetails(int movieId);
         void getGenresList();
         void onRandomMovieButtonClicked();
+        void addMovieToFavourities(SingleMovieDetails currentMovie);
     }
 }

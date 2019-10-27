@@ -36,7 +36,7 @@ public class StartPresenter implements StartInterface.Presenter, Serializable {
         this.view = view;
         this.connector = new TmdbConnector(MyApplication.getContext().getResources().getString(R.string.language_key));
         this.firebaseAuth = AuthManager.getInstance((Context)view);
-        this.firebaseDatabase = new DatabaseManager();
+        this.firebaseDatabase = DatabaseManager.getInstance();
         this.sharPrefsManager = SharPrefsManager.getSharPrefsManager();
 
         if (isUserLogged()) {

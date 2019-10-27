@@ -14,6 +14,9 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.observers.DisposableObserver;
 import pl.dszerszen.randommovie.Dagger.MyApplication;
 import pl.dszerszen.randommovie.Filter.FilterData;
+import pl.dszerszen.randommovie.Firebase.DatabaseManager;
+import pl.dszerszen.randommovie.Firebase.FirebaseDBInterface;
+import pl.dszerszen.randommovie.Firebase.FirebaseStoredMovie;
 import pl.dszerszen.randommovie.Network.TmdbConnector;
 
 public class MovieDetailsPresenter implements MovieDetailsInterface.Presenter{
@@ -22,6 +25,7 @@ public class MovieDetailsPresenter implements MovieDetailsInterface.Presenter{
 
     private TmdbConnector connector;
     private MovieDetailsInterface.View view;
+    private FirebaseDBInterface firebaseDatabase;
 
     @Inject @Named("language")
     String language;
@@ -32,6 +36,7 @@ public class MovieDetailsPresenter implements MovieDetailsInterface.Presenter{
     public MovieDetailsPresenter(MovieDetailsInterface.View view) {
         this.view = view;
         this.connector = new TmdbConnector(MyApplication.getContext().getResources().getString(R.string.language_key));
+        this.firebaseDatabase = DatabaseManager.getInstance();
     }
 
     @Override
@@ -40,6 +45,7 @@ public class MovieDetailsPresenter implements MovieDetailsInterface.Presenter{
         view.showLoader();
         getRandomMovie(500);
     }
+
 
     @SuppressLint("CheckResult")
     public void getRandomMovie(int maxPage) {
@@ -166,6 +172,12 @@ public class MovieDetailsPresenter implements MovieDetailsInterface.Presenter{
                 dispose();
             }
         });
+    }
+
+    @Override
+    public void addMovieToFavourities(SingleMovieDetails currentMovie) {
+        FirebaseStoredMovie firebaseStoredMovie = new FirebaseStoredMovie(currentMovie);
+        firebaseDatabase.addMovie(firebaseStoredMovie);
     }
 
 //

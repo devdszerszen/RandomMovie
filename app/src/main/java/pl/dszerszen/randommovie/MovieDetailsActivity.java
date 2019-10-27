@@ -36,6 +36,9 @@ public class MovieDetailsActivity extends BaseActivity implements MovieDetailsIn
     //Filters
     FilterData filterData;
 
+    //Current movie
+    SingleMovieDetails currentMovie;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,15 +68,17 @@ public class MovieDetailsActivity extends BaseActivity implements MovieDetailsIn
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main,menu);
-        MenuItem filterAction = menu.getItem(0);
-        View actionView = filterAction.getActionView();
-        notificationBadge = actionView.findViewById(R.id.cart_badge);
-        setupBadge();
 
-        actionView.setOnClickListener(v -> onFilterIconClicked());
+        //Filter
+        MenuItem filterAction = menu.getItem(0);
+        View filterActionView = filterAction.getActionView();
+        notificationBadge = filterActionView.findViewById(R.id.cart_badge);
+        setupBadge();
+        filterActionView.setOnClickListener(v -> onFilterIconClicked());
 
         return true;
     }
+
 
     public void onFilterIconClicked () {
         FiltersDialog dialog = new FiltersDialog(this, genres);
@@ -81,6 +86,15 @@ public class MovieDetailsActivity extends BaseActivity implements MovieDetailsIn
         int width = (int)(getResources().getDisplayMetrics().widthPixels*0.90);
         int height = (int)(getResources().getDisplayMetrics().heightPixels*0.90);
         dialog.getWindow().setLayout(width, height);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.menu_favIcon) {
+            presenter.addMovieToFavourities(currentMovie);
+        }
+
+        return true;
     }
 
     public void setupBadge() {
@@ -105,6 +119,7 @@ public class MovieDetailsActivity extends BaseActivity implements MovieDetailsIn
 
     @Override
     public void showMovie(SingleMovieDetails movieDetails) {
+        currentMovie = movieDetails;
         detailsFragment.showMovieDetails(movieDetails);
     }
 
