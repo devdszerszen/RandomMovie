@@ -1,6 +1,5 @@
 package pl.dszerszen.randommovie.Firebase;
 
-import android.provider.Settings;
 import android.util.Log;
 
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -9,12 +8,12 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
 import java.util.Calendar;
-import java.util.HashMap;
 
 import androidx.annotation.NonNull;
-import io.reactivex.Single;
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 import pl.dszerszen.randommovie.SharPrefs.SharPrefsManager;
 
 public class DatabaseManager implements FirebaseDBInterface {
@@ -46,7 +45,7 @@ public class DatabaseManager implements FirebaseDBInterface {
         users = mReference.child(USERS_PATH);
         movies = mReference.child(MOVIES_PATH);
 
-        sharPrefsManager = SharPrefsManager.getSharPrefsManager();
+        sharPrefsManager = SharPrefsManager.getSharPrefsInstance();
 
     }
 
@@ -81,6 +80,29 @@ public class DatabaseManager implements FirebaseDBInterface {
     }
 
     public void addMovie(FirebaseStoredMovie movie) {
-        movies.child(sharPrefsManager.getFirebaseKey()).child(String.valueOf(System.currentTimeMillis())).setValue(movie);
+        movies.child(sharPrefsManager.getFirebaseKey()).child(String.valueOf(movie.id)).setValue(movie);
+    }
+
+    @Override
+    public Observable getMovies() {
+
+        return Observable.create(source -> {
+
+            movies.child(sharPrefsManager.getFirebaseKey()).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    for (DataSnapshot singleItem : dataSnapshot.getChildren()) {
+                        FirebaseStoredMovie movie = singleItem.getValue(FirebaseStoredMovie.class);
+                        source.onNext(movie);
+                    }
+                    source.onComplete();
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+        }).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
     }
 }

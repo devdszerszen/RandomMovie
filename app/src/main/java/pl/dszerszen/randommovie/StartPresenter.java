@@ -13,8 +13,10 @@ import com.google.android.gms.tasks.Task;
 import java.io.Serializable;
 
 import io.reactivex.CompletableObserver;
+import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 import pl.dszerszen.randommovie.Dagger.MyApplication;
+import pl.dszerszen.randommovie.FavListActivity.FavListActivity;
 import pl.dszerszen.randommovie.Firebase.AuthManager;
 import pl.dszerszen.randommovie.Firebase.DatabaseManager;
 import pl.dszerszen.randommovie.Firebase.FirebaseAuthInterface;
@@ -37,7 +39,7 @@ public class StartPresenter implements StartInterface.Presenter, Serializable {
         this.connector = new TmdbConnector(MyApplication.getContext().getResources().getString(R.string.language_key));
         this.firebaseAuth = AuthManager.getInstance((Context)view);
         this.firebaseDatabase = DatabaseManager.getInstance();
-        this.sharPrefsManager = SharPrefsManager.getSharPrefsManager();
+        this.sharPrefsManager = SharPrefsManager.getSharPrefsInstance();
 
         if (isUserLogged()) {
             firebaseDatabase.incrementCounter();
@@ -51,9 +53,10 @@ public class StartPresenter implements StartInterface.Presenter, Serializable {
         view.startDetailsActivity();
     }
 
+    @SuppressLint("CheckResult")
     @Override
     public void favouritesButtonClicked() {
-
+        view.startFavListActivity();
     }
 
     private void showLoginPrompt() {

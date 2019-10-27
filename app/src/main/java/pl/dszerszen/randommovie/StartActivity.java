@@ -13,6 +13,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import dagger.android.AndroidInjection;
+import pl.dszerszen.randommovie.FavListActivity.FavListActivity;
 
 public class StartActivity extends AppCompatActivity implements StartInterface.View{
     
@@ -66,6 +67,12 @@ public class StartActivity extends AppCompatActivity implements StartInterface.V
     public void startDetailsActivity() {
         Intent intent = new Intent(this,MovieDetailsActivity.class);
         SingleMovieDetails details = new SingleMovieDetails();
+        startActivity(intent);
+    }
+
+    @Override
+    public void startFavListActivity() {
+        Intent intent = new Intent(this,FavListActivity.class);
         startActivity(intent);
     }
 

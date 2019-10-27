@@ -23,6 +23,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".MovieDetailsActivity" />
+        <activity android:name=".FavListActivity.FavListActivity"></activity>
     </application>
 
 </manifest>

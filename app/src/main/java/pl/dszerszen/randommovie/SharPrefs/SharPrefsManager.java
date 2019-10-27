@@ -16,7 +16,7 @@ public class SharPrefsManager {
 
     //Singleton
     private static SharPrefsManager sharPrefsInstance = null;
-    public static SharPrefsManager getSharPrefsManager() {
+    public static SharPrefsManager getSharPrefsInstance() {
         if (sharPrefsInstance == null) {
             sharPrefsInstance = new SharPrefsManager();
         }

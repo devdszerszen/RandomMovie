@@ -12,6 +12,7 @@ public interface StartInterface {
         void showToast(String message);
         void startDetailsActivity();
         void showLoginPrompt(Intent intent);
+        void startFavListActivity();
     }
 
     interface Presenter {

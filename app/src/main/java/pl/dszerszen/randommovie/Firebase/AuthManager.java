@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.util.Log;
 
 import io.reactivex.Completable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -83,7 +85,7 @@ public class AuthManager implements FirebaseAuthInterface {
                 }
 
             });
-        });
+        }).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
     }
 
     @Override
@@ -122,7 +124,7 @@ public class AuthManager implements FirebaseAuthInterface {
 //
 //
 //        //Firebase auth
-//        firebaseAuth = FirebaseAuth.getInstance();
+//        firebaseAuth = FirebaseAuth.getSharPrefsInstance();
 //    }
 //
 //
@@ -200,7 +202,7 @@ public class AuthManager implements FirebaseAuthInterface {
 //
 ////    private void saveUser(MyUser user, DatabaseActionCallback mCallback) {
 ////        Log.d(MyConstants.TAG, "AuthManager: saveUser method called");
-////        DatabaseReference usersReference = FirebaseDatabase.getInstance().getReference().child("users");
+////        DatabaseReference usersReference = FirebaseDatabase.getSharPrefsInstance().getReference().child("users");
 ////        DatabaseReference newReference = usersReference.push();
 ////        newReference.setValue(user, (databaseError, databaseReference) -> {
 ////            if (databaseError != null) {
@@ -215,7 +217,7 @@ public class AuthManager implements FirebaseAuthInterface {
 //
 ////    public void getFirebaseToken () {
 ////        Log.d(TAG, "AuthManager: getFirebaseToken method called");
-////        FirebaseInstanceId.getInstance().getInstanceId().addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
+////        FirebaseInstanceId.getSharPrefsInstance().getInstanceId().addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
 ////            @Override
 ////            public void onComplete(@NonNull Task<InstanceIdResult> task) {
 ////                if (!task.isSuccessful()) {
