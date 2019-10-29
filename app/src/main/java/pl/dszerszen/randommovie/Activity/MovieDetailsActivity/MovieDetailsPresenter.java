@@ -38,7 +38,7 @@ public class MovieDetailsPresenter implements MovieDetailsInterface.Presenter{
 
     public MovieDetailsPresenter(MovieDetailsInterface.View view) {
         this.view = view;
-        this.connector = new TmdbConnector(MyApplication.getContext().getResources().getString(R.string.language_key));
+        this.connector = TmdbConnector.getConnectorInstance();
         this.firebaseDatabase = DatabaseManager.getInstance();
     }
 

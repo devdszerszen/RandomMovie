@@ -10,6 +10,7 @@ import dagger.android.AndroidInjector;
 import dagger.android.DispatchingAndroidInjector;
 import dagger.android.HasActivityInjector;
 import dagger.android.support.DaggerApplication;
+import pl.dszerszen.randommovie.Network.TmdbConnector;
 
 public class MyApplication extends Application implements HasActivityInjector {
 

@@ -6,7 +6,9 @@ import java.util.Random;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
+import pl.dszerszen.randommovie.Dagger.MyApplication;
 import pl.dszerszen.randommovie.Filter.FilterData;
+import pl.dszerszen.randommovie.R;
 
 public class TmdbConnector {
 
@@ -14,6 +16,14 @@ public class TmdbConnector {
     private final String LANGUAGE_KEY;
 
     private final NetworkService client;
+
+    private static TmdbConnector connectorInstance = null;
+    public static TmdbConnector getConnectorInstance() {
+        if (connectorInstance == null) {
+            connectorInstance = new TmdbConnector(MyApplication.getContext().getResources().getString(R.string.language_key));
+        }
+        return connectorInstance;
+    }
 
     public TmdbConnector(String LANGUAGE_KEY) {
         this.LANGUAGE_KEY = LANGUAGE_KEY;
