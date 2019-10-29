@@ -7,6 +7,7 @@ import android.util.Log;
 import io.reactivex.Completable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
+import pl.dszerszen.randommovie.SharPrefs.SharPrefsManager;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -25,6 +26,7 @@ public class AuthManager implements FirebaseAuthInterface {
     private GoogleSignInClient googleSignClient;
     private GoogleSignInAccount googleSignAccount;
     private FirebaseAuth firebaseAuth;
+    private SharPrefsManager sharPrefsManager;
 
     //Singleton
     private static AuthManager authManagerInstance = null;
@@ -48,6 +50,8 @@ public class AuthManager implements FirebaseAuthInterface {
         Log.d(TAG, "AuthManager: GoogleSignAccount: " + googleSignAccount);
 
         this.firebaseAuth = FirebaseAuth.getInstance();
+
+        this.sharPrefsManager = SharPrefsManager.getSharPrefsInstance();
     }
 
     @Override
@@ -79,6 +83,7 @@ public class AuthManager implements FirebaseAuthInterface {
         return Completable.create(source -> {
             firebaseAuth.signInWithCredential(credential).addOnCompleteListener(command -> {
                 if (command.isSuccessful()) {
+                    saveUserUid();
                     source.onComplete();
                 } else {
                     source.onError(new Throwable("Firebase login error: " + command.getException().getMessage()));
@@ -86,6 +91,11 @@ public class AuthManager implements FirebaseAuthInterface {
 
             });
         }).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
+    }
+
+    private void saveUserUid() {
+        String uid = firebaseAuth.getCurrentUser().getUid();
+        sharPrefsManager.setFirebaseKey(uid);
     }
 
     @Override

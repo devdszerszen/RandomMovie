@@ -53,12 +53,7 @@ public class DatabaseManager implements FirebaseDBInterface {
     public void addUser(GoogleSignInAccount googleAccount) {
         FirebaseStoredUser user = new FirebaseStoredUser(googleAccount.getEmail(),googleAccount.getDisplayName());
         account = googleAccount;
-        String firebaseUserKey = String.format("%s_%s_%tF",
-                account.getEmail().replaceAll("[^A-Za-z]+", ""),
-                android.os.Build.MODEL,
-                Calendar.getInstance().getTime());
-        sharPrefsManager.setFirebaseKey(firebaseUserKey);
-        users.child(firebaseUserKey).setValue(user);
+        users.child(sharPrefsManager.getFirebaseKey()).setValue(user);
     }
 
     @Override
