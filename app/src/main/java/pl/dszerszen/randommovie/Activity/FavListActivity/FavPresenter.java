@@ -5,6 +5,7 @@ import android.util.Log;
 
 import java.util.ArrayList;
 
+import io.reactivex.CompletableObserver;
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 import pl.dszerszen.randommovie.Firebase.DatabaseManager;
@@ -50,6 +51,27 @@ public class FavPresenter implements FavInterface.Presenter {
                 Log.d(TAG, "Fav movie onComplete, list size: " + moviesList.size());
                 view.hideLoader();
                 view.showMoviesList(moviesList);
+            }
+        });
+    }
+
+    @SuppressLint("CheckResult")
+    @Override
+    public void deleteMovie(int id) {
+        firebaseDatabase.deleteMovie(id).subscribeWith(new CompletableObserver() {
+            @Override
+            public void onSubscribe(Disposable d) {
+
+            }
+
+            @Override
+            public void onComplete() {
+                Log.d(TAG, "onComplete: Movie deleted successfully");
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                Log.d(TAG, "onError: Movie not deleted: " + e.getMessage());
             }
         });
     }

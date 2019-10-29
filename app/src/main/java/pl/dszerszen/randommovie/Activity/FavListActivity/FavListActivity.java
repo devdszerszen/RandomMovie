@@ -10,7 +10,7 @@ import android.os.Bundle;
 
 import java.util.ArrayList;
 
-public class FavListActivity extends AppCompatActivity implements FavInterface.View {
+public class FavListActivity extends AppCompatActivity implements FavInterface.View, FavAdapterInterface {
 
     RecyclerView favRecyclerView;
     FavInterface.Presenter presenter;
@@ -22,7 +22,7 @@ public class FavListActivity extends AppCompatActivity implements FavInterface.V
         setContentView(R.layout.activity_fav_list);
 
         this.presenter = new FavPresenter(this);
-        this.adapter = new FavListAdapter();
+        this.adapter = new FavListAdapter(this);
 
         favRecyclerView = findViewById(R.id.fav_recycler_view);
         favRecyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -47,4 +47,11 @@ public class FavListActivity extends AppCompatActivity implements FavInterface.V
         adapter.update(moviesList);
         adapter.notifyDataSetChanged();
     }
+
+    @Override
+    public void deleteMovie(int id) {
+        presenter.deleteMovie(id);
+    }
+
+
 }

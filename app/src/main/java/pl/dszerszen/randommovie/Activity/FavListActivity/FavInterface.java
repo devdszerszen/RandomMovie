@@ -13,5 +13,7 @@ public interface FavInterface {
 
     interface Presenter {
         void getList();
+
+        void deleteMovie(int id);
     }
 }

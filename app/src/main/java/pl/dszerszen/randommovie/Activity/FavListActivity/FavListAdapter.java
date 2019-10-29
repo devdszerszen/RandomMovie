@@ -20,8 +20,11 @@ public class FavListAdapter extends RecyclerView.Adapter<FavListAdapter.ViewHold
     public final String TAG = "RandomMovie_log";
 
     ArrayList<FirebaseStoredMovie> moviesList = new ArrayList<>();
+    FavAdapterInterface activity;
 
-    public FavListAdapter() {
+
+    public FavListAdapter(FavAdapterInterface activity) {
+        this.activity = activity;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -42,7 +45,9 @@ public class FavListAdapter extends RecyclerView.Adapter<FavListAdapter.ViewHold
             });
 
             deleteButton.setOnClickListener(v -> {
-                Log.d(TAG, "ViewHolder: DELETE CLICKED");
+                activity.deleteMovie(this.id);
+                moviesList.remove(getAdapterPosition());
+                notifyItemRemoved(getAdapterPosition());
             });
         }
     }

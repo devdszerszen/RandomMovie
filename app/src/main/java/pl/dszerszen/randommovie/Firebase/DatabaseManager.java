@@ -1,5 +1,6 @@
 package pl.dszerszen.randommovie.Firebase;
 
+import android.annotation.SuppressLint;
 import android.util.Log;
 
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -11,6 +12,8 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.Calendar;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import io.reactivex.Completable;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
@@ -76,6 +79,21 @@ public class DatabaseManager implements FirebaseDBInterface {
 
     public void addMovie(FirebaseStoredMovie movie) {
         movies.child(sharPrefsManager.getFirebaseKey()).child(String.valueOf(movie.id)).setValue(movie);
+    }
+
+    @Override
+    @SuppressLint("CheckResult")
+    public Completable deleteMovie(int id) {
+
+        return Completable.create(emitter -> {
+            movies.child(sharPrefsManager.getFirebaseKey()).child(String.valueOf(id)).removeValue((databaseError, databaseReference) -> {
+                if (databaseError!=null) {
+                    emitter.onError(new Throwable(databaseError.getMessage()));
+                } else {
+                    emitter.onComplete();
+                }
+            });
+        }).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
     }
 
     @Override
