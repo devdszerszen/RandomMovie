@@ -22,10 +22,10 @@ public class FavListActivity extends AppCompatActivity implements FavInterface.V
         setContentView(R.layout.activity_fav_list);
 
         this.presenter = new FavPresenter(this);
-        this.adapter = new FavListAdapter(this);
 
         favRecyclerView = findViewById(R.id.fav_recycler_view);
         favRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        this.adapter = new FavListAdapter(this);
         favRecyclerView.setAdapter(adapter);
 
         presenter.getList();

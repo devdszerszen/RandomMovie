@@ -4,6 +4,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.ScaleAnimation;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -11,6 +12,7 @@ import java.util.ArrayList;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import pl.dszerszen.randommovie.Firebase.FirebaseStoredMovie;
 import pl.dszerszen.randommovie.R;
@@ -21,6 +23,7 @@ public class FavListAdapter extends RecyclerView.Adapter<FavListAdapter.ViewHold
 
     ArrayList<FirebaseStoredMovie> moviesList = new ArrayList<>();
     FavAdapterInterface activity;
+    int expandedPosition = -1;
 
 
     public FavListAdapter(FavAdapterInterface activity) {
@@ -31,6 +34,7 @@ public class FavListAdapter extends RecyclerView.Adapter<FavListAdapter.ViewHold
         public ConstraintLayout row;
         public TextView title;
         public ImageButton deleteButton;
+        public ConstraintLayout details;
         public int id = 0;
 
         public ViewHolder(@NonNull View itemView) {
@@ -39,10 +43,7 @@ public class FavListAdapter extends RecyclerView.Adapter<FavListAdapter.ViewHold
             row = itemView.findViewById(R.id.fav_row);
             title = itemView.findViewById(R.id.fav_title);
             deleteButton = itemView.findViewById(R.id.fav_delete_btn);
-
-            row.setOnClickListener(v -> {
-                Log.d(TAG, "ViewHolder: ROW CLICKED");
-            });
+            details = itemView.findViewById(R.id.fav_details);
 
             deleteButton.setOnClickListener(v -> {
                 activity.deleteMovie(this.id);
@@ -62,8 +63,16 @@ public class FavListAdapter extends RecyclerView.Adapter<FavListAdapter.ViewHold
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         FirebaseStoredMovie movie = moviesList.get(position);
-        holder.title.setText(movie.title);
+        holder.title.setText(String.format("%s (%s)",movie.title, movie.year));
         holder.id = movie.id;
+
+        final boolean isExpanded = position==expandedPosition;
+        holder.details.setVisibility(isExpanded ? View.VISIBLE : View.GONE);
+        holder.row.setOnClickListener(v -> {
+            notifyItemChanged(expandedPosition);
+            expandedPosition = isExpanded ? -1 : position;
+            notifyItemChanged(expandedPosition);
+        });
     }
 
     @Override
