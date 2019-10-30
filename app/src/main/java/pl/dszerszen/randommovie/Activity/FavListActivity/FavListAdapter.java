@@ -93,12 +93,9 @@ public class FavListAdapter extends RecyclerView.Adapter<FavListAdapter.ViewHold
         final boolean isExpanded = position==expandedPosition;
         holder.details.setVisibility(isExpanded ? View.VISIBLE : View.GONE);
         holder.row.setOnClickListener(v -> {
-            //Animation
-            holder.poster.animate().rotationBy(360f).setDuration(1000).withEndAction(() -> {
-                notifyItemChanged(expandedPosition);
-                expandedPosition = isExpanded ? -1 : position;
-                notifyItemChanged(expandedPosition);
-            }).start();
+            notifyItemChanged(expandedPosition);
+            expandedPosition = isExpanded ? -1 : position;
+            notifyItemChanged(expandedPosition);
         });
     }
 
