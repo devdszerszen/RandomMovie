@@ -60,12 +60,6 @@ public class FavListAdapter extends RecyclerView.Adapter<FavListAdapter.ViewHold
             description = itemView.findViewById(R.id.fav_description);
             poster = itemView.findViewById(R.id.fav_poster);
             genre = itemView.findViewById(R.id.fav_genre);
-
-            deleteButton.setOnClickListener(v -> {
-                activity.deleteMovie(this.id);
-                moviesList.remove(getAdapterPosition());
-                notifyItemRemoved(getAdapterPosition());
-            });
         }
     }
 
@@ -95,7 +89,17 @@ public class FavListAdapter extends RecyclerView.Adapter<FavListAdapter.ViewHold
         holder.row.setOnClickListener(v -> {
             notifyItemChanged(expandedPosition);
             expandedPosition = isExpanded ? -1 : position;
+            Log.d(TAG, "onBindViewHolder: POSITION: " + position);
+            Log.d(TAG, "onBindViewHolder: EXPANDED POSITION: " + expandedPosition);
             notifyItemChanged(expandedPosition);
+        });
+
+        holder.deleteButton.setOnClickListener(v -> {
+            activity.deleteMovie(holder.id);
+            expandedPosition = -1;
+            moviesList.remove(holder.getAdapterPosition());
+            notifyItemRemoved(holder.getAdapterPosition());
+            notifyItemRangeChanged(position, getItemCount());
         });
     }
 
