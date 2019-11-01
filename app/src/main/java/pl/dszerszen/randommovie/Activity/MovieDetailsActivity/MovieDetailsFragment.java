@@ -2,8 +2,10 @@ package pl.dszerszen.randommovie.Activity.MovieDetailsActivity;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import butterknife.BindView;
@@ -13,6 +15,7 @@ import butterknife.Unbinder;
 import pl.dszerszen.randommovie.R;
 import pl.dszerszen.randommovie.Network.SingleMovieDetails;
 
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,6 +28,12 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
+import com.squareup.picasso.Callback;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.Locale;
@@ -33,6 +42,7 @@ import static android.view.View.GONE;
 
 
 public class MovieDetailsFragment extends Fragment {
+    final String TAG = "RandomMovie_log";
 
     private OnFragmentInteractionListener mListener;
     private Unbinder unbinder;
@@ -130,11 +140,6 @@ public class MovieDetailsFragment extends Fragment {
             //URL
             final String BASE_URL = "https://image.tmdb.org/t/p/original/";
 
-            // Picture
-            if (movieDetails.backdropPath != null) {
-                Glide.with(this).load(BASE_URL + movieDetails.backdropPath).into(posterView);
-            }
-
             //Title
             title.setText(movieDetails.title);
             detailsLayout.bringChildToFront(title);
@@ -175,8 +180,27 @@ public class MovieDetailsFragment extends Fragment {
             previousMovies.add(movieDetails.id);
             setPreviousMovieButton();
 
-            //Hide loader
-            stopLoader();
+//            //Picture
+//            if (movieDetails.backdropPath != null) {
+//                Glide.with(this).load(BASE_URL + movieDetails.backdropPath).into(posterView);
+//            }
+
+            //Picture - picasso
+            if (movieDetails.backdropPath != null) {
+                Picasso.get()
+                        .load(BASE_URL + movieDetails.backdropPath)
+                        .into(posterView, new Callback() {
+                    @Override
+                    public void onSuccess() {
+                        stopLoader();
+                    }
+
+                    @Override
+                    public void onError(Exception e) {
+
+                    }
+                });
+            }
         }
     }
 

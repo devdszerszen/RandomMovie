@@ -160,7 +160,7 @@ public class MovieDetailsPresenter implements MovieDetailsInterface.Presenter{
 
             @Override
             public void onComplete() {
-                view.hideLoader();
+                //view.hideLoader();
             }
         });
     }
