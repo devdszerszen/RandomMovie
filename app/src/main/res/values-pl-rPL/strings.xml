@@ -20,4 +20,5 @@
     <string name="filter_runtime">Czas trwania</string>
     <string name="clear_filter">Wyczyść</string>
     <string name="successful_login">Logowanie zakończone sukcesem</string>
+    <string name="no_result">Lista ulubionych jest pusta</string>
 </resources>

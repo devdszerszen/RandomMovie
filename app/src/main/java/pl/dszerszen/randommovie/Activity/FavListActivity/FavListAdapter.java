@@ -100,6 +100,9 @@ public class FavListAdapter extends RecyclerView.Adapter<FavListAdapter.ViewHold
             moviesList.remove(holder.getAdapterPosition());
             notifyItemRemoved(holder.getAdapterPosition());
             notifyItemRangeChanged(position, getItemCount());
+            if (moviesList.size()==0) {
+                activity.showNoResultsMessage();
+            }
         });
     }
 

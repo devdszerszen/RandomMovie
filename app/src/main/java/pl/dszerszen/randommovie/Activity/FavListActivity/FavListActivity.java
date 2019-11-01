@@ -1,6 +1,7 @@
 package pl.dszerszen.randommovie.Activity.FavListActivity;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import pl.dszerszen.randommovie.Firebase.FirebaseStoredMovie;
@@ -16,6 +17,7 @@ public class FavListActivity extends AppCompatActivity implements FavInterface.V
 
     RecyclerView favRecyclerView;
     ProgressBar loader;
+    ConstraintLayout noResultsLayout;
     FavInterface.Presenter presenter;
     FavListAdapter adapter;
 
@@ -27,6 +29,7 @@ public class FavListActivity extends AppCompatActivity implements FavInterface.V
         this.presenter = new FavPresenter(this);
 
         loader = findViewById(R.id.fav_loader);
+        noResultsLayout = findViewById(R.id.fav_noresults);
         favRecyclerView = findViewById(R.id.fav_recycler_view);
         favRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         this.adapter = new FavListAdapter(this);
@@ -53,6 +56,10 @@ public class FavListActivity extends AppCompatActivity implements FavInterface.V
         hideLoader();
         adapter.update(moviesList);
         adapter.notifyDataSetChanged();
+
+        if (moviesList.size()==0) {
+            showNoResultsMessage();
+        }
     }
 
     @Override
@@ -60,5 +67,9 @@ public class FavListActivity extends AppCompatActivity implements FavInterface.V
         presenter.deleteMovie(id);
     }
 
-
+    @Override
+    public void showNoResultsMessage() {
+        favRecyclerView.setVisibility(View.GONE);
+        noResultsLayout.setVisibility(View.VISIBLE);
+    }
 }
