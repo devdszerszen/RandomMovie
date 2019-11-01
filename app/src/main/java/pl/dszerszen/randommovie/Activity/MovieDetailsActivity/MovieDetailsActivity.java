@@ -32,6 +32,7 @@ public class MovieDetailsActivity extends BaseActivity implements MovieDetailsIn
 
     ActionBar actionBar;
     TextView notificationBadge;
+    Menu menu;
 
     //Genres genresList
     List<ResponseGenre.Genre> genres = new ArrayList<>();
@@ -41,6 +42,8 @@ public class MovieDetailsActivity extends BaseActivity implements MovieDetailsIn
 
     //Current movie
     SingleMovieDetails currentMovie;
+
+    boolean isSetAsFavourite = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +73,7 @@ public class MovieDetailsActivity extends BaseActivity implements MovieDetailsIn
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        this.menu = menu;
         getMenuInflater().inflate(R.menu.menu_main,menu);
 
         //Filter
@@ -94,10 +98,23 @@ public class MovieDetailsActivity extends BaseActivity implements MovieDetailsIn
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.menu_favIcon) {
-            presenter.addMovieToFavourities(currentMovie);
+            if (!isSetAsFavourite) {
+                presenter.addMovieToFavourities(currentMovie);
+                setMovieAsFavourite(true);
+            } else {
+                presenter.deleteMovieFromFavourites(currentMovie.id);
+                setMovieAsFavourite(false);
+            }
         }
 
         return true;
+    }
+
+    @Override
+    public void setMovieAsFavourite(boolean isFavourite) {
+        isSetAsFavourite = isFavourite;
+        if (isFavourite) menu.findItem(R.id.menu_favIcon).setIcon(android.R.drawable.btn_star_big_on);
+        else menu.findItem(R.id.menu_favIcon).setIcon(android.R.drawable.btn_star_big_off);
     }
 
     public void setupBadge() {

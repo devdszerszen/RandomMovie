@@ -9,7 +9,10 @@ import java.util.Random;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+
+import io.reactivex.CompletableObserver;
 import io.reactivex.Observer;
+import io.reactivex.SingleObserver;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.observers.DisposableObserver;
 import pl.dszerszen.randommovie.Dagger.MyApplication;
@@ -36,6 +39,10 @@ public class MovieDetailsPresenter implements MovieDetailsInterface.Presenter{
     int apiCallsCounter = 0;
     final int MAX_API_CALLS = 10;
 
+    //Fav movies id
+    ArrayList<Integer> favMoviesIdsList;
+    boolean shouldRefreshFavMoviesIdList = true;
+
     public MovieDetailsPresenter(MovieDetailsInterface.View view) {
         this.view = view;
         this.connector = TmdbConnector.getConnectorInstance();
@@ -53,6 +60,7 @@ public class MovieDetailsPresenter implements MovieDetailsInterface.Presenter{
     @SuppressLint("CheckResult")
     public void getRandomMovie(int maxPage) {
 
+        if (shouldRefreshFavMoviesIdList) updateFavMoviesIdList();
 
         apiCallsCounter++;
         if (apiCallsCounter >MAX_API_CALLS) {
@@ -142,6 +150,7 @@ public class MovieDetailsPresenter implements MovieDetailsInterface.Presenter{
             @Override
             public void onNext(SingleMovieDetails movieDetails) {
                 view.showMovie(movieDetails);
+                view.setMovieAsFavourite(isSetAsFavourite(movieDetails));
             }
 
             @Override
@@ -181,35 +190,60 @@ public class MovieDetailsPresenter implements MovieDetailsInterface.Presenter{
     public void addMovieToFavourities(SingleMovieDetails currentMovie) {
         FirebaseStoredMovie firebaseStoredMovie = new FirebaseStoredMovie(currentMovie);
         firebaseDatabase.addMovie(firebaseStoredMovie);
+        shouldRefreshFavMoviesIdList = true;
     }
 
-//
-//    // Collecting movies genresList response + call api to get movie details
-//    private Observer<ResponseMovieList> getMoviesListObserver() {
-//
-//        return new Observer<ResponseMovieList>() {
-//            @Override
-//            public void onSubscribe(Disposable d) {
-//
-//            }
-//
-//            @Override
-//            public void onNext(ResponseMovieList moviesList) {
-//                int validMovieId = getValidMovieId(moviesList);
-//                if (validMovieId > 0)
-//                    getMovieDetails(validMovieId);
-//            }
-//
-//            @Override
-//            public void onError(Throwable e) {
-//
-//            }
-//
-//            @Override
-//            public void onComplete() {
-//            }
-//        };
-//    }
+    @SuppressLint("CheckResult")
+    @Override
+    public void deleteMovieFromFavourites(int id) {
+        shouldRefreshFavMoviesIdList = true;
+        firebaseDatabase.deleteMovie(id).subscribeWith(new CompletableObserver() {
+            @Override
+            public void onSubscribe(Disposable d) {
 
+            }
 
+            @Override
+            public void onComplete() {
+                Log.d(TAG, "onComplete: Movie deleted successfully");
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                Log.d(TAG, "onError: Movie not deleted: " + e.getMessage());
+            }
+        });
+    }
+
+    @SuppressLint("CheckResult")
+    private void updateFavMoviesIdList() {
+        Log.d(TAG, "updateFavMoviesIdList: called");
+        firebaseDatabase.getFavouriteMoviesIds().subscribeWith(new SingleObserver<ArrayList<Integer>>() {
+            @Override
+            public void onSubscribe(Disposable d) {
+
+            }
+
+            @Override
+            public void onSuccess(ArrayList<Integer> integers) {
+                favMoviesIdsList = integers;
+                Log.d(TAG, "updateFavMoviesIdList: " + favMoviesIdsList.toString());
+                shouldRefreshFavMoviesIdList = false;
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+        });
+    }
+
+    public boolean isSetAsFavourite(SingleMovieDetails movieDetails) {
+        for (Integer id: favMoviesIdsList) {
+            if (movieDetails.id == id) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

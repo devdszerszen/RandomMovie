@@ -9,12 +9,15 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
 import java.util.Calendar;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import io.reactivex.Completable;
 import io.reactivex.Observable;
+import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import pl.dszerszen.randommovie.SharPrefs.SharPrefsManager;
@@ -117,5 +120,27 @@ public class DatabaseManager implements FirebaseDBInterface {
                 }
             });
         }).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
+    }
+
+    @Override
+    public Single<ArrayList<Integer>> getFavouriteMoviesIds() {
+        return Single.create(emitter -> {
+            movies.child(sharPrefsManager.getFirebaseKey()).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    int count = (int)dataSnapshot.getChildrenCount();
+                    ArrayList<Integer> movieIds = new ArrayList<>();
+                    for (DataSnapshot singleItem : dataSnapshot.getChildren()) {
+                        movieIds.add(Integer.parseInt(singleItem.getKey()));
+                    }
+                    emitter.onSuccess(movieIds);
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+        });
     }
 }

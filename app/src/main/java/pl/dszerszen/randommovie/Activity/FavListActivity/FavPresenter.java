@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 import io.reactivex.CompletableObserver;
 import io.reactivex.Observer;
+import io.reactivex.SingleObserver;
 import io.reactivex.disposables.Disposable;
 import pl.dszerszen.randommovie.Firebase.DatabaseManager;
 import pl.dszerszen.randommovie.Firebase.FirebaseDBInterface;

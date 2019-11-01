@@ -47,7 +47,7 @@ public class MinMaxView extends LinearLayout implements FilterExpandView.Attache
                 break;
             }
             case VOTE: {
-                rangeSeekBar.setRange(0,10,4f);
+                rangeSeekBar.setRange(0,10,2f);
                 rangeSeekBar.setProgress(0,10);
                 break;
             }

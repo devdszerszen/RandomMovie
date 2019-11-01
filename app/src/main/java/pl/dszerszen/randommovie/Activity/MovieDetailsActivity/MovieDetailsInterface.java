@@ -8,6 +8,7 @@ import pl.dszerszen.randommovie.Network.SingleMovieDetails;
 public interface MovieDetailsInterface {
 
     interface View{
+        void setMovieAsFavourite(boolean isFavourite);
         void showMovie(SingleMovieDetails movieDetails);
         void showLoader();
         void hideLoader();
@@ -20,5 +21,6 @@ public interface MovieDetailsInterface {
         void getGenresList();
         void onRandomMovieButtonClicked();
         void addMovieToFavourities(SingleMovieDetails currentMovie);
+        void deleteMovieFromFavourites(int id);
     }
 }
