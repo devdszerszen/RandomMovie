@@ -181,7 +181,7 @@ public class MovieDetailsFragment extends Fragment {
                 tmpTxtView.setTextColor(Color.WHITE);
                 LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT, 1f);
                 tmpTxtView.setLayoutParams(params);
-                tmpTxtView.setTextSize(14f);
+                tmpTxtView.setTextSize(16f);
                 tmpTxtView.setGravity(Gravity.CENTER);
                 tmpTxtView.setText(movieDetails.genres.get(i).name.toLowerCase());
                 genresLayout.addView(tmpTxtView);

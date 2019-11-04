@@ -36,23 +36,25 @@
 
         <Button
             android:id="@+id/start_search_btn"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="130dp"
             android:layout_marginTop="32dp"
+            android:layout_marginEnd="130dp"
             android:background="@color/colorPrimary"
             android:clickable="true"
             android:enabled="true"
             android:padding="8dp"
             android:text="@string/search_btn"
             android:textColor="@android:color/background_light"
-            android:textSize="14sp"
+            android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <Button
             android:id="@+id/start_fav_btn"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
             android:background="@color/colorPrimary"
@@ -61,10 +63,10 @@
             android:padding="8dp"
             android:text="@string/favourites_btn"
             android:textColor="@android:color/background_light"
-            android:textSize="14sp"
+            android:textSize="18sp"
             android:visibility="visible"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/start_search_btn"
+            app:layout_constraintStart_toStartOf="@+id/start_search_btn"
             app:layout_constraintTop_toBottomOf="@+id/start_search_btn" />
 
         <TextView
@@ -72,7 +74,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="32dp"
-            android:text="Created by Damian Szerszeń"
+            android:text="Created by Natalia & Damian Szerszeń"
             android:textColor="@color/colorAccent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
