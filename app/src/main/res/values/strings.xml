@@ -23,4 +23,6 @@
     <string name="clear_filter">Clear</string>
     <string name="successful_login">Successfully logged in</string>
     <string name="no_result">Favourites list is empty</string>
+    <string name="description">Description</string>
+    <string name="details">Details</string>
 </resources>

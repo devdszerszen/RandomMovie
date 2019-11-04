@@ -2,10 +2,8 @@ package pl.dszerszen.randommovie.Activity.MovieDetailsActivity;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
-import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import butterknife.BindView;
@@ -15,6 +13,7 @@ import butterknife.Unbinder;
 import pl.dszerszen.randommovie.R;
 import pl.dszerszen.randommovie.Network.SingleMovieDetails;
 
+import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -27,11 +26,7 @@ import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.DataSource;
-import com.bumptech.glide.load.engine.GlideException;
-import com.bumptech.glide.request.RequestListener;
-import com.bumptech.glide.request.target.Target;
+import com.google.android.material.tabs.TabLayout;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
@@ -58,10 +53,12 @@ public class MovieDetailsFragment extends Fragment {
     @BindView(R.id.df_time_value) TextView timeValue;
     @BindView(R.id.df_year_value) TextView yearValue;
     @BindView(R.id.df_rating_value) TextView rating;
-    @BindView(R.id.df_scrollView) ScrollView scrolledMovieDescView;
     @BindView(R.id.df_loader) ProgressBar loader;
     @BindView(R.id.df_random_btn) Button randomButton;
     @BindView(R.id.df_previous_btn) Button previousButton;
+    @BindView(R.id.df_tab_header) TabLayout tabHeader;
+    @BindView(R.id.df_descriptionScrollView) ScrollView tabDescription;
+    @BindView(R.id.df_detailsScrollView) ScrollView tabDetails;
 
     ArrayList<Integer> previousMovies = new ArrayList<>();
     boolean isPreviousMovie = false;
@@ -82,13 +79,46 @@ public class MovieDetailsFragment extends Fragment {
         super.onCreate(savedInstanceState);
     }
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_movie_details, container, false);
         unbinder = ButterKnife.bind(this, view);
         mListener.getRandomMovie();
+
+//        tabHeader.addOnTabSelectedListener(new TabLayout.BaseOnTabSelectedListener() {
+//            @Override
+//            public void onTabSelected(TabLayout.Tab tab) {
+//                setTabContent(tab);
+//            }
+//
+//            @Override
+//            public void onTabUnselected(TabLayout.Tab tab) {
+//
+//            }
+//
+//            @Override
+//            public void onTabReselected(TabLayout.Tab tab) {
+//
+//            }
+//        });
         return view;
     }
+
+//    private void setTabContent(TabLayout.Tab tab) {
+//        switch (tab.getPosition()) {
+//            case 0: {
+//                tabDetails.setVisibility(GONE);
+//                tabDescription.setVisibility(View.VISIBLE);
+//                break;
+//            }
+//            case 1: {
+//                tabDescription.setVisibility(GONE);
+//                tabDetails.setVisibility(View.VISIBLE);
+//                break;
+//            }
+//        }
+//    }
 
     @Override
     public void onAttach(Context context) {
@@ -171,7 +201,7 @@ public class MovieDetailsFragment extends Fragment {
             //Description
             desc.setText(movieDetails.overview);
             desc.scrollTo(0, 0);
-            scrolledMovieDescView.scrollTo(0, 0);
+            //tabDescription.scrollTo(0, 0);
 
             //Rating
             rating.setText(String.valueOf(movieDetails.voteAverage));
@@ -179,11 +209,6 @@ public class MovieDetailsFragment extends Fragment {
             //Previous movie button
             previousMovies.add(movieDetails.id);
             setPreviousMovieButton();
-
-//            //Picture
-//            if (movieDetails.backdropPath != null) {
-//                Glide.with(this).load(BASE_URL + movieDetails.backdropPath).into(posterView);
-//            }
 
             //Picture - picasso
             if (movieDetails.backdropPath != null) {

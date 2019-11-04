@@ -22,8 +22,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Activity.MovieDetailsActivity.MovieDetailsActivity" />
-        <activity android:name=".Activity.FavListActivity.FavListActivity"></activity>
+        <activity
+            android:name=".Activity.MovieDetailsActivity.MovieDetailsActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".Activity.FavListActivity.FavListActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>
