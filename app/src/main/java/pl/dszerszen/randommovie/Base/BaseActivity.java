@@ -1,6 +1,7 @@
 package pl.dszerszen.randommovie.Base;
 
 import android.app.Activity;
+import android.view.MenuItem;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -16,4 +17,15 @@ public abstract class BaseActivity extends AppCompatActivity {
         fragmentTransaction.replace(android.R.id.content, fragment);
         fragmentTransaction.commit();
     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 }
+

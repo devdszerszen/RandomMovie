@@ -48,6 +48,7 @@ public class MovieDetailsActivity extends BaseActivity implements MovieDetailsIn
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         //Filter data
         this.filterData = FilterData.getInstance();
@@ -105,8 +106,9 @@ public class MovieDetailsActivity extends BaseActivity implements MovieDetailsIn
                 presenter.deleteMovieFromFavourites(currentMovie.id);
                 setMovieAsFavourite(false);
             }
+        } else if (item.getItemId() == android.R.id.home) {
+            onBackPressed();
         }
-
         return true;
     }
 
@@ -176,6 +178,4 @@ public class MovieDetailsActivity extends BaseActivity implements MovieDetailsIn
     public void getMovieDetails(int id) {
         presenter.getMovieDetails(id);
     }
-
-
 }

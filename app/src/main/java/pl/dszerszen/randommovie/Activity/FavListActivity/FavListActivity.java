@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import pl.dszerszen.randommovie.Base.BaseActivity;
 import pl.dszerszen.randommovie.Firebase.FirebaseStoredMovie;
 import pl.dszerszen.randommovie.R;
 
@@ -13,7 +14,7 @@ import android.widget.ProgressBar;
 
 import java.util.ArrayList;
 
-public class FavListActivity extends AppCompatActivity implements FavInterface.View, FavAdapterInterface {
+public class FavListActivity extends BaseActivity implements FavInterface.View, FavAdapterInterface {
 
     RecyclerView favRecyclerView;
     ProgressBar loader;
@@ -25,6 +26,7 @@ public class FavListActivity extends AppCompatActivity implements FavInterface.V
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fav_list);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         this.presenter = new FavPresenter(this);
 
