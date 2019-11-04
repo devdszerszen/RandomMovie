@@ -1,7 +1,10 @@
 package pl.dszerszen.randommovie.Activity.StartActivity;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -81,7 +84,23 @@ public class StartActivity extends AppCompatActivity implements StartInterface.V
 
     @Override
     public void showLoginPrompt(Intent intent) {
-        startActivityForResult(intent, RC_LOGIN);
+        Dialog dialog = new Dialog(this);
+        dialog.setContentView(R.layout.dialog_login);
+        dialog.setCancelable(false);
+        dialog.show();
+
+        Button positive = dialog.findViewById(R.id.login_btn_pos);
+        Button negative = dialog.findViewById(R.id.login_btn_neg);
+
+        negative.setOnClickListener(v -> {
+            dialog.dismiss();
+        });
+        positive.setOnClickListener(v -> {
+            startActivityForResult(intent, RC_LOGIN);
+            dialog.dismiss();
+        });
+
+
     }
 
     @Override

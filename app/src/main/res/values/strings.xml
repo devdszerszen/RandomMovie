@@ -26,4 +26,7 @@
     <string name="description">Description</string>
     <string name="details">Details</string>
     <string name="fav_label">Favourites</string>
+    <string name="login_prompt">Log in with Google to access this function.</string>
+    <string name="cancel">Cancel</string>
+    <string name="Login">Log in</string>
 </resources>

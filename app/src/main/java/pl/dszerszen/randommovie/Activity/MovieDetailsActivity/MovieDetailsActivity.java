@@ -99,13 +99,8 @@ public class MovieDetailsActivity extends BaseActivity implements MovieDetailsIn
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.menu_favIcon) {
-            if (!isSetAsFavourite) {
-                presenter.addMovieToFavourities(currentMovie);
-                setMovieAsFavourite(true);
-            } else {
-                presenter.deleteMovieFromFavourites(currentMovie.id);
-                setMovieAsFavourite(false);
-            }
+            presenter.onFavIconClicked(currentMovie, isSetAsFavourite);
+
         } else if (item.getItemId() == android.R.id.home) {
             onBackPressed();
         }

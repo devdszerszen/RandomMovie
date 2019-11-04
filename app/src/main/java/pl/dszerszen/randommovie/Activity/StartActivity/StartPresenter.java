@@ -55,11 +55,15 @@ public class StartPresenter implements StartInterface.Presenter, Serializable {
     @SuppressLint("CheckResult")
     @Override
     public void favouritesButtonClicked() {
-        view.startFavListActivity();
+        if (isUserLogged()) {
+            view.startFavListActivity();
+        } else {
+            showLoginPrompt();
+        }
     }
 
     private void showLoginPrompt() {
-            view.showLoginPrompt(firebaseAuth.getSignInIntent());
+        view.showLoginPrompt(firebaseAuth.getSignInIntent());
     }
 
     //Used when user selects google account to be logged in

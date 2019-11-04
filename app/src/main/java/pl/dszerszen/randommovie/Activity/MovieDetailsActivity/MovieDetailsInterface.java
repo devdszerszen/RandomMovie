@@ -22,5 +22,6 @@ public interface MovieDetailsInterface {
         void onRandomMovieButtonClicked();
         void addMovieToFavourities(SingleMovieDetails currentMovie);
         void deleteMovieFromFavourites(int id);
+        void onFavIconClicked(SingleMovieDetails movie, boolean isSetAsFavourite);
     }
 }

@@ -1,6 +1,7 @@
 package pl.dszerszen.randommovie.Activity.MovieDetailsActivity;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.util.Log;
 
 import java.util.ArrayList;
@@ -16,7 +17,9 @@ import io.reactivex.SingleObserver;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.observers.DisposableObserver;
 import pl.dszerszen.randommovie.Dagger.MyApplication;
+import pl.dszerszen.randommovie.Firebase.AuthManager;
 import pl.dszerszen.randommovie.Firebase.DatabaseManager;
+import pl.dszerszen.randommovie.Firebase.FirebaseAuthInterface;
 import pl.dszerszen.randommovie.Firebase.FirebaseDBInterface;
 import pl.dszerszen.randommovie.Firebase.FirebaseStoredMovie;
 import pl.dszerszen.randommovie.Network.TmdbConnector;
@@ -32,6 +35,7 @@ public class MovieDetailsPresenter implements MovieDetailsInterface.Presenter{
     private TmdbConnector connector;
     private MovieDetailsInterface.View view;
     private FirebaseDBInterface firebaseDatabase;
+    private FirebaseAuthInterface firebaseAuth;
 
     @Inject @Named("language")
     String language;
@@ -40,13 +44,14 @@ public class MovieDetailsPresenter implements MovieDetailsInterface.Presenter{
     final int MAX_API_CALLS = 10;
 
     //Fav movies id
-    ArrayList<Integer> favMoviesIdsList;
+    ArrayList<Integer> favMoviesIdsList = new ArrayList<>();
     boolean shouldRefreshFavMoviesIdList = true;
 
     public MovieDetailsPresenter(MovieDetailsInterface.View view) {
         this.view = view;
         this.connector = TmdbConnector.getConnectorInstance();
         this.firebaseDatabase = DatabaseManager.getInstance();
+        this.firebaseAuth = AuthManager.getInstance((Context)view);
     }
 
     @Override
@@ -187,6 +192,21 @@ public class MovieDetailsPresenter implements MovieDetailsInterface.Presenter{
     }
 
     @Override
+    public void onFavIconClicked(SingleMovieDetails movie, boolean isSetAsFavourite) {
+        if (isUserLogged()) {
+            if (isSetAsFavourite) {
+                deleteMovieFromFavourites(movie.id);
+                view.setMovieAsFavourite(false);
+            } else {
+                addMovieToFavourities(movie);
+                view.setMovieAsFavourite(true);
+            }
+        } else {
+            Log.d(TAG, "onFavIconClicked: User not logged");
+        }
+    }
+
+    @Override
     public void addMovieToFavourities(SingleMovieDetails currentMovie) {
         FirebaseStoredMovie firebaseStoredMovie = new FirebaseStoredMovie(currentMovie);
         firebaseDatabase.addMovie(firebaseStoredMovie);
@@ -245,5 +265,9 @@ public class MovieDetailsPresenter implements MovieDetailsInterface.Presenter{
             }
         }
         return false;
+    }
+
+    private boolean isUserLogged() {
+        return firebaseAuth.isUserSignedToFirebase() && firebaseAuth.isUserSignedToGoogle();
     }
 }

@@ -24,4 +24,7 @@
     <string name="description">Opis</string>
     <string name="details">Szczegóły</string>
     <string name="fav_label">Ulubione</string>
+    <string name="login_prompt">By skorzystać z tej funkcji zaloguj się przy użyciu konta Google.</string>
+    <string name="cancel">Anuluj</string>
+    <string name="Login">Zaloguj</string>
 </resources>
