@@ -18,6 +18,12 @@ public interface NetworkService {
                                             @Query("vote_average.lte") String maxVote
                                             );
 
+    @GET("discover/movie")
+    Observable<ResponseMovieList> getPosters(@Query("api_key") String api_key,
+                                            @Query("language") String language,
+                                            @Query("page") int page
+    );
+
     @GET("genre/movie/list")
     Observable<ResponseGenre> getGenres(@Query("api_key") String api_key, @Query("language") String language);
 

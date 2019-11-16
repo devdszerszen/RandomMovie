@@ -26,7 +26,7 @@
             android:gravity="center"
             android:minHeight="40dp"
             android:textColor="@android:color/background_light"
-            android:textSize="28sp"
+            android:textSize="26sp"
             app:layout_constraintBottom_toBottomOf="@+id/df_poster"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/df_poster" />
@@ -160,7 +160,7 @@
                     android:layout_height="match_parent"
                     android:gravity="center"
                     android:textColor="@android:color/background_light"
-                    android:textSize="16sp" />
+                    android:textSize="14dp" />
             </LinearLayout>
 
             <LinearLayout
@@ -185,14 +185,14 @@
                     android:layout_height="match_parent"
                     android:gravity="center"
                     android:textColor="@android:color/background_light"
-                    android:textSize="16sp" />
+                    android:textSize="14dp" />
             </LinearLayout>
         </LinearLayout>
 
         <FrameLayout
             android:id="@+id/df_rating_element"
-            android:layout_width="75dp"
-            android:layout_height="80dp"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             app:layout_constraintEnd_toEndOf="@+id/df_poster"
@@ -202,15 +202,17 @@
                 android:id="@+id/df_star_shape"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                app:srcCompat="@drawable/semi_transparent_circle" />
+                app:srcCompat="@drawable/star" />
 
             <TextView
                 android:id="@+id/df_rating_value"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginTop="6dp"
                 android:gravity="center"
+                android:hint="@color/colorAccent"
                 android:textColor="@color/colorAccent"
-                android:textSize="28dp"
+                android:textSize="16dp"
                 android:textStyle="bold" />
         </FrameLayout>
 

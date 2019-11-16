@@ -67,5 +67,11 @@ public class TmdbConnector {
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
+    public Observable<ResponseMovieList> getPostersList() {
+        return client.getPosters(API_KEY,LANGUAGE_KEY,2)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
 
 }

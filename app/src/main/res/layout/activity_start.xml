@@ -8,6 +8,16 @@
     android:background="@color/background"
     tools:context=".Activity.StartActivity.StartActivity">
 
+    <FrameLayout
+        android:id="@+id/start_carousel_frame"
+        android:layout_width="match_parent"
+        android:layout_height="450dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+    </FrameLayout>
+
     <ImageView
         android:id="@+id/start_tmdb_image"
         android:layout_width="0dp"
@@ -15,7 +25,7 @@
         android:layout_marginStart="32dp"
         android:layout_marginTop="64dp"
         android:layout_marginEnd="32dp"
-        android:visibility="visible"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -26,35 +36,32 @@
         android:id="@+id/start_buttons_layout"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="8dp"
         android:layout_marginEnd="5dp"
         android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/start_tmdb_image">
+        app:layout_constraintTop_toBottomOf="@+id/start_carousel_frame">
 
         <Button
             android:id="@+id/start_search_btn"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="130dp"
             android:layout_marginTop="32dp"
-            android:layout_marginEnd="130dp"
             android:background="@color/colorPrimary"
             android:clickable="true"
             android:enabled="true"
             android:padding="8dp"
             android:text="@string/search_btn"
             android:textColor="@android:color/background_light"
-            android:textSize="18sp"
+            android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <Button
             android:id="@+id/start_fav_btn"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
             android:background="@color/colorPrimary"
@@ -63,10 +70,10 @@
             android:padding="8dp"
             android:text="@string/favourites_btn"
             android:textColor="@android:color/background_light"
-            android:textSize="18sp"
+            android:textSize="14sp"
             android:visibility="visible"
-            app:layout_constraintEnd_toEndOf="@+id/start_search_btn"
-            app:layout_constraintStart_toStartOf="@+id/start_search_btn"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/start_search_btn" />
 
         <TextView
@@ -74,7 +81,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="32dp"
-            android:text="Created by Natalia & Damian Szerszeń"
+            android:text="Created by Damian Szerszeń"
             android:textColor="@color/colorAccent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

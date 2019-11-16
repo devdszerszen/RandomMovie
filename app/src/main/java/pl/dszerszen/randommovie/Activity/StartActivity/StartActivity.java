@@ -6,8 +6,11 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.Toast;
+
+import java.util.ArrayList;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
@@ -16,8 +19,10 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import dagger.android.AndroidInjection;
+import it.moondroid.coverflow.components.ui.containers.FeatureCoverFlow;
 import pl.dszerszen.randommovie.Activity.FavListActivity.FavListActivity;
 import pl.dszerszen.randommovie.Activity.MovieDetailsActivity.MovieDetailsActivity;
+import pl.dszerszen.randommovie.Carousel.CarouselAdapter;
 import pl.dszerszen.randommovie.R;
 import pl.dszerszen.randommovie.Network.SingleMovieDetails;
 
@@ -29,9 +34,15 @@ public class StartActivity extends AppCompatActivity implements StartInterface.V
     @BindView(R.id.start_search_btn) Button randomButton;
     @BindView(R.id.start_fav_btn) Button favorites;
     @BindView(R.id.start_tmdb_image) ImageView tmdbImage;
+    @BindView(R.id.start_carousel_frame) FrameLayout carouselFrame;
+    FeatureCoverFlow carousel;
     ActionBar actionBar;
 
     private StartInterface.Presenter presenter;
+    private CarouselAdapter carouselAdapter;
+
+    //Test only - carousel
+    private ArrayList<String> images;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,6 +91,26 @@ public class StartActivity extends AppCompatActivity implements StartInterface.V
     public void startFavListActivity() {
         Intent intent = new Intent(this,FavListActivity.class);
         startActivity(intent);
+    }
+
+    @Override
+    public void setPostersList(ArrayList<String> postersUriList) {
+        carousel = new FeatureCoverFlow(StartActivity.this);
+        carousel.setLayoutParams(new FrameLayout.LayoutParams(
+                FrameLayout.LayoutParams.MATCH_PARENT,
+                FrameLayout.LayoutParams.MATCH_PARENT
+        ));
+        int coverHeight = 400;
+        int coverWidth = Math.toIntExact(Math.round(coverHeight*0.66));
+        carousel.setCoverHeight(coverHeight);
+        carousel.setCoverWidth(coverWidth);
+        carousel.setMaxScaleFactor(1.7f);
+        carousel.setSpacing(0.6f);
+        carousel.setRotationTreshold(0.4f);
+        carousel.setScalingThreshold(0.3f);
+        carouselFrame.addView(carousel);
+        carouselAdapter = new CarouselAdapter(this, postersUriList);
+        carousel.setAdapter(carouselAdapter);
     }
 
     @Override
