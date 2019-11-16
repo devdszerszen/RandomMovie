@@ -2,6 +2,8 @@ package pl.dszerszen.randommovie.Activity.StartActivity;
 
 import android.content.Intent;
 
+import java.util.ArrayList;
+
 public interface StartInterface {
 
     interface View{
@@ -9,6 +11,7 @@ public interface StartInterface {
         void startDetailsActivity();
         void showLoginPrompt(Intent intent);
         void startFavListActivity();
+        void setPostersList(ArrayList<String> postersUriList);
     }
 
     interface Presenter {

@@ -11,14 +11,17 @@ import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 import io.reactivex.CompletableObserver;
+import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 import pl.dszerszen.randommovie.Dagger.MyApplication;
 import pl.dszerszen.randommovie.Firebase.AuthManager;
 import pl.dszerszen.randommovie.Firebase.DatabaseManager;
 import pl.dszerszen.randommovie.Firebase.FirebaseAuthInterface;
 import pl.dszerszen.randommovie.Firebase.FirebaseDBInterface;
+import pl.dszerszen.randommovie.Network.ResponseMovieList;
 import pl.dszerszen.randommovie.Network.TmdbConnector;
 import pl.dszerszen.randommovie.R;
 import pl.dszerszen.randommovie.SharPrefs.SharPrefsManager;
@@ -32,6 +35,7 @@ public class StartPresenter implements StartInterface.Presenter, Serializable {
     private FirebaseAuthInterface firebaseAuth;
     private FirebaseDBInterface firebaseDatabase;
     private SharPrefsManager sharPrefsManager;
+    private ArrayList<String> postersUriList = new ArrayList<>();
 
     public StartPresenter(StartInterface.View view) {
         this.view = view;
@@ -42,6 +46,7 @@ public class StartPresenter implements StartInterface.Presenter, Serializable {
 
         if (isUserLogged()) {
             firebaseDatabase.incrementCounter();
+            getPostersList();
         } else {
             showLoginPrompt();
         }
@@ -102,5 +107,39 @@ public class StartPresenter implements StartInterface.Presenter, Serializable {
 
     private boolean isUserLogged() {
         return firebaseAuth.isUserSignedToGoogle() && firebaseAuth.isUserSignedToFirebase();
+    }
+
+    @SuppressLint("CheckResult")
+    private void getPostersList() {
+        connector.getPostersList().subscribeWith(new Observer<ResponseMovieList>() {
+            @Override
+            public void onSubscribe(Disposable d) {
+
+            }
+
+            @Override
+            public void onNext(ResponseMovieList responseMovieList) {
+                for (int i=0; i<10; i++) {
+                    postersUriList.add(responseMovieList.results.get(i).posterPath);
+                }
+
+//                for (ResponseMovieList.Result movie: responseMovieList.results) {
+//                    if (movie.posterPath != null) {
+//                        postersUriList.add(movie.posterPath);
+//                    }
+//                }
+                Log.d(TAG, "CAROUSEL Posters list size is: " + postersUriList.size());
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onComplete() {
+                view.setPostersList(postersUriList);
+            }
+        });
     }
 }
