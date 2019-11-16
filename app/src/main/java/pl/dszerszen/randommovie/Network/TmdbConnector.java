@@ -68,7 +68,9 @@ public class TmdbConnector {
     }
 
     public Observable<ResponseMovieList> getPostersList() {
-        return client.getPosters(API_KEY,LANGUAGE_KEY,2)
+        Random random = new Random();
+        int randomPage = random.nextInt(20)+1;
+        return client.getPosters(API_KEY,LANGUAGE_KEY,randomPage)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
