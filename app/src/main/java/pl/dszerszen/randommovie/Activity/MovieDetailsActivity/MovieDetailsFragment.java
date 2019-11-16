@@ -69,8 +69,6 @@ public class MovieDetailsFragment extends Fragment {
 
     public static MovieDetailsFragment newInstance() {
         MovieDetailsFragment fragment = new MovieDetailsFragment();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
         return fragment;
     }
 
@@ -84,7 +82,8 @@ public class MovieDetailsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_movie_details, container, false);
         unbinder = ButterKnife.bind(this, view);
-        mListener.getRandomMovie();
+        startLoader();
+        mListener.getFirstMovie();
 
 //        tabHeader.addOnTabSelectedListener(new TabLayout.BaseOnTabSelectedListener() {
 //            @Override
@@ -242,5 +241,6 @@ public class MovieDetailsFragment extends Fragment {
     public interface OnFragmentInteractionListener {
         void getRandomMovie();
         void getMovieDetails(int id);
+        void getFirstMovie();
     }
 }

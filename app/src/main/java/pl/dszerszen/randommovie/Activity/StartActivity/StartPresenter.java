@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import io.reactivex.CompletableObserver;
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
+import pl.dszerszen.randommovie.Carousel.CarouselMoviePOJO;
 import pl.dszerszen.randommovie.Dagger.MyApplication;
 import pl.dszerszen.randommovie.Firebase.AuthManager;
 import pl.dszerszen.randommovie.Firebase.DatabaseManager;
@@ -35,7 +36,7 @@ public class StartPresenter implements StartInterface.Presenter, Serializable {
     private FirebaseAuthInterface firebaseAuth;
     private FirebaseDBInterface firebaseDatabase;
     private SharPrefsManager sharPrefsManager;
-    private ArrayList<String> postersUriList = new ArrayList<>();
+    private ArrayList<CarouselMoviePOJO> postersList = new ArrayList<>();
 
     public StartPresenter(StartInterface.View view) {
         this.view = view;
@@ -120,15 +121,17 @@ public class StartPresenter implements StartInterface.Presenter, Serializable {
             @Override
             public void onNext(ResponseMovieList responseMovieList) {
                 for (int i=0; i<10; i++) {
-                    postersUriList.add(responseMovieList.results.get(i).posterPath);
+                    String path = responseMovieList.results.get(i).posterPath;
+                    int id = responseMovieList.results.get(i).id;
+                    postersList.add(new CarouselMoviePOJO(path,id));
                 }
 
 //                for (ResponseMovieList.Result movie: responseMovieList.results) {
 //                    if (movie.posterPath != null) {
-//                        postersUriList.add(movie.posterPath);
+//                        postersList.add(movie.posterPath);
 //                    }
 //                }
-                Log.d(TAG, "CAROUSEL Posters list size is: " + postersUriList.size());
+                Log.d(TAG, "CAROUSEL Posters list size is: " + postersList.size());
             }
 
             @Override
@@ -138,7 +141,7 @@ public class StartPresenter implements StartInterface.Presenter, Serializable {
 
             @Override
             public void onComplete() {
-                view.setPostersList(postersUriList);
+                view.setPostersList(postersList);
             }
         });
     }

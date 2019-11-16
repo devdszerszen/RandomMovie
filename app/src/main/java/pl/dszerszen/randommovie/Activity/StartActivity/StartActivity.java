@@ -23,6 +23,7 @@ import it.moondroid.coverflow.components.ui.containers.FeatureCoverFlow;
 import pl.dszerszen.randommovie.Activity.FavListActivity.FavListActivity;
 import pl.dszerszen.randommovie.Activity.MovieDetailsActivity.MovieDetailsActivity;
 import pl.dszerszen.randommovie.Carousel.CarouselAdapter;
+import pl.dszerszen.randommovie.Carousel.CarouselMoviePOJO;
 import pl.dszerszen.randommovie.R;
 import pl.dszerszen.randommovie.Network.SingleMovieDetails;
 
@@ -40,9 +41,6 @@ public class StartActivity extends AppCompatActivity implements StartInterface.V
 
     private StartInterface.Presenter presenter;
     private CarouselAdapter carouselAdapter;
-
-    //Test only - carousel
-    private ArrayList<String> images;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,7 +92,7 @@ public class StartActivity extends AppCompatActivity implements StartInterface.V
     }
 
     @Override
-    public void setPostersList(ArrayList<String> postersUriList) {
+    public void setPostersList(ArrayList<CarouselMoviePOJO> postersUriList) {
         carousel = new FeatureCoverFlow(StartActivity.this);
         carousel.setLayoutParams(new FrameLayout.LayoutParams(
                 FrameLayout.LayoutParams.MATCH_PARENT,

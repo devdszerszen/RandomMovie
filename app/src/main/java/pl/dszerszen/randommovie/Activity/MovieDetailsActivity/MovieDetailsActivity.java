@@ -44,6 +44,7 @@ public class MovieDetailsActivity extends BaseActivity implements MovieDetailsIn
     SingleMovieDetails currentMovie;
 
     boolean isSetAsFavourite = false;
+    int firstMovieId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +60,7 @@ public class MovieDetailsActivity extends BaseActivity implements MovieDetailsIn
         //Fragment
         detailsFragment = MovieDetailsFragment.newInstance();
         setFragment(detailsFragment);
+        firstMovieId = getIntent().getIntExtra("MOVIE_ID",-1);
 
         //ActionBar
         setupActionBar();
@@ -172,5 +174,14 @@ public class MovieDetailsActivity extends BaseActivity implements MovieDetailsIn
     @Override
     public void getMovieDetails(int id) {
         presenter.getMovieDetails(id);
+    }
+
+    @Override
+    public void getFirstMovie() {
+        if (firstMovieId > -1) {
+            getMovieDetails(firstMovieId);
+        } else {
+            getRandomMovie();
+        }
     }
 }
