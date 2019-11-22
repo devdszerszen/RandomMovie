@@ -3,7 +3,7 @@ package pl.dszerszen.randommovie.Activity.StartActivity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
+import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
@@ -15,17 +15,17 @@ import java.util.ArrayList;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import dagger.android.AndroidInjection;
 import it.moondroid.coverflow.components.ui.containers.FeatureCoverFlow;
 import pl.dszerszen.randommovie.Activity.FavListActivity.FavListActivity;
 import pl.dszerszen.randommovie.Activity.MovieDetailsActivity.MovieDetailsActivity;
 import pl.dszerszen.randommovie.Carousel.CarouselAdapter;
 import pl.dszerszen.randommovie.Carousel.CarouselMoviePOJO;
-import pl.dszerszen.randommovie.R;
 import pl.dszerszen.randommovie.Network.SingleMovieDetails;
+import pl.dszerszen.randommovie.R;
 
 public class StartActivity extends AppCompatActivity implements StartInterface.View{
     
@@ -36,6 +36,7 @@ public class StartActivity extends AppCompatActivity implements StartInterface.V
     @BindView(R.id.start_fav_btn) Button favorites;
     @BindView(R.id.start_tmdb_image) ImageView tmdbImage;
     @BindView(R.id.start_carousel_frame) FrameLayout carouselFrame;
+    @BindView(R.id.start_apilogo_layout) ConstraintLayout logoLayout;
     FeatureCoverFlow carousel;
     ActionBar actionBar;
 
@@ -46,7 +47,7 @@ public class StartActivity extends AppCompatActivity implements StartInterface.V
     protected void onCreate(Bundle savedInstanceState) {
 
         //Dagger
-        AndroidInjection.inject(this);
+        //AndroidInjection.inject(this);
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
@@ -60,11 +61,21 @@ public class StartActivity extends AppCompatActivity implements StartInterface.V
         //Presenter
         presenter = new StartPresenter(this);
 
+        //TMDB view
+        setApiLogoView();
+
     }
 
     public void setupActionBar() {
         actionBar = getSupportActionBar();
         //actionBar.setDisplayHomeAsUpEnabled(true);
+    }
+
+    @Override
+    public void setApiLogoView() {
+            logoLayout.setVisibility(View.VISIBLE);
+            Handler handler = new Handler();
+            handler.postDelayed(() -> logoLayout.setVisibility(View.GONE), 3000);
     }
 
     @Override
@@ -107,7 +118,7 @@ public class StartActivity extends AppCompatActivity implements StartInterface.V
         carousel.setRotationTreshold(0.4f);
         carousel.setScalingThreshold(0.3f);
         carouselFrame.addView(carousel);
-        carouselAdapter = new CarouselAdapter(this, postersUriList);
+        carouselAdapter = new CarouselAdapter(this, postersUriList,carousel);
         carousel.setAdapter(carouselAdapter);
     }
 

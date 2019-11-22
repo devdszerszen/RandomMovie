@@ -121,9 +121,11 @@ public class StartPresenter implements StartInterface.Presenter, Serializable {
             @Override
             public void onNext(ResponseMovieList responseMovieList) {
                 for (int i=0; i<10; i++) {
-                    String path = responseMovieList.results.get(i).posterPath;
-                    int id = responseMovieList.results.get(i).id;
-                    postersList.add(new CarouselMoviePOJO(path,id));
+                    if (responseMovieList.results.get(i).posterPath != null) {
+                        String path = responseMovieList.results.get(i).posterPath;
+                        int id = responseMovieList.results.get(i).id;
+                        postersList.add(new CarouselMoviePOJO(path, id));
+                    }
                 }
 
 //                for (ResponseMovieList.Result movie: responseMovieList.results) {

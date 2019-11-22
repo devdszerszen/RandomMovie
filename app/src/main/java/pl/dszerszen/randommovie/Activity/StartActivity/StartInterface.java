@@ -14,6 +14,7 @@ public interface StartInterface {
         void showLoginPrompt(Intent intent);
         void startFavListActivity();
         void setPostersList(ArrayList<CarouselMoviePOJO> postersUriList);
+        void setApiLogoView();
     }
 
     interface Presenter {
