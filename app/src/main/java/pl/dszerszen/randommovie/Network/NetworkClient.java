@@ -2,6 +2,8 @@ package pl.dszerszen.randommovie.Network;
 
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 
+import java.util.concurrent.TimeUnit;
+
 import javax.inject.Inject;
 
 import okhttp3.OkHttpClient;
@@ -24,7 +26,11 @@ public class NetworkClient {
             interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
 
             OkHttpClient.Builder builder = new OkHttpClient.Builder();
-            OkHttpClient okHttpClient = builder.addInterceptor(interceptor).build();
+            OkHttpClient okHttpClient = builder
+                    .addInterceptor(interceptor)
+                    .connectTimeout(10,TimeUnit.SECONDS)
+                    .readTimeout(10, TimeUnit.SECONDS)
+                    .build();
 
             retrofit = new Retrofit.Builder()
                     .baseUrl("https://api.themoviedb.org/3/")

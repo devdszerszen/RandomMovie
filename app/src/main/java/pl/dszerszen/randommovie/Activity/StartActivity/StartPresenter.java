@@ -138,7 +138,6 @@ public class StartPresenter implements StartInterface.Presenter, Serializable {
 
             @Override
             public void onError(Throwable e) {
-
             }
 
             @Override

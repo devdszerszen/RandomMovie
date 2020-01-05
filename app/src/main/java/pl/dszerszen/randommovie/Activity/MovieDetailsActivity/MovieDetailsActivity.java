@@ -1,6 +1,9 @@
 package pl.dszerszen.randommovie.Activity.MovieDetailsActivity;
 
 import androidx.appcompat.app.ActionBar;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import pl.dszerszen.randommovie.Base.BaseActivity;
 import pl.dszerszen.randommovie.Filter.FilterData;
 import pl.dszerszen.randommovie.Filter.FiltersDialog;
@@ -13,6 +16,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -50,6 +54,7 @@ public class MovieDetailsActivity extends BaseActivity implements MovieDetailsIn
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        setContentView(R.layout.activity_movie_details);
 
         //Filter data
         this.filterData = FilterData.getInstance();
@@ -101,8 +106,8 @@ public class MovieDetailsActivity extends BaseActivity implements MovieDetailsIn
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.menu_favIcon) {
+            if (!detailsFragment.errorInfoShowed)
             presenter.onFavIconClicked(currentMovie, isSetAsFavourite);
-
         } else if (item.getItemId() == android.R.id.home) {
             onBackPressed();
         }
@@ -160,6 +165,11 @@ public class MovieDetailsActivity extends BaseActivity implements MovieDetailsIn
     @Override
     public void showMessage(String message) {
         runOnUiThread(() -> showToastMessage(message));
+    }
+
+    @Override
+    public void showNetworkError() {
+        detailsFragment.showNetworkError();
     }
 
     private void showToastMessage(String message) {

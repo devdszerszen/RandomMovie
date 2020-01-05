@@ -79,7 +79,6 @@ public class MovieDetailsPresenter implements MovieDetailsInterface.Presenter{
             page = maxPage;
         }
 
-        //connector.getMoviesList(page).subscribeWith(getMoviesListObserver());
         connector.getMoviesList(page).subscribe(new DisposableObserver<ResponseMovieList>() {
             @Override
             public void onNext(ResponseMovieList responseMovieList) {
@@ -104,10 +103,9 @@ public class MovieDetailsPresenter implements MovieDetailsInterface.Presenter{
                 }
             }
 
-
             @Override
             public void onError(Throwable e) {
-
+                view.showNetworkError();
             }
 
             @Override
@@ -160,7 +158,7 @@ public class MovieDetailsPresenter implements MovieDetailsInterface.Presenter{
 
             @Override
             public void onError(Throwable e) {
-
+                view.showNetworkError();
             }
 
             @Override

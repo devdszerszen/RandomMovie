@@ -45,6 +45,7 @@ public class MovieDetailsFragment extends Fragment {
     //@BindView(R.id.loader) ProgressBar loader;
     //@BindView(R.id.randomButton) Button randomButton;
     //@BindView(R.id.previousButton) Button previousButton;
+    @BindView(R.id.errorLayout) ConstraintLayout errorLayout;
     @BindView(R.id.df_title) TextView title;
     @BindView(R.id.df_desc) TextView desc;
     @BindView(R.id.df_poster) ImageView posterView;
@@ -62,6 +63,7 @@ public class MovieDetailsFragment extends Fragment {
 
     ArrayList<Integer> previousMovies = new ArrayList<>();
     boolean isPreviousMovie = false;
+    boolean errorInfoShowed = false;
 
     public MovieDetailsFragment() {
     }
@@ -144,12 +146,14 @@ public class MovieDetailsFragment extends Fragment {
 
     @OnClick(R.id.df_random_btn)
     public void onButtonClicked() {
+        if (errorInfoShowed) hideNetworkError();
         mListener.getRandomMovie();
         isPreviousMovie = true;
     }
 
     @OnClick(R.id.df_previous_btn)
     public void onPreviousButtonClicked() {
+        if (errorInfoShowed) hideNetworkError();
         isPreviousMovie = false;
         mListener.getMovieDetails(previousMovies.get(previousMovies.size()-2));
     }
@@ -236,6 +240,19 @@ public class MovieDetailsFragment extends Fragment {
     public void stopLoader() {
         loader.setVisibility(GONE);
         detailsLayout.setVisibility(View.VISIBLE);
+    }
+
+    public void showNetworkError() {
+        errorInfoShowed = true;
+        loader.setVisibility(GONE);
+        detailsLayout.setVisibility(GONE);
+        errorLayout.setVisibility(View.VISIBLE);
+    }
+
+    private void hideNetworkError() {
+        errorInfoShowed = false;
+        detailsLayout.setVisibility(View.VISIBLE);
+        errorLayout.setVisibility(GONE);
     }
 
     public interface OnFragmentInteractionListener {
