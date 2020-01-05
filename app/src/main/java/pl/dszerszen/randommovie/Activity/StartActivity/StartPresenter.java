@@ -10,6 +10,8 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
 
+import org.greenrobot.eventbus.Subscribe;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -18,6 +20,7 @@ import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 import pl.dszerszen.randommovie.Carousel.CarouselMoviePOJO;
 import pl.dszerszen.randommovie.Dagger.MyApplication;
+import pl.dszerszen.randommovie.EventBus.CarouselReadyEvent;
 import pl.dszerszen.randommovie.Firebase.AuthManager;
 import pl.dszerszen.randommovie.Firebase.DatabaseManager;
 import pl.dszerszen.randommovie.Firebase.FirebaseAuthInterface;
@@ -30,6 +33,7 @@ import pl.dszerszen.randommovie.SharPrefs.SharPrefsManager;
 public class StartPresenter implements StartInterface.Presenter, Serializable {
 
     final String TAG = "RandomMovie_log";
+    final int postersCount = 6;
 
     private StartInterface.View view;
     private TmdbConnector connector;
@@ -120,7 +124,7 @@ public class StartPresenter implements StartInterface.Presenter, Serializable {
 
             @Override
             public void onNext(ResponseMovieList responseMovieList) {
-                for (int i=0; i<10; i++) {
+                for (int i=0; i<postersCount; i++) {
                     if (responseMovieList.results.get(i).posterPath != null) {
                         String path = responseMovieList.results.get(i).posterPath;
                         int id = responseMovieList.results.get(i).id;

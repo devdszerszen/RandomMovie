@@ -1,5 +1,6 @@
 package pl.dszerszen.randommovie.Activity.StartActivity;
 
+import android.animation.Animator;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,6 +10,9 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.Toast;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 
@@ -24,6 +28,7 @@ import pl.dszerszen.randommovie.Activity.FavListActivity.FavListActivity;
 import pl.dszerszen.randommovie.Activity.MovieDetailsActivity.MovieDetailsActivity;
 import pl.dszerszen.randommovie.Carousel.CarouselAdapter;
 import pl.dszerszen.randommovie.Carousel.CarouselMoviePOJO;
+import pl.dszerszen.randommovie.EventBus.CarouselReadyEvent;
 import pl.dszerszen.randommovie.Network.SingleMovieDetails;
 import pl.dszerszen.randommovie.R;
 
@@ -34,7 +39,7 @@ public class StartActivity extends AppCompatActivity implements StartInterface.V
 
     @BindView(R.id.start_search_btn) Button randomButton;
     @BindView(R.id.start_fav_btn) Button favorites;
-    @BindView(R.id.start_tmdb_image) ImageView tmdbImage;
+    @BindView(R.id.start_api_image) ImageView apiImage;
     @BindView(R.id.start_carousel_frame) FrameLayout carouselFrame;
     @BindView(R.id.start_apilogo_layout) ConstraintLayout logoLayout;
     FeatureCoverFlow carousel;
@@ -66,6 +71,18 @@ public class StartActivity extends AppCompatActivity implements StartInterface.V
 
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        EventBus.getDefault().unregister(this);
+    }
+
     public void setupActionBar() {
         actionBar = getSupportActionBar();
         //actionBar.setDisplayHomeAsUpEnabled(true);
@@ -75,14 +92,36 @@ public class StartActivity extends AppCompatActivity implements StartInterface.V
     public void setApiLogoView() {
             logoLayout.setVisibility(View.VISIBLE);
             Handler handler = new Handler();
-            handler.postDelayed(() -> logoLayout.setVisibility(View.GONE), 3000);
+            handler.postDelayed(() -> logoLayout.setVisibility(View.GONE), 1);
     }
 
-    @Override
-    protected void onStop() {
-        super.onStop();
-    }
+    @Subscribe
+    public void showCarousel(CarouselReadyEvent event) {
+        apiImage.animate().alpha(0.0f).setDuration(500).setListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animation) {
 
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                apiImage.setVisibility(View.GONE);
+                carouselFrame.setVisibility(View.VISIBLE);
+                carouselFrame.setAlpha(0.0f);
+                carouselFrame.animate().alpha(1.0f).setDuration(500).start();
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animation) {
+
+            }
+        });
+    }
 
     @Override
     public void showToast(String message) {

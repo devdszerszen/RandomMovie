@@ -2,19 +2,25 @@ package pl.dszerszen.randommovie.Carousel;
 
 import android.content.Context;
 import android.content.Intent;
+import android.telecom.Call;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 
+import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 
 import androidx.appcompat.app.AppCompatActivity;
 import it.moondroid.coverflow.components.ui.containers.FeatureCoverFlow;
 import pl.dszerszen.randommovie.Activity.MovieDetailsActivity.MovieDetailsActivity;
+import pl.dszerszen.randommovie.EventBus.CarouselReadyEvent;
 import pl.dszerszen.randommovie.R;
 
 public class CarouselAdapter extends BaseAdapter {
@@ -24,6 +30,7 @@ public class CarouselAdapter extends BaseAdapter {
     private AppCompatActivity activity;
     private ArrayList<CarouselMoviePOJO> data;
     private FeatureCoverFlow view;
+    private int loadedImagesCounter = 0;
 
     public CarouselAdapter(AppCompatActivity context, ArrayList<CarouselMoviePOJO> data, FeatureCoverFlow view) {
         this.activity = context;
@@ -59,7 +66,17 @@ public class CarouselAdapter extends BaseAdapter {
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
-        Picasso.get().load(BASE_URL+data.get(position).posterPath).into(viewHolder.posterImage);
+        Picasso.get().load(BASE_URL+data.get(position).posterPath).into(viewHolder.posterImage, new Callback() {
+            @Override
+            public void onSuccess() {
+                checkCarouselReady();
+            }
+
+            @Override
+            public void onError(Exception e) {
+
+            }
+        });
 
         convertView.setOnClickListener(v -> {
             Intent intent = new Intent(activity, MovieDetailsActivity.class);
@@ -70,6 +87,14 @@ public class CarouselAdapter extends BaseAdapter {
         });
 
         return convertView;
+    }
+
+    private synchronized void checkCarouselReady() {
+        loadedImagesCounter++;
+        Log.d(TAG,"Check carousel, ready: " +  + loadedImagesCounter);
+        if (loadedImagesCounter == data.size()) {
+            EventBus.getDefault().post(new CarouselReadyEvent());
+        }
     }
 
     private static class ViewHolder {
