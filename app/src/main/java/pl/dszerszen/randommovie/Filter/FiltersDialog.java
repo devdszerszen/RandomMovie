@@ -44,6 +44,8 @@ public class FiltersDialog extends Dialog {
         this.activity = (StartActivityFilter)context;
         this.filterData = FilterData.getInstance();
         this.setContentView(R.layout.dialog_filter_view);
+        this.getWindow().setDimAmount(0.9f);
+        this.getWindow().setBackgroundDrawableResource(R.drawable.filter_background);
         this.show();
 
         //Genres

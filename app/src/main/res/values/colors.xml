@@ -4,6 +4,8 @@
     <color name="colorPrimaryDark">#741f2e</color>
     <color name="colorAccent">#d48f05</color>
     <color name="background">#212121</color>
+    <color name="filters_background">#313131</color>
     <color name="favourites_background">#2d2e2e</color>
     <color name="colorGray">#757575</color>
+    <color name="white">#FFFFFF</color>
 </resources>

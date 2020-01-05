@@ -10,7 +10,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import androidx.annotation.Nullable;
+import androidx.core.widget.NestedScrollView;
 import pl.dszerszen.randommovie.Filter.FilterData;
+import pl.dszerszen.randommovie.Filter.FiltersDialog;
 import pl.dszerszen.randommovie.Filter.SingleFilter;
 import pl.dszerszen.randommovie.R;
 
@@ -68,7 +70,7 @@ public class FilterExpandView extends LinearLayout {
             StringBuilder builder = new StringBuilder();
             builder.append(title).append(": ").append(currentFilterValue);
             tv_title.setText(builder);
-            tv_title.setTextColor(getResources().getColor(R.color.colorPrimary,null));
+            tv_title.setTextColor(getResources().getColor(R.color.colorAccent,null));
             tv_title.setTypeface(null,Typeface.BOLD);
         }
     }
@@ -77,8 +79,10 @@ public class FilterExpandView extends LinearLayout {
         ((View)child).setVisibility(VISIBLE);
         chevron.setRotation(180f);
         tv_title.setText(title);
-        tv_title.setTextColor(getResources().getColor(R.color.colorGray,null));
+        tv_title.setTextColor(getResources().getColor(R.color.white,null));
         tv_title.setTypeface(null,Typeface.NORMAL);
+        NestedScrollView parent = (NestedScrollView) this.getParent().getParent();
+        parent.fullScroll(View.FOCUS_DOWN);
     }
 
     public boolean isChecked() {

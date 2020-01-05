@@ -99,7 +99,7 @@ public class MovieDetailsActivity extends BaseActivity implements MovieDetailsIn
         FiltersDialog dialog = new FiltersDialog(this, genres);
 
         int width = (int)(getResources().getDisplayMetrics().widthPixels*0.90);
-        int height = (int)(getResources().getDisplayMetrics().heightPixels*0.90);
+        int height = (int)(getResources().getDisplayMetrics().heightPixels*0.80);
         dialog.getWindow().setLayout(width, height);
     }
 

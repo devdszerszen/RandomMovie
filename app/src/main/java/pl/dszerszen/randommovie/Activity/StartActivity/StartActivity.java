@@ -47,7 +47,6 @@ public class StartActivity extends AppCompatActivity implements StartInterface.V
     @BindView(R.id.start_fav_btn) Button favorites;
     @BindView(R.id.start_api_image) ImageView apiImage;
     @BindView(R.id.start_carousel_frame) FrameLayout carouselFrame;
-    @BindView(R.id.start_apilogo_layout) ConstraintLayout logoLayout;
     FeatureCoverFlow carousel;
     ActionBar actionBar;
 
@@ -96,9 +95,9 @@ public class StartActivity extends AppCompatActivity implements StartInterface.V
 
     @Override
     public void setApiLogoView() {
-            logoLayout.setVisibility(View.VISIBLE);
-            Handler handler = new Handler();
-            handler.postDelayed(() -> logoLayout.setVisibility(View.GONE), 1);
+//            logoLayout.setVisibility(View.VISIBLE);
+//            Handler handler = new Handler();
+//            handler.postDelayed(() -> logoLayout.setVisibility(View.GONE), 1);
     }
 
     @Subscribe

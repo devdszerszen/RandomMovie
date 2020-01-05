@@ -8,15 +8,18 @@
     <com.jaygoo.widget.RangeSeekBar
         android:id="@+id/minmax_seekbar"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:padding="12dp"
+        android:layout_height="60dp"
+        android:layout_marginBottom="4dp"
+        android:padding="10dp"
         app:rsb_gravity="top"
-        app:rsb_indicator_background_color="@color/colorPrimary"
+        app:rsb_indicator_background_color="@color/colorAccent"
         app:rsb_indicator_height="wrap_content"
-        app:rsb_indicator_padding_bottom="2dp"
-        app:rsb_indicator_padding_left="3dp"
-        app:rsb_indicator_padding_right="3dp"
-        app:rsb_indicator_padding_top="2dp"
+        app:rsb_indicator_margin="2dp"
+        app:rsb_indicator_padding_bottom="4dp"
+        app:rsb_indicator_padding_left="4dp"
+        app:rsb_indicator_padding_right="4dp"
+        app:rsb_indicator_padding_top="4dp"
+        app:rsb_indicator_radius="4dp"
         app:rsb_indicator_show_mode="alwaysShow"
         app:rsb_indicator_width="8dp"
         app:rsb_min_interval="5"
@@ -29,7 +32,7 @@
         app:rsb_thumb_height="19dp"
         app:rsb_thumb_width="19dp"
         app:rsb_tick_mark_mode="number"
-        tools:rsb_indicator_background_color="@color/colorPrimary" />
+        app:rsb_tick_mark_text_margin="4dp" />
 
     <LinearLayout
         android:id="@+id/minmax_mainLayout"
