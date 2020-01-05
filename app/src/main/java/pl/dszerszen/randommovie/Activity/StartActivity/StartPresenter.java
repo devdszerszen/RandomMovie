@@ -33,7 +33,7 @@ import pl.dszerszen.randommovie.SharPrefs.SharPrefsManager;
 public class StartPresenter implements StartInterface.Presenter, Serializable {
 
     final String TAG = "RandomMovie_log";
-    final int postersCount = 6;
+    final int postersCount = 8;
 
     private StartInterface.View view;
     private TmdbConnector connector;
@@ -127,8 +127,9 @@ public class StartPresenter implements StartInterface.Presenter, Serializable {
                 for (int i=0; i<postersCount; i++) {
                     if (responseMovieList.results.get(i).posterPath != null) {
                         String path = responseMovieList.results.get(i).posterPath;
+                        String title = responseMovieList.results.get(i).title;
                         int id = responseMovieList.results.get(i).id;
-                        postersList.add(new CarouselMoviePOJO(path, id));
+                        postersList.add(new CarouselMoviePOJO(path, title, id));
                     }
                 }
 

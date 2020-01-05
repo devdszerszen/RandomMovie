@@ -96,4 +96,7 @@ dependencies {
 
     //Carousel
     implementation 'com.github.moondroid.coverflow:library:1.0'
+
+    //Tutorial
+    implementation 'me.toptas.fancyshowcase:fancyshowcaseview:1.2.1'
 }

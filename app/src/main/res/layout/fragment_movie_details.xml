@@ -234,8 +234,8 @@
 
         <FrameLayout
             android:id="@+id/df_rating_element"
-            android:layout_width="75dp"
-            android:layout_height="80dp"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             app:layout_constraintEnd_toEndOf="@+id/df_poster"
@@ -253,7 +253,7 @@
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:textColor="@color/colorAccent"
-                android:textSize="28dp"
+                android:textSize="24sp"
                 android:textStyle="bold" />
         </FrameLayout>
 

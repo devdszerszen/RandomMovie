@@ -6,13 +6,16 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 
@@ -24,6 +27,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import it.moondroid.coverflow.components.ui.containers.FeatureCoverFlow;
+import me.toptas.fancyshowcase.FancyShowCaseView;
+import me.toptas.fancyshowcase.FocusShape;
+import me.toptas.fancyshowcase.listener.OnViewInflateListener;
 import pl.dszerszen.randommovie.Activity.FavListActivity.FavListActivity;
 import pl.dszerszen.randommovie.Activity.MovieDetailsActivity.MovieDetailsActivity;
 import pl.dszerszen.randommovie.Carousel.CarouselAdapter;
@@ -97,30 +103,21 @@ public class StartActivity extends AppCompatActivity implements StartInterface.V
 
     @Subscribe
     public void showCarousel(CarouselReadyEvent event) {
-        apiImage.animate().alpha(0.0f).setDuration(500).setListener(new Animator.AnimatorListener() {
-            @Override
-            public void onAnimationStart(Animator animation) {
-
-            }
-
-            @Override
-            public void onAnimationEnd(Animator animation) {
-                apiImage.setVisibility(View.GONE);
-                carouselFrame.setVisibility(View.VISIBLE);
-                carouselFrame.setAlpha(0.0f);
-                carouselFrame.animate().alpha(1.0f).setDuration(500).start();
-            }
-
-            @Override
-            public void onAnimationCancel(Animator animation) {
-
-            }
-
-            @Override
-            public void onAnimationRepeat(Animator animation) {
-
-            }
-        });
+        apiImage.animate()
+                .alpha(0.0f)
+                .setDuration(500)
+                .withEndAction(() -> {
+                    apiImage.setVisibility(View.GONE);
+                    carouselFrame.setVisibility(View.VISIBLE);
+                    carouselFrame.setAlpha(0.0f);
+                    carouselFrame.animate()
+                            .alpha(1.0f)
+                            .setDuration(500)
+                            .withEndAction(() -> {
+                                //showTutorial(carouselFrame);
+                            })
+                            .start();
+                }).start();
     }
 
     @Override
@@ -178,9 +175,17 @@ public class StartActivity extends AppCompatActivity implements StartInterface.V
             startActivityForResult(intent, RC_LOGIN);
             dialog.dismiss();
         });
-
-
     }
+
+//    public void showTutorial(View view) {
+//        new FancyShowCaseView.Builder(this)
+//                .focusShape(FocusShape.ROUNDED_RECTANGLE)
+//                .focusOn(randomButton)
+//                .titleGravity(-1)
+//                .title("Click to get movie")
+//                .build()
+//                .show();
+//    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {

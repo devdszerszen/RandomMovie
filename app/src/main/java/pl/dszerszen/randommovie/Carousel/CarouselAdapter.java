@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
@@ -82,8 +83,6 @@ public class CarouselAdapter extends BaseAdapter {
             Intent intent = new Intent(activity, MovieDetailsActivity.class);
             intent.putExtra("MOVIE_ID",data.get(position).id);
             activity.startActivity(intent);
-//            Log.d(TAG, "getView: Clicked element on position: " + position);
-//            Log.d(TAG, "getView: Current scroll position: " + view.getScrollPosition());
         });
 
         return convertView;
