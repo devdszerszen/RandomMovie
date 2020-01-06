@@ -200,7 +200,7 @@ public class MovieDetailsPresenter implements MovieDetailsInterface.Presenter{
                 view.setMovieAsFavourite(true);
             }
         } else {
-            Log.d(TAG, "onFavIconClicked: User not logged");
+            view.showLoginPrompt();
         }
     }
 

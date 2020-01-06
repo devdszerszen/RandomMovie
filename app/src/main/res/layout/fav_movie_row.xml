@@ -98,13 +98,13 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <Button
-                android:id="@+id/button3"
+                android:id="@+id/fav_details_btn"
                 style="@style/BorderlessButton"
                 android:layout_width="wrap_content"
                 android:layout_height="30dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="16dp"
-                android:text="Button"
+                android:text="Przejdź do szczegółów"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@+id/fav_description"
                 app:layout_constraintTop_toBottomOf="@+id/fav_description" />

@@ -12,10 +12,14 @@ import pl.dszerszen.randommovie.Network.ResponseGenre;
 import pl.dszerszen.randommovie.Network.SingleMovieDetails;
 import pl.dszerszen.randommovie.Activity.StartActivity.StartActivityFilter;
 
+import android.app.Activity;
+import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -121,6 +125,13 @@ public class MovieDetailsActivity extends BaseActivity implements MovieDetailsIn
         else menu.findItem(R.id.menu_favIcon).setIcon(android.R.drawable.btn_star_big_off);
     }
 
+    @Override
+    public void backToStartActivityWithLoginPrompt() {
+        Intent returnIntent = new Intent();
+        setResult(Activity.RESULT_FIRST_USER,returnIntent);
+        finish();
+    }
+
     public void setupBadge() {
         int notificationsCount = filterData.getFiltersCount();
         if (notificationBadge!=null) {
@@ -165,6 +176,27 @@ public class MovieDetailsActivity extends BaseActivity implements MovieDetailsIn
     @Override
     public void showMessage(String message) {
         runOnUiThread(() -> showToastMessage(message));
+    }
+
+    @Override
+    public void showLoginPrompt() {
+        Dialog dialog = new Dialog(this);
+        dialog.setContentView(R.layout.dialog_login);
+        dialog.setCancelable(false);
+        dialog.getWindow().setDimAmount(0.9f);
+        dialog.getWindow().setBackgroundDrawableResource(R.drawable.filter_background);
+        dialog.show();
+
+        Button positive = dialog.findViewById(R.id.login_btn_pos);
+        Button negative = dialog.findViewById(R.id.login_btn_neg);
+
+        negative.setOnClickListener(v -> {
+            dialog.dismiss();
+        });
+        positive.setOnClickListener(v -> {
+            backToStartActivityWithLoginPrompt();
+            dialog.dismiss();
+        });
     }
 
     @Override

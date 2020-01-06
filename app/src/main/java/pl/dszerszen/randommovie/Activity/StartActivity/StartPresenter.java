@@ -45,15 +45,13 @@ public class StartPresenter implements StartInterface.Presenter, Serializable {
     public StartPresenter(StartInterface.View view) {
         this.view = view;
         this.connector = new TmdbConnector(MyApplication.getContext().getResources().getString(R.string.language_key));
-        this.firebaseAuth = AuthManager.getInstance((Context)view);
+        this.firebaseAuth = AuthManager.getInstance((Context) view);
         this.firebaseDatabase = DatabaseManager.getInstance();
         this.sharPrefsManager = SharPrefsManager.getSharPrefsInstance();
+        getPostersList();
 
         if (isUserLogged()) {
             firebaseDatabase.incrementCounter();
-            getPostersList();
-        } else {
-            showLoginPrompt();
         }
     }
 
@@ -68,12 +66,18 @@ public class StartPresenter implements StartInterface.Presenter, Serializable {
         if (isUserLogged()) {
             view.startFavListActivity();
         } else {
-            showLoginPrompt();
+            showLoginPrompt(true);
         }
     }
 
-    private void showLoginPrompt() {
-        view.showLoginPrompt(firebaseAuth.getSignInIntent());
+    @Override
+    public void showLoginPrompt(Boolean withDialog) {
+        if (withDialog) {
+            view.showLoginPrompt(firebaseAuth.getSignInIntent());
+        } else {
+            view.showLoginPromptWithoutDialog(firebaseAuth.getSignInIntent());
+        }
+
     }
 
     //Used when user selects google account to be logged in

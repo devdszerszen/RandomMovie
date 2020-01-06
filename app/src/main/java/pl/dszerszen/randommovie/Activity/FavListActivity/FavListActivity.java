@@ -4,10 +4,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import pl.dszerszen.randommovie.Activity.MovieDetailsActivity.MovieDetailsActivity;
 import pl.dszerszen.randommovie.Base.BaseActivity;
 import pl.dszerszen.randommovie.Firebase.FirebaseStoredMovie;
 import pl.dszerszen.randommovie.R;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ProgressBar;
@@ -62,6 +64,13 @@ public class FavListActivity extends BaseActivity implements FavInterface.View, 
         if (moviesList.size()==0) {
             showNoResultsMessage();
         }
+    }
+
+    @Override
+    public void startDetailsActivity(int id) {
+        Intent intent = new Intent(this,MovieDetailsActivity.class);
+        intent.putExtra("MOVIE_ID",id);
+        startActivity(intent);
     }
 
     @Override

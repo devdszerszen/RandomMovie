@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.ScaleAnimation;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -45,6 +46,7 @@ public class FavListAdapter extends RecyclerView.Adapter<FavListAdapter.ViewHold
         public TextView title;
         public ImageButton deleteButton;
         public ConstraintLayout details;
+        public Button detailsButton;
         public TextView description;
         public TextView genre;
         public ImageView poster;
@@ -57,6 +59,7 @@ public class FavListAdapter extends RecyclerView.Adapter<FavListAdapter.ViewHold
             title = itemView.findViewById(R.id.fav_title);
             deleteButton = itemView.findViewById(R.id.fav_delete_btn);
             details = itemView.findViewById(R.id.fav_details);
+            detailsButton = itemView.findViewById(R.id.fav_details_btn);
             description = itemView.findViewById(R.id.fav_description);
             poster = itemView.findViewById(R.id.fav_poster);
             genre = itemView.findViewById(R.id.fav_genre);
@@ -103,6 +106,10 @@ public class FavListAdapter extends RecyclerView.Adapter<FavListAdapter.ViewHold
             if (moviesList.size()==0) {
                 activity.showNoResultsMessage();
             }
+        });
+
+        holder.detailsButton.setOnClickListener(v -> {
+            activity.startDetailsActivity(moviesList.get(position).id);
         });
     }
 

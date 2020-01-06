@@ -12,6 +12,7 @@ public interface StartInterface {
         void showToast(String message);
         void startDetailsActivity();
         void showLoginPrompt(Intent intent);
+        void showLoginPromptWithoutDialog(Intent intent);
         void startFavListActivity();
         void setPostersList(ArrayList<CarouselMoviePOJO> postersUriList);
         void setApiLogoView();
@@ -21,5 +22,6 @@ public interface StartInterface {
         void searchButtonClicked();
         void favouritesButtonClicked();
         void loginToFirebaseWithSelectedGoogleAccount(Intent data);
+        void showLoginPrompt(Boolean withDialog);
     }
 }

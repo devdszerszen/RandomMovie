@@ -14,8 +14,9 @@ public interface MovieDetailsInterface {
         void hideLoader();
         void saveGenresList(List<ResponseGenre.Genre> genresList);
         void showMessage(String message);
-
+        void showLoginPrompt();
         void showNetworkError();
+        void backToStartActivityWithLoginPrompt();
     }
 
     interface Presenter {

@@ -1,6 +1,7 @@
 package pl.dszerszen.randommovie.Activity.StartActivity;
 
 import android.animation.Animator;
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -41,7 +42,8 @@ import pl.dszerszen.randommovie.R;
 public class StartActivity extends AppCompatActivity implements StartInterface.View{
     
     final String TAG = "RandomMovie_log";
-    final int RC_LOGIN = 187;
+    final public static int RC_LOGIN = 187;
+    final static int RC_MOVIE = 188;
 
     @BindView(R.id.start_search_btn) Button randomButton;
     @BindView(R.id.start_fav_btn) Button favorites;
@@ -128,7 +130,7 @@ public class StartActivity extends AppCompatActivity implements StartInterface.V
     public void startDetailsActivity() {
         Intent intent = new Intent(this,MovieDetailsActivity.class);
         SingleMovieDetails details = new SingleMovieDetails();
-        startActivity(intent);
+        startActivityForResult(intent,RC_MOVIE);
     }
 
     @Override
@@ -189,10 +191,21 @@ public class StartActivity extends AppCompatActivity implements StartInterface.V
 //    }
 
     @Override
+    public void showLoginPromptWithoutDialog(Intent intent) {
+        startActivityForResult(intent, RC_LOGIN);
+    }
+
+    @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == RC_LOGIN) {
             presenter.loginToFirebaseWithSelectedGoogleAccount(data);
+        }
+        else if (requestCode == RC_MOVIE) {
+            if (resultCode == Activity.RESULT_FIRST_USER) {
+                presenter.showLoginPrompt(false);
+            }
+
         }
     }
 
