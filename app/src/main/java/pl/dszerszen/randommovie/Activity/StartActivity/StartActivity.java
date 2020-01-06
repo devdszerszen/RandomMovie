@@ -36,6 +36,7 @@ import pl.dszerszen.randommovie.Activity.MovieDetailsActivity.MovieDetailsActivi
 import pl.dszerszen.randommovie.Carousel.CarouselAdapter;
 import pl.dszerszen.randommovie.Carousel.CarouselMoviePOJO;
 import pl.dszerszen.randommovie.EventBus.CarouselReadyEvent;
+import pl.dszerszen.randommovie.MessageCode;
 import pl.dszerszen.randommovie.Network.SingleMovieDetails;
 import pl.dszerszen.randommovie.R;
 
@@ -95,7 +96,7 @@ public class StartActivity extends AppCompatActivity implements StartInterface.V
 
     public void setupActionBar() {
         actionBar = getSupportActionBar();
-        //actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.hide();
     }
 
     @Override
@@ -127,6 +128,14 @@ public class StartActivity extends AppCompatActivity implements StartInterface.V
     @Override
     public void showToast(String message) {
         Toast.makeText(StartActivity.this, message, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void showToast(int code) {
+        switch (code) {
+            case MessageCode.USER_LOGGED_OK:
+                showToast(getString(R.string.user_logged_toast));
+        }
     }
 
     @Override

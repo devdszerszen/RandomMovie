@@ -168,6 +168,7 @@ public class MovieDetailsFragment extends Fragment {
 
 
     public void showMovieDetails(SingleMovieDetails movieDetails) {
+        try {
         if (movieDetails != null) {
 
             //URL
@@ -180,7 +181,7 @@ public class MovieDetailsFragment extends Fragment {
             //Genres
             genresLayout.removeAllViews();
             for (int i = 0; i < movieDetails.genres.size(); i++) {
-                TextView tmpTxtView = new TextView((Context)mListener);
+                TextView tmpTxtView = new TextView((Context) mListener);
                 tmpTxtView.setTextColor(Color.WHITE);
                 LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT, 1f);
                 tmpTxtView.setLayoutParams(params);
@@ -191,11 +192,11 @@ public class MovieDetailsFragment extends Fragment {
             }
 
             //Year
-            yearValue.setText(String.valueOf(movieDetails.releaseDate).substring(0,4));
+            yearValue.setText(String.valueOf(movieDetails.releaseDate).substring(0, 4));
 
             //Time
             if (movieDetails.runtime > 0) {
-                String timeWithMins = String.format(Locale.getDefault(),"%d min",movieDetails.runtime);
+                String timeWithMins = String.format(Locale.getDefault(), "%d min", movieDetails.runtime);
                 timeValue.setText(timeWithMins);
             } else {
                 timeValue.setText("N/A");
@@ -218,17 +219,20 @@ public class MovieDetailsFragment extends Fragment {
                 Picasso.get()
                         .load(BASE_URL + movieDetails.backdropPath)
                         .into(posterView, new Callback() {
-                    @Override
-                    public void onSuccess() {
-                        stopLoader();
-                    }
+                            @Override
+                            public void onSuccess() {
+                                stopLoader();
+                            }
 
-                    @Override
-                    public void onError(Exception e) {
+                            @Override
+                            public void onError(Exception e) {
 
-                    }
-                });
+                            }
+                        });
             }
+        }
+        } catch (Exception e) {
+            Log.d(TAG, "Catched: " + e.getLocalizedMessage());
         }
     }
 
@@ -238,8 +242,12 @@ public class MovieDetailsFragment extends Fragment {
     }
 
     public void stopLoader() {
-        loader.setVisibility(GONE);
-        detailsLayout.setVisibility(View.VISIBLE);
+        try {
+            loader.setVisibility(GONE);
+            detailsLayout.setVisibility(View.VISIBLE);
+        } catch (Exception e) {
+            Log.d(TAG,"Catched: " + e.getLocalizedMessage());
+        }
     }
 
     public void showNetworkError() {

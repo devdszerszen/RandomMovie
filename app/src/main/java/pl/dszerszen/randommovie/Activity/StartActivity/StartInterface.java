@@ -10,6 +10,7 @@ public interface StartInterface {
 
     interface View{
         void showToast(String message);
+        void showToast (int code);
         void startDetailsActivity();
         void showLoginPrompt(Intent intent);
         void showLoginPromptWithoutDialog(Intent intent);

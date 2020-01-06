@@ -7,6 +7,7 @@ import butterknife.ButterKnife;
 import pl.dszerszen.randommovie.Base.BaseActivity;
 import pl.dszerszen.randommovie.Filter.FilterData;
 import pl.dszerszen.randommovie.Filter.FiltersDialog;
+import pl.dszerszen.randommovie.MessageCode;
 import pl.dszerszen.randommovie.R;
 import pl.dszerszen.randommovie.Network.ResponseGenre;
 import pl.dszerszen.randommovie.Network.SingleMovieDetails;
@@ -167,8 +168,16 @@ public class MovieDetailsActivity extends BaseActivity implements MovieDetailsIn
     }
 
     @Override
-    public void showMessage(String message) {
+    public void showToast(String message) {
         runOnUiThread(() -> showToastMessage(message));
+    }
+
+    @Override
+    public void showToast(int code) {
+        switch (code) {
+            case MessageCode.MOVIE_ADDED_FAV:
+                showToast(getString(R.string.movie_fav_toast));
+        }
     }
 
     @Override

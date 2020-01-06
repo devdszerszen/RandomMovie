@@ -13,7 +13,8 @@ public interface MovieDetailsInterface {
         void showLoader();
         void hideLoader();
         void saveGenresList(List<ResponseGenre.Genre> genresList);
-        void showMessage(String message);
+        void showToast(String message);
+        void showToast(int code);
         void showLoginPrompt();
         void showNetworkError();
         void backToStartActivityWithLoginPrompt();

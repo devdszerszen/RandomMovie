@@ -27,4 +27,6 @@
     <string name="login_prompt">By skorzystać z tej funkcji zaloguj się przy użyciu konta Google.</string>
     <string name="cancel">Anuluj</string>
     <string name="Login">Zaloguj</string>
+    <string name="user_logged_toast">Logowanie zakończone sukcesem!</string>
+    <string name="movie_fav_toast">Film dodany do ulubionych!</string>
 </resources>

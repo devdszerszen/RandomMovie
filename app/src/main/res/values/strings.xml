@@ -29,4 +29,6 @@
     <string name="login_prompt">Log in with Google to access this function.</string>
     <string name="cancel">Cancel</string>
     <string name="Login">Log in</string>
+    <string name="user_logged_toast">Succesfully logged in!</string>
+    <string name="movie_fav_toast">Movie added to list!</string>
 </resources>

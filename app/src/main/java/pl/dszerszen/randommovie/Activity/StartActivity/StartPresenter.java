@@ -25,6 +25,7 @@ import pl.dszerszen.randommovie.Firebase.AuthManager;
 import pl.dszerszen.randommovie.Firebase.DatabaseManager;
 import pl.dszerszen.randommovie.Firebase.FirebaseAuthInterface;
 import pl.dszerszen.randommovie.Firebase.FirebaseDBInterface;
+import pl.dszerszen.randommovie.MessageCode;
 import pl.dszerszen.randommovie.Network.ResponseMovieList;
 import pl.dszerszen.randommovie.Network.TmdbConnector;
 import pl.dszerszen.randommovie.R;
@@ -105,6 +106,7 @@ public class StartPresenter implements StartInterface.Presenter, Serializable {
             public void onComplete() {
                 Log.d(TAG, "onComplete: Firebase login successful");
                 firebaseDatabase.addUser(firebaseAuth.getLoggedAccount());
+                view.showToast(MessageCode.USER_LOGGED_OK);
             }
 
             @Override
