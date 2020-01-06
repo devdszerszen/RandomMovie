@@ -125,13 +125,6 @@ public class MovieDetailsActivity extends BaseActivity implements MovieDetailsIn
         else menu.findItem(R.id.menu_favIcon).setIcon(android.R.drawable.btn_star_big_off);
     }
 
-    @Override
-    public void backToStartActivityWithLoginPrompt() {
-        Intent returnIntent = new Intent();
-        setResult(Activity.RESULT_FIRST_USER,returnIntent);
-        finish();
-    }
-
     public void setupBadge() {
         int notificationsCount = filterData.getFiltersCount();
         if (notificationBadge!=null) {
@@ -197,6 +190,14 @@ public class MovieDetailsActivity extends BaseActivity implements MovieDetailsIn
             backToStartActivityWithLoginPrompt();
             dialog.dismiss();
         });
+    }
+
+    @Override
+    public void backToStartActivityWithLoginPrompt() {
+        Intent returnIntent = new Intent();
+        returnIntent.putExtra("MOVIE_ID",currentMovie.id);
+        setResult(Activity.RESULT_FIRST_USER,returnIntent);
+        finish();
     }
 
     @Override

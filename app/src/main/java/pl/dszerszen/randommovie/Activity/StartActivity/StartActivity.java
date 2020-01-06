@@ -55,6 +55,9 @@ public class StartActivity extends AppCompatActivity implements StartInterface.V
     private StartInterface.Presenter presenter;
     private CarouselAdapter carouselAdapter;
 
+    //Used in unlogged user use case - to show the same movie after logging in
+    private int unloggedMovieId = -1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -129,7 +132,10 @@ public class StartActivity extends AppCompatActivity implements StartInterface.V
     @Override
     public void startDetailsActivity() {
         Intent intent = new Intent(this,MovieDetailsActivity.class);
-        SingleMovieDetails details = new SingleMovieDetails();
+        if (unloggedMovieId != -1) {
+            intent.putExtra("MOVIE_ID",unloggedMovieId);
+            unloggedMovieId = -1;
+        }
         startActivityForResult(intent,RC_MOVIE);
     }
 
@@ -203,6 +209,7 @@ public class StartActivity extends AppCompatActivity implements StartInterface.V
         }
         else if (requestCode == RC_MOVIE) {
             if (resultCode == Activity.RESULT_FIRST_USER) {
+                unloggedMovieId = data.getExtras().getInt("MOVIE_ID");
                 presenter.showLoginPrompt(false);
             }
 
