@@ -162,6 +162,8 @@ public class StartActivity extends AppCompatActivity implements StartInterface.V
         Dialog dialog = new Dialog(this);
         dialog.setContentView(R.layout.dialog_login);
         dialog.setCancelable(false);
+        dialog.getWindow().setDimAmount(0.9f);
+        dialog.getWindow().setBackgroundDrawableResource(R.drawable.filter_background);
         dialog.show();
 
         Button positive = dialog.findViewById(R.id.login_btn_pos);
