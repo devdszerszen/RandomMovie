@@ -48,6 +48,7 @@ public class StartActivity extends AppCompatActivity implements StartInterface.V
 
     @BindView(R.id.start_search_btn) Button randomButton;
     @BindView(R.id.start_fav_btn) Button favorites;
+    @BindView(R.id.start_buttons_layout) ConstraintLayout buttonsLayout;
     @BindView(R.id.start_api_image) ImageView apiImage;
     @BindView(R.id.start_carousel_frame) FrameLayout carouselFrame;
     FeatureCoverFlow carousel;
@@ -96,7 +97,6 @@ public class StartActivity extends AppCompatActivity implements StartInterface.V
 
     public void setupActionBar() {
         actionBar = getSupportActionBar();
-        actionBar.hide();
     }
 
     @Override
@@ -109,10 +109,18 @@ public class StartActivity extends AppCompatActivity implements StartInterface.V
     @Subscribe
     public void showCarousel(CarouselReadyEvent event) {
         apiImage.animate()
-                .alpha(0.0f)
-                .setDuration(500)
+                // Approach 1
+//                .alpha(0.0f)
+//                .setDuration(500)
+
+                // Approach 2
+                //.translationY(buttonsLayout.getBottom()-carouselFrame.getBottom()-apiImage.getTop())
+                .translationY(buttonsLayout.getBottom()-carouselFrame.getBottom() + 1.5f*buttonsLayout.getHeight())
+                .setDuration(300)
+                .scaleX(0.4f)
+                .scaleY(0.4f)
                 .withEndAction(() -> {
-                    apiImage.setVisibility(View.GONE);
+                    //apiImage.setVisibility(View.GONE);
                     carouselFrame.setVisibility(View.VISIBLE);
                     carouselFrame.setAlpha(0.0f);
                     carouselFrame.animate()
