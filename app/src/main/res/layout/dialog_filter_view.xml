@@ -116,7 +116,7 @@
 
         <Button
             android:id="@+id/dialog_negative_btn"
-            style="@style/FilterButton"
+            style="@style/BorderlessButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
@@ -128,7 +128,7 @@
 
         <Button
             android:id="@+id/dialog_positive_btn"
-            style="@style/FilterButton"
+            style="@style/DefaultButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
