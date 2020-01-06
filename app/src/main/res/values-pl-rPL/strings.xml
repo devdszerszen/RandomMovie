@@ -29,4 +29,6 @@
     <string name="Login">Zaloguj</string>
     <string name="user_logged_toast">Logowanie zakończone sukcesem!</string>
     <string name="movie_fav_toast">Film dodany do ulubionych!</string>
+    <string name="gameInfoStatic">Aplikacja umożliwia rywalizację dwóch graczy na jednym urządzeniu. Planuję nadal ją rozwijać, jeśli masz jakiekolwiek pomysły lub spostrzeżenia, skontatuj się ze mną.</string>
+    <string name="sendMailButton">Wyślij wiadomość</string>
 </resources>

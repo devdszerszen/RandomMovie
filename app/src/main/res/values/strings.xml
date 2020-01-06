@@ -31,4 +31,8 @@
     <string name="Login">Log in</string>
     <string name="user_logged_toast">Succesfully logged in!</string>
     <string name="movie_fav_toast">Movie added to list!</string>
+    <string name="devMail" translatable="false">devdszerszen@gmail.com</string>
+    <string name="devName" translatable="false">Damian Szerszeń</string>
+    <string name="gameInfoStatic">The application allows the competition of two players on one device. I would like to continue to develop it, if you have any ideas or insights, please contact me.</string>
+    <string name="sendMailButton">Send message</string>
 </resources>

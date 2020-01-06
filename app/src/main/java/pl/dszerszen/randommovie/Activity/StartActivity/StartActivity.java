@@ -6,6 +6,9 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -32,6 +35,7 @@ import me.toptas.fancyshowcase.FancyShowCaseView;
 import me.toptas.fancyshowcase.FocusShape;
 import me.toptas.fancyshowcase.listener.OnViewInflateListener;
 import pl.dszerszen.randommovie.Activity.FavListActivity.FavListActivity;
+import pl.dszerszen.randommovie.Activity.InfoActivity.InfoActivity;
 import pl.dszerszen.randommovie.Activity.MovieDetailsActivity.MovieDetailsActivity;
 import pl.dszerszen.randommovie.Carousel.CarouselAdapter;
 import pl.dszerszen.randommovie.Carousel.CarouselMoviePOJO;
@@ -51,6 +55,7 @@ public class StartActivity extends AppCompatActivity implements StartInterface.V
     @BindView(R.id.start_buttons_layout) ConstraintLayout buttonsLayout;
     @BindView(R.id.start_api_image) ImageView apiImage;
     @BindView(R.id.start_carousel_frame) FrameLayout carouselFrame;
+    Menu menu;
     FeatureCoverFlow carousel;
     ActionBar actionBar;
 
@@ -93,6 +98,22 @@ public class StartActivity extends AppCompatActivity implements StartInterface.V
     protected void onStop() {
         super.onStop();
         EventBus.getDefault().unregister(this);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        this.menu = menu;
+        getMenuInflater().inflate(R.menu.menu_start, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.menu_settings) {
+            Intent intent = new Intent(this,InfoActivity.class);
+            startActivity(intent);
+        }
+        return true;
     }
 
     public void setupActionBar() {
