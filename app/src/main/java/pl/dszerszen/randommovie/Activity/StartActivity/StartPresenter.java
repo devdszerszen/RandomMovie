@@ -4,23 +4,18 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
-
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
-
-import org.greenrobot.eventbus.Subscribe;
-
 import java.io.Serializable;
 import java.util.ArrayList;
-
 import io.reactivex.CompletableObserver;
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
+import pl.dszerszen.randommovie.Base.BasePresenter;
 import pl.dszerszen.randommovie.Carousel.CarouselMoviePOJO;
 import pl.dszerszen.randommovie.Dagger.MyApplication;
-import pl.dszerszen.randommovie.EventBus.CarouselReadyEvent;
 import pl.dszerszen.randommovie.Firebase.AuthManager;
 import pl.dszerszen.randommovie.Firebase.DatabaseManager;
 import pl.dszerszen.randommovie.Firebase.FirebaseAuthInterface;
@@ -29,18 +24,16 @@ import pl.dszerszen.randommovie.MessageCode;
 import pl.dszerszen.randommovie.Network.ResponseMovieList;
 import pl.dszerszen.randommovie.Network.TmdbConnector;
 import pl.dszerszen.randommovie.R;
-import pl.dszerszen.randommovie.SharPrefs.SharPrefsManager;
 
-public class StartPresenter implements StartInterface.Presenter, Serializable {
+public class StartPresenter extends BasePresenter implements StartInterface.Presenter, Serializable {
 
-    final String TAG = "RandomMovie_log";
-    final int postersCount = 8;
+
+    private final int postersCount = 8;
 
     private StartInterface.View view;
     private TmdbConnector connector;
     private FirebaseAuthInterface firebaseAuth;
     private FirebaseDBInterface firebaseDatabase;
-    private SharPrefsManager sharPrefsManager;
     private ArrayList<CarouselMoviePOJO> postersList = new ArrayList<>();
 
     public StartPresenter(StartInterface.View view) {
@@ -48,7 +41,6 @@ public class StartPresenter implements StartInterface.Presenter, Serializable {
         this.connector = new TmdbConnector(MyApplication.getContext().getResources().getString(R.string.language_key));
         this.firebaseAuth = AuthManager.getInstance((Context) view);
         this.firebaseDatabase = DatabaseManager.getInstance();
-        this.sharPrefsManager = SharPrefsManager.getSharPrefsInstance();
         getPostersList();
 
         if (isUserLogged()) {
@@ -87,11 +79,9 @@ public class StartPresenter implements StartInterface.Presenter, Serializable {
         try {
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
             GoogleSignInAccount account = task.getResult(ApiException.class);
-            Log.d(TAG, "loginToFirebaseWithSelectedGoogleAccount: Logged successful on: " + account.getEmail());
             loginToFirebase(account);
             firebaseAuth.updateGoogleAccount(account);
         } catch (ApiException e) {
-            Log.d(TAG, "loginToFirebaseWithSelectedGoogleAccount: Error:" + e.getMessage());
         }
     }
 
@@ -104,14 +94,12 @@ public class StartPresenter implements StartInterface.Presenter, Serializable {
 
             @Override
             public void onComplete() {
-                Log.d(TAG, "onComplete: Firebase login successful");
                 firebaseDatabase.addUser(firebaseAuth.getLoggedAccount());
                 view.showToast(MessageCode.USER_LOGGED_OK);
             }
 
             @Override
             public void onError(Throwable e) {
-                Log.d(TAG, "onError: Firebase login error: " + e.getMessage());
             }
         });
     }
@@ -138,13 +126,6 @@ public class StartPresenter implements StartInterface.Presenter, Serializable {
                         postersList.add(new CarouselMoviePOJO(path, title, id));
                     }
                 }
-
-//                for (ResponseMovieList.Result movie: responseMovieList.results) {
-//                    if (movie.posterPath != null) {
-//                        postersList.add(movie.posterPath);
-//                    }
-//                }
-                Log.d(TAG, "CAROUSEL Posters list size is: " + postersList.size());
             }
 
             @Override

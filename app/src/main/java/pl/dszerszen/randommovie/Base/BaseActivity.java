@@ -1,6 +1,5 @@
 package pl.dszerszen.randommovie.Base;
 
-import android.app.Activity;
 import android.view.MenuItem;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -9,6 +8,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 public abstract class BaseActivity extends AppCompatActivity {
+    final String TAG = "RandomMovie_log";
 
     protected void setFragment(Fragment fragment) {
         FragmentManager fragmentManager = getSupportFragmentManager();

@@ -1,25 +1,19 @@
 package pl.dszerszen.randommovie.Activity.StartActivity;
 
-import android.animation.Animator;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 
@@ -31,9 +25,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import it.moondroid.coverflow.components.ui.containers.FeatureCoverFlow;
-import me.toptas.fancyshowcase.FancyShowCaseView;
-import me.toptas.fancyshowcase.FocusShape;
-import me.toptas.fancyshowcase.listener.OnViewInflateListener;
 import pl.dszerszen.randommovie.Activity.FavListActivity.FavListActivity;
 import pl.dszerszen.randommovie.Activity.InfoActivity.InfoActivity;
 import pl.dszerszen.randommovie.Activity.MovieDetailsActivity.MovieDetailsActivity;
@@ -41,12 +32,10 @@ import pl.dszerszen.randommovie.Carousel.CarouselAdapter;
 import pl.dszerszen.randommovie.Carousel.CarouselMoviePOJO;
 import pl.dszerszen.randommovie.EventBus.CarouselReadyEvent;
 import pl.dszerszen.randommovie.MessageCode;
-import pl.dszerszen.randommovie.Network.SingleMovieDetails;
 import pl.dszerszen.randommovie.R;
 
 public class StartActivity extends AppCompatActivity implements StartInterface.View{
     
-    final String TAG = "RandomMovie_log";
     final public static int RC_LOGIN = 187;
     final static int RC_MOVIE = 188;
 
@@ -60,7 +49,6 @@ public class StartActivity extends AppCompatActivity implements StartInterface.V
     ActionBar actionBar;
 
     private StartInterface.Presenter presenter;
-    private CarouselAdapter carouselAdapter;
 
     //Used in unlogged user use case - to show the same movie after logging in
     private int unloggedMovieId = -1;
@@ -130,25 +118,21 @@ public class StartActivity extends AppCompatActivity implements StartInterface.V
     @Subscribe
     public void showCarousel(CarouselReadyEvent event) {
         apiImage.animate()
-                // Approach 1
+//                 Approach 1
 //                .alpha(0.0f)
 //                .setDuration(500)
 
-                // Approach 2
-                //.translationY(buttonsLayout.getBottom()-carouselFrame.getBottom()-apiImage.getTop())
                 .translationY(buttonsLayout.getBottom()-carouselFrame.getBottom() + 1.5f*buttonsLayout.getHeight())
                 .setDuration(300)
                 .scaleX(0.4f)
                 .scaleY(0.4f)
                 .withEndAction(() -> {
-                    //apiImage.setVisibility(View.GONE);
                     carouselFrame.setVisibility(View.VISIBLE);
                     carouselFrame.setAlpha(0.0f);
                     carouselFrame.animate()
                             .alpha(1.0f)
                             .setDuration(500)
                             .withEndAction(() -> {
-                                //showTutorial(carouselFrame);
                             })
                             .start();
                 }).start();
@@ -199,7 +183,7 @@ public class StartActivity extends AppCompatActivity implements StartInterface.V
         carousel.setRotationTreshold(0.4f);
         carousel.setScalingThreshold(0.3f);
         carouselFrame.addView(carousel);
-        carouselAdapter = new CarouselAdapter(this, postersUriList,carousel);
+        CarouselAdapter carouselAdapter = new CarouselAdapter(this, postersUriList, carousel);
         carousel.setAdapter(carouselAdapter);
     }
 
@@ -215,9 +199,7 @@ public class StartActivity extends AppCompatActivity implements StartInterface.V
         Button positive = dialog.findViewById(R.id.login_btn_pos);
         Button negative = dialog.findViewById(R.id.login_btn_neg);
 
-        negative.setOnClickListener(v -> {
-            dialog.dismiss();
-        });
+        negative.setOnClickListener(v -> dialog.dismiss());
         positive.setOnClickListener(v -> {
             startActivityForResult(intent, RC_LOGIN);
             dialog.dismiss();
@@ -247,7 +229,9 @@ public class StartActivity extends AppCompatActivity implements StartInterface.V
         }
         else if (requestCode == RC_MOVIE) {
             if (resultCode == Activity.RESULT_FIRST_USER) {
-                unloggedMovieId = data.getExtras().getInt("MOVIE_ID");
+                if (data != null) {
+                    unloggedMovieId = data.getExtras().getInt("MOVIE_ID");
+                }
                 presenter.showLoginPrompt(false);
             }
 
