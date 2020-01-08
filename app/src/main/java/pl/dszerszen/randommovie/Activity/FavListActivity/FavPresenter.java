@@ -44,7 +44,7 @@ public class FavPresenter implements FavInterface.Presenter {
 
             @Override
             public void onError(Throwable e) {
-
+                view.showNoResultsMessage();
             }
 
             @Override

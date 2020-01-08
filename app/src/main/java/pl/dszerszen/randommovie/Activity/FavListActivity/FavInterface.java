@@ -9,6 +9,7 @@ public interface FavInterface {
         void showLoader();
         void hideLoader();
         void showMoviesList(ArrayList<FirebaseStoredMovie> moviesList);
+        void showNoResultsMessage();
     }
 
     interface Presenter {

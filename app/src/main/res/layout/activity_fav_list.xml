@@ -47,11 +47,10 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
             android:text="@string/no_result"
-            android:textColor="@color/colorAccent"
-            android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView" />
+            app:layout_constraintTop_toBottomOf="@+id/imageView"
+            style="@style/error_desc_style"/>
 
         <ImageView
             android:id="@+id/imageView"
