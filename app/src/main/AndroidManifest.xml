@@ -30,6 +30,10 @@
             android:name=".Activity.InfoActivity.InfoActivity"
             android:configChanges="keyboardHidden|orientation"
             android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".Activity.FavListActivity.FavListActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>
