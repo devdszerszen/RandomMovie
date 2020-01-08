@@ -35,4 +35,6 @@
     <string name="devName" translatable="false">Damian Szerszeń</string>
     <string name="gameInfoStatic">The application allows the competition of two players on one device. I would like to continue to develop it, if you have any ideas or insights, please contact me.</string>
     <string name="sendMailButton">Send message</string>
+    <string name="error_msg_network">Check connection and try again</string>
+    <string name="error_msg_lack_of_results">Results not found, change filters and try again</string>
 </resources>

@@ -15,6 +15,7 @@ import java.util.List;
 import androidx.appcompat.app.ActionBar;
 import pl.dszerszen.randommovie.Activity.StartActivity.StartActivityFilter;
 import pl.dszerszen.randommovie.Base.BaseActivity;
+import pl.dszerszen.randommovie.Error.ErrorType;
 import pl.dszerszen.randommovie.Filter.FilterData;
 import pl.dszerszen.randommovie.Filter.FiltersDialog;
 import pl.dszerszen.randommovie.MessageCode;
@@ -199,8 +200,8 @@ public class MovieDetailsActivity extends BaseActivity implements MovieDetailsIn
     }
 
     @Override
-    public void showNetworkError() {
-        detailsFragment.showNetworkError();
+    public void showError(ErrorType errorType) {
+        detailsFragment.showError(errorType);
     }
 
     private void showToastMessage(String message) {

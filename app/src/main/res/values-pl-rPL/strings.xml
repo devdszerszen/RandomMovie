@@ -31,4 +31,6 @@
     <string name="movie_fav_toast">Film dodany do ulubionych!</string>
     <string name="gameInfoStatic">Aplikacja umożliwia rywalizację dwóch graczy na jednym urządzeniu. Planuję nadal ją rozwijać, jeśli masz jakiekolwiek pomysły lub spostrzeżenia, skontatuj się ze mną.</string>
     <string name="sendMailButton">Wyślij wiadomość</string>
+    <string name="error_msg_network">Sprawdź połączenie i spróbuj ponownie</string>
+    <string name="error_msg_lack_of_results">Nie znaleziono pasujących filmów, zmień filtry i spróbuj ponownie</string>
 </resources>

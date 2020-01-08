@@ -17,6 +17,7 @@ import io.reactivex.SingleObserver;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.observers.DisposableObserver;
 import pl.dszerszen.randommovie.Base.BasePresenter;
+import pl.dszerszen.randommovie.Error.ErrorType;
 import pl.dszerszen.randommovie.Firebase.AuthManager;
 import pl.dszerszen.randommovie.Firebase.DatabaseManager;
 import pl.dszerszen.randommovie.Firebase.FirebaseAuthInterface;
@@ -66,9 +67,8 @@ public class MovieDetailsPresenter extends BasePresenter implements MovieDetails
         if (shouldRefreshFavMoviesIdList) updateFavMoviesIdList();
 
         apiCallsCounter++;
-        if (apiCallsCounter >MAX_API_CALLS) {
-            view.showToast("Something went wrong, sorry");
-            view.hideLoader();
+        if (apiCallsCounter > MAX_API_CALLS) {
+            view.showError(ErrorType.LACK_OF_RESULT);
             return;
         }
 
@@ -86,7 +86,7 @@ public class MovieDetailsPresenter extends BasePresenter implements MovieDetails
 
                 if (responseMovieList.totalPages == 0) {
                     Log.d(TAG, "logRX onNext: No results");
-                    view.showToast("No results for query, change filters");
+                    view.showError(ErrorType.LACK_OF_RESULT);
                 } else if (responseMovieList.page>responseMovieList.totalPages || responseMovieList.results.size()==0) {
                     Log.d(TAG, "logRX onNext: Current page greater than total pages");
                     getRandomMovie(responseMovieList.totalPages);
@@ -103,13 +103,11 @@ public class MovieDetailsPresenter extends BasePresenter implements MovieDetails
 
             @Override
             public void onError(Throwable e) {
-                view.showNetworkError();
+                view.showError(ErrorType.NETWORK);
             }
 
             @Override
             public void onComplete() {
-                Log.d(TAG, "logRX onComplete: Observer disposed");
-                Log.d(TAG, "logRX --------------------------------");
                 dispose();
             }
         });
@@ -156,7 +154,7 @@ public class MovieDetailsPresenter extends BasePresenter implements MovieDetails
 
             @Override
             public void onError(Throwable e) {
-                view.showNetworkError();
+                view.showError(ErrorType.NETWORK);
             }
 
             @Override

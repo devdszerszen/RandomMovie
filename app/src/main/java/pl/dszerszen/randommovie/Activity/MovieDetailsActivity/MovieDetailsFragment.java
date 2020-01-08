@@ -28,6 +28,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import pl.dszerszen.randommovie.Error.ErrorType;
 import pl.dszerszen.randommovie.Network.SingleMovieDetails;
 import pl.dszerszen.randommovie.R;
 
@@ -55,10 +56,11 @@ public class MovieDetailsFragment extends Fragment {
     @BindView(R.id.df_tab_header) TabLayout tabHeader;
     @BindView(R.id.df_descriptionScrollView) ScrollView tabDescription;
     @BindView(R.id.df_detailsScrollView) ScrollView tabDetails;
+    @BindView(R.id.df_error_desc) TextView errorDescription;
 
     ArrayList<Integer> previousMovies = new ArrayList<>();
     private boolean isPreviousMovie = false;
-    private boolean errorInfoShowed = false;
+    boolean errorInfoShowed = false;
 
     public MovieDetailsFragment() {
     }
@@ -244,11 +246,16 @@ public class MovieDetailsFragment extends Fragment {
         }
     }
 
-    public void showNetworkError() {
+    public void showError(ErrorType errorType) {
         errorInfoShowed = true;
         loader.setVisibility(GONE);
         detailsLayout.setVisibility(GONE);
         errorLayout.setVisibility(View.VISIBLE);
+        switch (errorType) {
+            case NETWORK: errorDescription.setText(getString(R.string.error_msg_network));
+            case LACK_OF_RESULT: errorDescription.setText(getString(R.string.error_msg_lack_of_results));
+        }
+
     }
 
     private void hideNetworkError() {

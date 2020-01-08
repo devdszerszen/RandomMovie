@@ -42,7 +42,7 @@ public class MinMaxView extends LinearLayout implements FilterExpandView.Attache
         this.filterType = filterType;
         switch (filterType) {
             case YEAR: {
-                rangeSeekBar.setRange(1980,Calendar.getInstance().get(Calendar.YEAR),6f);
+                rangeSeekBar.setRange(1980,Calendar.getInstance().get(Calendar.YEAR),5f);
                 rangeSeekBar.setProgress(1980,Calendar.getInstance().get(Calendar.YEAR));
                 break;
             }

@@ -2,6 +2,7 @@ package pl.dszerszen.randommovie.Activity.MovieDetailsActivity;
 
 import java.util.List;
 
+import pl.dszerszen.randommovie.Error.ErrorType;
 import pl.dszerszen.randommovie.Network.ResponseGenre;
 import pl.dszerszen.randommovie.Network.SingleMovieDetails;
 
@@ -16,7 +17,7 @@ public interface MovieDetailsInterface {
         void showToast(String message);
         void showToast(int code);
         void showLoginPrompt();
-        void showNetworkError();
+        void showError(ErrorType errorType);
         void backToStartActivityWithLoginPrompt();
     }
 

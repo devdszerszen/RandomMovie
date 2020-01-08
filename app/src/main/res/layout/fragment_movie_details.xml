@@ -10,7 +10,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/errorLayout"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="40dp"
         android:layout_marginTop="200dp"
@@ -24,7 +24,7 @@
         tools:visibility="visible">
 
         <ImageView
-            android:id="@+id/imageView2"
+            android:id="@+id/df_error_img"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
@@ -34,15 +34,16 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/textView2"
-            android:layout_width="wrap_content"
+            android:id="@+id/df_error_desc"
+            style="@style/error_desc_style"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
-            android:text="Check Internet connection and try again!"
+            android:gravity="center"
+            android:text="@string/error_msg_network"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView2"
-            style="@style/error_desc_style" />
+            app:layout_constraintTop_toBottomOf="@+id/df_error_img" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
