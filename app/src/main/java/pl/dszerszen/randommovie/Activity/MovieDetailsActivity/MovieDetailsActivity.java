@@ -1,18 +1,5 @@
 package pl.dszerszen.randommovie.Activity.MovieDetailsActivity;
 
-import androidx.appcompat.app.ActionBar;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import pl.dszerszen.randommovie.Base.BaseActivity;
-import pl.dszerszen.randommovie.Filter.FilterData;
-import pl.dszerszen.randommovie.Filter.FiltersDialog;
-import pl.dszerszen.randommovie.MessageCode;
-import pl.dszerszen.randommovie.R;
-import pl.dszerszen.randommovie.Network.ResponseGenre;
-import pl.dszerszen.randommovie.Network.SingleMovieDetails;
-import pl.dszerszen.randommovie.Activity.StartActivity.StartActivityFilter;
-
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
@@ -21,20 +8,24 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import java.util.ArrayList;
 import java.util.List;
-
+import androidx.appcompat.app.ActionBar;
+import pl.dszerszen.randommovie.Activity.StartActivity.StartActivityFilter;
+import pl.dszerszen.randommovie.Base.BaseActivity;
+import pl.dszerszen.randommovie.Filter.FilterData;
+import pl.dszerszen.randommovie.Filter.FiltersDialog;
+import pl.dszerszen.randommovie.MessageCode;
+import pl.dszerszen.randommovie.Network.ResponseGenre;
+import pl.dszerszen.randommovie.Network.SingleMovieDetails;
+import pl.dszerszen.randommovie.R;
 import static android.view.View.GONE;
 
 
 public class MovieDetailsActivity extends BaseActivity implements MovieDetailsInterface.View,
         MovieDetailsFragment.OnFragmentInteractionListener, StartActivityFilter {
-
-    final String TAG = "RandomMovie_log";
 
     MovieDetailsFragment detailsFragment;
     MovieDetailsInterface.Presenter presenter;
@@ -192,9 +183,7 @@ public class MovieDetailsActivity extends BaseActivity implements MovieDetailsIn
         Button positive = dialog.findViewById(R.id.login_btn_pos);
         Button negative = dialog.findViewById(R.id.login_btn_neg);
 
-        negative.setOnClickListener(v -> {
-            dialog.dismiss();
-        });
+        negative.setOnClickListener(v -> dialog.dismiss());
         positive.setOnClickListener(v -> {
             backToStartActivityWithLoginPrompt();
             dialog.dismiss();

@@ -16,20 +16,19 @@ import io.reactivex.Observer;
 import io.reactivex.SingleObserver;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.observers.DisposableObserver;
+import pl.dszerszen.randommovie.Base.BasePresenter;
 import pl.dszerszen.randommovie.Firebase.AuthManager;
 import pl.dszerszen.randommovie.Firebase.DatabaseManager;
 import pl.dszerszen.randommovie.Firebase.FirebaseAuthInterface;
 import pl.dszerszen.randommovie.Firebase.FirebaseDBInterface;
 import pl.dszerszen.randommovie.Firebase.FirebaseStoredMovie;
 import pl.dszerszen.randommovie.MessageCode;
-import pl.dszerszen.randommovie.Network.TmdbConnector;
 import pl.dszerszen.randommovie.Network.ResponseGenre;
 import pl.dszerszen.randommovie.Network.ResponseMovieList;
 import pl.dszerszen.randommovie.Network.SingleMovieDetails;
+import pl.dszerszen.randommovie.Network.TmdbConnector;
 
-public class MovieDetailsPresenter implements MovieDetailsInterface.Presenter{
-
-    private final String TAG = "RandomMovie_log";
+public class MovieDetailsPresenter extends BasePresenter implements MovieDetailsInterface.Presenter{
 
     private TmdbConnector connector;
     private MovieDetailsInterface.View view;
@@ -39,12 +38,12 @@ public class MovieDetailsPresenter implements MovieDetailsInterface.Presenter{
     @Inject @Named("language")
     String language;
 
-    int apiCallsCounter = 0;
-    final int MAX_API_CALLS = 10;
+    private int apiCallsCounter = 0;
+    private final int MAX_API_CALLS = 10;
 
     //Fav movies id
     ArrayList<Integer> favMoviesIdsList = new ArrayList<>();
-    boolean shouldRefreshFavMoviesIdList = true;
+    private boolean shouldRefreshFavMoviesIdList = true;
 
     public MovieDetailsPresenter(MovieDetailsInterface.View view) {
         this.view = view;
@@ -256,7 +255,7 @@ public class MovieDetailsPresenter implements MovieDetailsInterface.Presenter{
         });
     }
 
-    public boolean isSetAsFavourite(SingleMovieDetails movieDetails) {
+    private boolean isSetAsFavourite(SingleMovieDetails movieDetails) {
         for (Integer id: favMoviesIdsList) {
             if (movieDetails.id == id) {
                 return true;

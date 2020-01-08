@@ -3,17 +3,6 @@ package pl.dszerszen.randommovie.Activity.MovieDetailsActivity;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
-
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.fragment.app.Fragment;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-import butterknife.Unbinder;
-import pl.dszerszen.randommovie.R;
-import pl.dszerszen.randommovie.Network.SingleMovieDetails;
-
-import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -33,6 +22,15 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.Locale;
 
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.fragment.app.Fragment;
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+import butterknife.Unbinder;
+import pl.dszerszen.randommovie.Network.SingleMovieDetails;
+import pl.dszerszen.randommovie.R;
+
 import static android.view.View.GONE;
 
 
@@ -42,9 +40,6 @@ public class MovieDetailsFragment extends Fragment {
     private OnFragmentInteractionListener mListener;
     private Unbinder unbinder;
 
-    //@BindView(R.id.loader) ProgressBar loader;
-    //@BindView(R.id.randomButton) Button randomButton;
-    //@BindView(R.id.previousButton) Button previousButton;
     @BindView(R.id.errorLayout) ConstraintLayout errorLayout;
     @BindView(R.id.df_title) TextView title;
     @BindView(R.id.df_desc) TextView desc;
@@ -62,16 +57,15 @@ public class MovieDetailsFragment extends Fragment {
     @BindView(R.id.df_detailsScrollView) ScrollView tabDetails;
 
     ArrayList<Integer> previousMovies = new ArrayList<>();
-    boolean isPreviousMovie = false;
-    boolean errorInfoShowed = false;
+    private boolean isPreviousMovie = false;
+    private boolean errorInfoShowed = false;
 
     public MovieDetailsFragment() {
     }
 
 
     public static MovieDetailsFragment newInstance() {
-        MovieDetailsFragment fragment = new MovieDetailsFragment();
-        return fragment;
+        return new MovieDetailsFragment();
     }
 
     @Override
