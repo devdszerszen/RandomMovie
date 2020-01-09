@@ -10,12 +10,17 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+
 import java.util.ArrayList;
 import java.util.List;
 import androidx.appcompat.app.ActionBar;
 import pl.dszerszen.randommovie.Activity.StartActivity.StartActivityFilter;
 import pl.dszerszen.randommovie.Base.BaseActivity;
 import pl.dszerszen.randommovie.Error.ErrorType;
+import pl.dszerszen.randommovie.EventBus.ShowMessageEvent;
 import pl.dszerszen.randommovie.Filter.FilterData;
 import pl.dszerszen.randommovie.Filter.FiltersDialog;
 import pl.dszerszen.randommovie.MessageCode;
@@ -69,6 +74,18 @@ public class MovieDetailsActivity extends BaseActivity implements MovieDetailsIn
 
         //Genres genresList
         presenter.getGenresList();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        EventBus.getDefault().unregister(this);
     }
 
     private void setupActionBar() {
@@ -133,8 +150,15 @@ public class MovieDetailsActivity extends BaseActivity implements MovieDetailsIn
     @Override
     public void onFiltersSaved() {
         this.filterData = FilterData.getInstance();
-        Toast.makeText(this, getResources().getString(R.string.toast_filter_ok), Toast.LENGTH_SHORT).show();
         setupBadge();
+    }
+
+    @Subscribe
+    public void showMessage(ShowMessageEvent event) {
+        switch (event.msgType) {
+            case FILTER_CLEARED: showToast(getString(R.string.toast_filter_cleared)); break;
+            case FILTER_SAVED: showToast(getString(R.string.toast_filter_ok)); break;
+        }
     }
 
 
@@ -167,8 +191,8 @@ public class MovieDetailsActivity extends BaseActivity implements MovieDetailsIn
     @Override
     public void showToast(int code) {
         switch (code) {
-            case MessageCode.MOVIE_ADDED_FAV:
-                showToast(getString(R.string.movie_fav_toast));
+            case MessageCode.MOVIE_ADDED_FAV: showToast(getString(R.string.movie_fav_toast)); break;
+            case MessageCode.MOVIE_DELETED_FAV: showToast(getString(R.string.movie_deleted_fav_toast)); break;
         }
     }
 

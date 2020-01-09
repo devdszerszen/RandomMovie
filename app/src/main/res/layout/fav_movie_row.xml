@@ -91,6 +91,8 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="16dp"
                 android:justificationMode="inter_word"
+                android:maxLines="3"
+                android:ellipsize="end"
                 android:textColor="@android:color/white"
                 android:textSize="16dp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -104,7 +106,7 @@
                 android:layout_height="30dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="16dp"
-                android:text="Przejdź do szczegółów"
+                android:text="@string/more"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@+id/fav_description"
                 app:layout_constraintTop_toBottomOf="@+id/fav_description" />

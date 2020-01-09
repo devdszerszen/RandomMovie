@@ -10,6 +10,7 @@
     <string name="dialog_pos_btn">Zapisz</string>
     <string name="dialog_neg_btn">Anuluj</string>
     <string name="toast_filter_ok">Filtr zapisany prawidłowo</string>
+    <string name="toast_filter_cleared">Filtry zresetowane</string>
     <string name="btn_previous">Poprzedni</string>
     <string name="search_btn">Szukaj filmów</string>
     <string name="favourites_btn">Pokaż ulubione</string>
@@ -28,9 +29,11 @@
     <string name="cancel">Anuluj</string>
     <string name="Login">Zaloguj</string>
     <string name="user_logged_toast">Logowanie zakończone sukcesem!</string>
-    <string name="movie_fav_toast">Film dodany do ulubionych!</string>
+    <string name="movie_fav_toast">Film dodany do ulubionych</string>
     <string name="gameInfoStatic">Aplikacja umożliwia rywalizację dwóch graczy na jednym urządzeniu. Planuję nadal ją rozwijać, jeśli masz jakiekolwiek pomysły lub spostrzeżenia, skontatuj się ze mną.</string>
     <string name="sendMailButton">Wyślij wiadomość</string>
     <string name="error_msg_network">Sprawdź połączenie i spróbuj ponownie</string>
     <string name="error_msg_lack_of_results">Nie znaleziono pasujących filmów, zmień filtry i spróbuj ponownie</string>
+    <string name="movie_deleted_fav_toast">Film usunięty z listy ulubionych</string>
+    <string name="more">Więcej</string>
 </resources>

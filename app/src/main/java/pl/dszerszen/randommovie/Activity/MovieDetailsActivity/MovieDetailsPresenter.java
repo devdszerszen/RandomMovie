@@ -220,12 +220,11 @@ public class MovieDetailsPresenter extends BasePresenter implements MovieDetails
 
             @Override
             public void onComplete() {
-                Log.d(TAG, "onComplete: Movie deleted successfully");
+                view.showToast(MessageCode.MOVIE_DELETED_FAV);
             }
 
             @Override
             public void onError(Throwable e) {
-                Log.d(TAG, "onError: Movie not deleted: " + e.getMessage());
             }
         });
     }

@@ -20,6 +20,7 @@ import pl.dszerszen.randommovie.CustomViews.CustomRecyclerView;
 import pl.dszerszen.randommovie.CustomViews.FilterExpandView;
 import pl.dszerszen.randommovie.CustomViews.MinMaxView;
 import pl.dszerszen.randommovie.EventBus.CloseExpandedFilterEvent;
+import pl.dszerszen.randommovie.EventBus.ShowMessageEvent;
 import pl.dszerszen.randommovie.Network.ResponseGenre;
 import pl.dszerszen.randommovie.R;
 
@@ -102,6 +103,7 @@ public class FiltersDialog extends Dialog {
         positiveButton.setOnClickListener(v -> {
             saveFilters();
             activity.onFiltersSaved();
+            EventBus.getDefault().post(new ShowMessageEvent(ShowMessageEvent.MessageType.FILTER_SAVED));
             unregisterEventBus();
             this.dismiss();
         });
@@ -110,6 +112,7 @@ public class FiltersDialog extends Dialog {
         negativeButton.setOnClickListener(v ->{
             filterData.clearFilters();
             activity.onFiltersSaved();
+            EventBus.getDefault().post(new ShowMessageEvent(ShowMessageEvent.MessageType.FILTER_CLEARED));
             unregisterEventBus();
             this.dismiss();
         });

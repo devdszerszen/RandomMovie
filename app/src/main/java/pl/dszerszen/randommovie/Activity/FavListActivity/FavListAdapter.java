@@ -92,8 +92,6 @@ public class FavListAdapter extends RecyclerView.Adapter<FavListAdapter.ViewHold
         holder.row.setOnClickListener(v -> {
             notifyItemChanged(expandedPosition);
             expandedPosition = isExpanded ? -1 : position;
-            Log.d(TAG, "onBindViewHolder: POSITION: " + position);
-            Log.d(TAG, "onBindViewHolder: EXPANDED POSITION: " + expandedPosition);
             notifyItemChanged(expandedPosition);
         });
 
