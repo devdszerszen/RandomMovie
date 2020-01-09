@@ -2,6 +2,8 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/row_container"
+    android:background="@drawable/filter_expand_background"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
@@ -16,7 +18,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="Horror"/>
+        tools:text="Horror" />
 
     <RadioButton
         android:id="@+id/row_radiobutton"

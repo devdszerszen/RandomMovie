@@ -2,18 +2,26 @@ package pl.dszerszen.randommovie.Filter;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.os.Handler;
+import android.view.View;
 import android.widget.Button;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+
+import java.util.ArrayList;
 import java.util.List;
 
 import androidx.annotation.NonNull;
+import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import pl.dszerszen.randommovie.Activity.StartActivity.StartActivityFilter;
 import pl.dszerszen.randommovie.CustomViews.CustomRecyclerView;
 import pl.dszerszen.randommovie.CustomViews.FilterExpandView;
 import pl.dszerszen.randommovie.CustomViews.MinMaxView;
-import pl.dszerszen.randommovie.Activity.StartActivity.StartActivityFilter;
-import pl.dszerszen.randommovie.R;
+import pl.dszerszen.randommovie.EventBus.CloseExpandedFilterEvent;
 import pl.dszerszen.randommovie.Network.ResponseGenre;
+import pl.dszerszen.randommovie.R;
 
 public class FiltersDialog extends Dialog {
     public final String TAG = "RandomMovie_log";
@@ -37,10 +45,15 @@ public class FiltersDialog extends Dialog {
     FilterExpandView votesHeader;
     MinMaxView votesSelector;
 
+    //Scroll
+    NestedScrollView scrollView;
+    ArrayList<FilterExpandView> filtersList;
+
 
 
     public FiltersDialog(@NonNull Context context, List<ResponseGenre.Genre> list) {
         super(context);
+        EventBus.getDefault().register(this);
         this.activity = (StartActivityFilter)context;
         this.filterData = FilterData.getInstance();
         this.setContentView(R.layout.dialog_filter_view);
@@ -77,11 +90,19 @@ public class FiltersDialog extends Dialog {
             setSeekbarValues(votesSelector,FilterData.FilterType.VOTE);
         }
 
+        //Scroll
+        scrollView = findViewById(R.id.dialog_scrollView);
+        filtersList = new ArrayList<>();
+        filtersList.add(genresHeader);
+        filtersList.add(votesHeader);
+        filtersList.add(yearsHeader);
+
         //Buttons
         Button positiveButton = findViewById(R.id.dialog_positive_btn);
         positiveButton.setOnClickListener(v -> {
             saveFilters();
             activity.onFiltersSaved();
+            unregisterEventBus();
             this.dismiss();
         });
 
@@ -89,6 +110,7 @@ public class FiltersDialog extends Dialog {
         negativeButton.setOnClickListener(v ->{
             filterData.clearFilters();
             activity.onFiltersSaved();
+            unregisterEventBus();
             this.dismiss();
         });
         }
@@ -126,5 +148,16 @@ public class FiltersDialog extends Dialog {
                     break;
                 }
             }
+        }
+
+        @Subscribe
+        public void closeExpandedFilter(CloseExpandedFilterEvent event) {
+            for (FilterExpandView filter : filtersList) {
+                if (filter.isExpanded) filter.hideContent();
+            }
+        }
+
+        private void unregisterEventBus() {
+            EventBus.getDefault().unregister(this);
         }
 }

@@ -2,6 +2,7 @@ package pl.dszerszen.randommovie.CustomViews;
 
 import android.content.Context;
 import android.graphics.Typeface;
+import android.os.Handler;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
@@ -9,10 +10,12 @@ import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import org.greenrobot.eventbus.EventBus;
+
 import androidx.annotation.Nullable;
-import androidx.core.widget.NestedScrollView;
+import pl.dszerszen.randommovie.EventBus.CloseExpandedFilterEvent;
 import pl.dszerszen.randommovie.Filter.FilterData;
-import pl.dszerszen.randommovie.Filter.FiltersDialog;
 import pl.dszerszen.randommovie.Filter.SingleFilter;
 import pl.dszerszen.randommovie.R;
 
@@ -20,7 +23,7 @@ public class FilterExpandView extends LinearLayout {
 
     final String TAG = "RandomMovie_log";
 
-    private boolean isExpanded = false;
+    public boolean isExpanded = false;
 
     String title = "Title";
 
@@ -46,11 +49,9 @@ public class FilterExpandView extends LinearLayout {
             if (child != null) {
                 if (isExpanded) {
                     hideContent();
-                    isExpanded = false;
                 }
                 else {
                     showContent();
-                    isExpanded = true;
                 }
             } else {
                 Log.d(TAG, "FilterExpandView: Child is null");
@@ -58,7 +59,8 @@ public class FilterExpandView extends LinearLayout {
         });
     }
 
-    private void hideContent() {
+    public void hideContent() {
+        isExpanded = false;
         ((View)child).setVisibility(GONE);
         chevron.setRotation(0f);
         setTitle();
@@ -76,13 +78,16 @@ public class FilterExpandView extends LinearLayout {
     }
 
     private void showContent() {
-        ((View)child).setVisibility(VISIBLE);
-        chevron.setRotation(180f);
-        tv_title.setText(title);
-        tv_title.setTextColor(getResources().getColor(R.color.white,null));
-        tv_title.setTypeface(null,Typeface.NORMAL);
-        NestedScrollView parent = (NestedScrollView) this.getParent().getParent();
-        parent.fullScroll(View.FOCUS_DOWN);
+        Handler handler = new Handler();
+        handler.postDelayed(() -> {
+            EventBus.getDefault().post(new CloseExpandedFilterEvent());
+            ((View)child).setVisibility(VISIBLE);
+            chevron.setRotation(180f);
+            tv_title.setText(title);
+            tv_title.setTextColor(getResources().getColor(R.color.white,null));
+            tv_title.setTypeface(null,Typeface.NORMAL);
+            isExpanded = true;
+        },100);
     }
 
     public boolean isChecked() {

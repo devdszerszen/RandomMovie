@@ -14,8 +14,11 @@
         android:id="@+id/expand_header"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:paddingTop="4dp"
+        android:paddingBottom="4dp"
         android:layout_weight="1"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:background="@drawable/filter_expand_background">
 
         <CheckBox
             android:id="@+id/expand_checkbox"

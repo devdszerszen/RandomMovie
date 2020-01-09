@@ -9,6 +9,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 import pl.dszerszen.randommovie.CustomViews.CustomRecyclerView;
 import pl.dszerszen.randommovie.Network.ResponseGenre;
@@ -47,11 +48,6 @@ public class GenreFilterAdapter extends CustomRecyclerView.Adapter<GenreFilterAd
 
     private void saveSelectedItem(int adapterPosition) {
         selectedCategoryPosition = adapterPosition;
-//
-//        //Saving filter
-//        filterData.genrePosition = selectedCategoryPosition;
-//        filterData.setGenreId(list.get(selectedCategoryPosition).id);
-//        filterData.genreName = list.get(selectedCategoryPosition).name;
         notifyDataSetChanged();
     }
 
