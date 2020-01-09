@@ -42,7 +42,8 @@ public class StartActivity extends AppCompatActivity implements StartInterface.V
     @BindView(R.id.start_search_btn) Button randomButton;
     @BindView(R.id.start_fav_btn) Button favorites;
     @BindView(R.id.start_buttons_layout) ConstraintLayout buttonsLayout;
-    @BindView(R.id.start_api_image) ImageView apiImage;
+    @BindView(R.id.start_logo_image) ImageView logoImage;
+
     @BindView(R.id.start_carousel_frame) FrameLayout carouselFrame;
     Menu menu;
     FeatureCoverFlow carousel;
@@ -70,10 +71,6 @@ public class StartActivity extends AppCompatActivity implements StartInterface.V
 
         //Presenter
         presenter = new StartPresenter(this);
-
-        //TMDB view
-        setApiLogoView();
-
     }
 
     @Override
@@ -108,24 +105,11 @@ public class StartActivity extends AppCompatActivity implements StartInterface.V
         actionBar = getSupportActionBar();
     }
 
-    @Override
-    public void setApiLogoView() {
-//            logoLayout.setVisibility(View.VISIBLE);
-//            Handler handler = new Handler();
-//            handler.postDelayed(() -> logoLayout.setVisibility(View.GONE), 1);
-    }
-
     @Subscribe
     public void showCarousel(CarouselReadyEvent event) {
-        apiImage.animate()
-//                 Approach 1
-//                .alpha(0.0f)
-//                .setDuration(500)
-
-                .translationY(buttonsLayout.getBottom()-carouselFrame.getBottom() + 1.5f*buttonsLayout.getHeight())
-                .setDuration(300)
-                .scaleX(0.4f)
-                .scaleY(0.4f)
+        logoImage.animate()
+                .alpha(0.0f)
+                .setDuration(400)
                 .withEndAction(() -> {
                     carouselFrame.setVisibility(View.VISIBLE);
                     carouselFrame.setAlpha(0.0f);

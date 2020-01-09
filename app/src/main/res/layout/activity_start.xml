@@ -9,14 +9,14 @@
     tools:context=".Activity.StartActivity.StartActivity">
 
     <ImageView
-        android:id="@+id/start_api_image"
+        android:id="@+id/start_logo_image"
         android:layout_width="match_parent"
-        android:layout_height="320dp"
-        android:padding="32dp"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/start_carousel_frame"
+        app:layout_constraintEnd_toStartOf="@+id/start_carousel_frame"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_tmdb" />
+        app:layout_constraintTop_toTopOf="@+id/start_carousel_frame"
+        app:srcCompat="@mipmap/rm_circle" />
 
     <FrameLayout
         android:id="@+id/start_carousel_frame"
@@ -34,8 +34,8 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="5dp"
-        android:layout_marginBottom="100dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="24dp"
+        app:layout_constraintBottom_toTopOf="@+id/start_api_image"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
@@ -60,5 +60,15 @@
             app:layout_constraintTop_toBottomOf="@+id/start_search_btn" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <ImageView
+        android:id="@+id/start_api_image"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/ic_tmdb" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

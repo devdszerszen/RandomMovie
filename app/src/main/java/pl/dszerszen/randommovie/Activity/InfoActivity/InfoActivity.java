@@ -43,8 +43,7 @@ public class InfoActivity extends BaseActivity {
 
     public void sendMessage(View view) {
         Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.parse("mailto:"+getResources().getString(R.string.devMail)));
-        emailIntent.putExtra("subject", getResources().getString(R.string.app_name));
-        emailIntent.putExtra("body", "");
+        emailIntent.putExtra(Intent.EXTRA_SUBJECT, getResources().getString(R.string.app_name));
         startActivity(emailIntent);
     }
 }
