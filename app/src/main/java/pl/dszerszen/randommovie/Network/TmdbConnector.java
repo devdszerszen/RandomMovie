@@ -14,6 +14,8 @@ public class TmdbConnector {
 
     private final String API_KEY = "2a85fd50596d300dc0916d427958caa0";
     private final String LANGUAGE_KEY;
+    private final String SORT_KEY = "popularity.desc";
+    boolean DO_NOT_INCLUDE_ADULT = false;
 
     private final NetworkService client;
 
@@ -42,7 +44,7 @@ public class TmdbConnector {
 
 
         return client.getMovies(
-                API_KEY, LANGUAGE_KEY,
+                API_KEY, LANGUAGE_KEY,DO_NOT_INCLUDE_ADULT,
                 queryPage,
                 filter.getMinYear(),
                 filter.getMaxYear(),
@@ -70,7 +72,7 @@ public class TmdbConnector {
     public Observable<ResponseMovieList> getPostersList() {
         Random random = new Random();
         int randomPage = random.nextInt(20)+1;
-        return client.getPosters(API_KEY,LANGUAGE_KEY,randomPage)
+        return client.getPosters(API_KEY,LANGUAGE_KEY,DO_NOT_INCLUDE_ADULT,SORT_KEY,randomPage)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }

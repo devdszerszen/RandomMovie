@@ -10,6 +10,7 @@ public interface NetworkService {
     @GET("discover/movie")
     Observable<ResponseMovieList> getMovies(@Query("api_key") String api_key,
                                             @Query("language") String language,
+                                            @Query("include_adult") boolean withAdults,
                                             @Query("page") int page,
                                             @Query("primary_release_date.gte") String minYear,
                                             @Query("primary_release_date.lte") String maxYear,
@@ -21,11 +22,14 @@ public interface NetworkService {
     @GET("discover/movie")
     Observable<ResponseMovieList> getPosters(@Query("api_key") String api_key,
                                             @Query("language") String language,
+                                             @Query("include_adult") boolean withAdults,
+                                            @Query("sort_by") String sorting,
                                             @Query("page") int page
     );
 
     @GET("genre/movie/list")
-    Observable<ResponseGenre> getGenres(@Query("api_key") String api_key, @Query("language") String language);
+    Observable<ResponseGenre> getGenres(@Query("api_key") String api_key,
+                                        @Query("language") String language);
 
     @GET("movie/{movie_id}")
     Observable<SingleMovieDetails> getMovieDetails(@Path("movie_id") int movieId, @Query("api_key") String api_key, @Query("language") String language);
