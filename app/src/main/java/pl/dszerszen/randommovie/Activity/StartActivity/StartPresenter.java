@@ -3,7 +3,7 @@ package pl.dszerszen.randommovie.Activity.StartActivity;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
+
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.common.api.ApiException;
@@ -41,7 +41,6 @@ public class StartPresenter extends BasePresenter implements StartInterface.Pres
         this.connector = new TmdbConnector(MyApplication.getContext().getResources().getString(R.string.language_key));
         this.firebaseAuth = AuthManager.getInstance((Context) view);
         this.firebaseDatabase = DatabaseManager.getInstance();
-        getPostersList();
 
         if (isUserLogged()) {
             firebaseDatabase.incrementCounter();
@@ -108,34 +107,40 @@ public class StartPresenter extends BasePresenter implements StartInterface.Pres
         return firebaseAuth.isUserSignedToGoogle() && firebaseAuth.isUserSignedToFirebase();
     }
 
+    @Override
     @SuppressLint("CheckResult")
-    private void getPostersList() {
-        connector.getPostersList().subscribeWith(new Observer<ResponseMovieList>() {
-            @Override
-            public void onSubscribe(Disposable d) {
+    public void showPosters() {
 
-            }
+        if (postersList.size() > 0) {
+            view.setPostersList(postersList);
+        } else {
+            connector.getPostersList().subscribeWith(new Observer<ResponseMovieList>() {
+                @Override
+                public void onSubscribe(Disposable d) {
 
-            @Override
-            public void onNext(ResponseMovieList responseMovieList) {
-                for (int i=0; i<postersCount; i++) {
-                    if (responseMovieList.results.get(i).posterPath != null) {
-                        String path = responseMovieList.results.get(i).posterPath;
-                        String title = responseMovieList.results.get(i).title;
-                        int id = responseMovieList.results.get(i).id;
-                        postersList.add(new CarouselMoviePOJO(path, title, id));
+                }
+
+                @Override
+                public void onNext(ResponseMovieList responseMovieList) {
+                    for (int i = 0; i < postersCount; i++) {
+                        if (responseMovieList.results.get(i).posterPath != null) {
+                            String path = responseMovieList.results.get(i).posterPath;
+                            String title = responseMovieList.results.get(i).title;
+                            int id = responseMovieList.results.get(i).id;
+                            postersList.add(new CarouselMoviePOJO(path, title, id));
+                        }
                     }
                 }
-            }
 
-            @Override
-            public void onError(Throwable e) {
-            }
+                @Override
+                public void onError(Throwable e) {
+                }
 
-            @Override
-            public void onComplete() {
-                view.setPostersList(postersList);
-            }
-        });
+                @Override
+                public void onComplete() {
+                    view.setPostersList(postersList);
+                }
+            });
+        }
     }
 }

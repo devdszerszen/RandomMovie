@@ -29,11 +29,12 @@
         <activity
             android:name=".Activity.InfoActivity.InfoActivity"
             android:configChanges="keyboardHidden|orientation"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".Activity.FavListActivity.FavListActivity"
             android:configChanges="keyboardHidden|orientation"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait"
+            android:label="@string/fav_label"/>
     </application>
 
 </manifest>

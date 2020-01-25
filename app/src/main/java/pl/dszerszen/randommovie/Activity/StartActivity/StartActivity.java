@@ -80,6 +80,12 @@ public class StartActivity extends AppCompatActivity implements StartInterface.V
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        presenter.showPosters();
+    }
+
+    @Override
     protected void onStop() {
         super.onStop();
         EventBus.getDefault().unregister(this);
@@ -111,6 +117,7 @@ public class StartActivity extends AppCompatActivity implements StartInterface.V
                 .alpha(0.0f)
                 .setDuration(400)
                 .withEndAction(() -> {
+                    logoImage.setVisibility(View.GONE);
                     carouselFrame.setVisibility(View.VISIBLE);
                     carouselFrame.setAlpha(0.0f);
                     carouselFrame.animate()
@@ -153,22 +160,24 @@ public class StartActivity extends AppCompatActivity implements StartInterface.V
 
     @Override
     public void setPostersList(ArrayList<CarouselMoviePOJO> postersUriList) {
-        carousel = new FeatureCoverFlow(StartActivity.this);
-        carousel.setLayoutParams(new FrameLayout.LayoutParams(
-                FrameLayout.LayoutParams.MATCH_PARENT,
-                FrameLayout.LayoutParams.MATCH_PARENT
-        ));
-        int coverHeight = 400;
-        int coverWidth = Math.toIntExact(Math.round(coverHeight*0.66));
-        carousel.setCoverHeight(coverHeight);
-        carousel.setCoverWidth(coverWidth);
-        carousel.setMaxScaleFactor(1.7f);
-        carousel.setSpacing(0.6f);
-        carousel.setRotationTreshold(0.4f);
-        carousel.setScalingThreshold(0.3f);
-        carouselFrame.addView(carousel);
-        CarouselAdapter carouselAdapter = new CarouselAdapter(this, postersUriList, carousel);
-        carousel.setAdapter(carouselAdapter);
+        if (logoImage.getVisibility() == View.VISIBLE) {
+            carousel = new FeatureCoverFlow(StartActivity.this);
+            carousel.setLayoutParams(new FrameLayout.LayoutParams(
+                    FrameLayout.LayoutParams.MATCH_PARENT,
+                    FrameLayout.LayoutParams.MATCH_PARENT
+            ));
+            int coverHeight = 400;
+            int coverWidth = Math.toIntExact(Math.round(coverHeight * 0.66));
+            carousel.setCoverHeight(coverHeight);
+            carousel.setCoverWidth(coverWidth);
+            carousel.setMaxScaleFactor(1.7f);
+            carousel.setSpacing(0.6f);
+            carousel.setRotationTreshold(0.4f);
+            carousel.setScalingThreshold(0.3f);
+            carouselFrame.addView(carousel);
+            CarouselAdapter carouselAdapter = new CarouselAdapter(this, postersUriList, carousel);
+            carousel.setAdapter(carouselAdapter);
+        }
     }
 
     @Override

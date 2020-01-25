@@ -23,5 +23,6 @@ public interface StartInterface {
         void favouritesButtonClicked();
         void loginToFirebaseWithSelectedGoogleAccount(Intent data);
         void showLoginPrompt(Boolean withDialog);
+        void showPosters();
     }
 }
