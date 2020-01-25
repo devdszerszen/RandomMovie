@@ -51,6 +51,7 @@ public class MovieDetailsPresenter extends BasePresenter implements MovieDetails
         this.connector = TmdbConnector.getConnectorInstance();
         this.firebaseDatabase = DatabaseManager.getInstance();
         this.firebaseAuth = AuthManager.getInstance((Context)view);
+        updateFavMoviesIdList();
     }
 
     @Override
