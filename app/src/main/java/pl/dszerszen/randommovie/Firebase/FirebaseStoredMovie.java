@@ -9,6 +9,7 @@ public class FirebaseStoredMovie {
     public String imgUrl;
     public String genre;
     public int id;
+    public int timestamp;
 
     public FirebaseStoredMovie() {
     }
@@ -26,5 +27,8 @@ public class FirebaseStoredMovie {
                 this.genre = this.genre.concat(", " + movieDetails.genres.get(i).name);
             }
         }
+
+        Long currentTime = System.currentTimeMillis()/1000L;
+        this.timestamp = currentTime.intValue();
     }
 }

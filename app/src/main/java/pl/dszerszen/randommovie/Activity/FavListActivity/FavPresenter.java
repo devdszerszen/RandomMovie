@@ -51,6 +51,7 @@ public class FavPresenter implements FavInterface.Presenter {
             public void onComplete() {
                 Log.d(TAG, "Fav movie onComplete, list size: " + moviesList.size());
                 view.hideLoader();
+                sortListByDate();
                 view.showMoviesList(moviesList);
             }
         });
@@ -75,5 +76,13 @@ public class FavPresenter implements FavInterface.Presenter {
                 Log.d(TAG, "onError: Movie not deleted: " + e.getMessage());
             }
         });
+    }
+
+    private void sortListByName() {
+        moviesList.sort((movie1,movie2) -> movie1.title.compareTo(movie2.title));
+    }
+
+    private void sortListByDate() {
+        moviesList.sort((movie1,movie2) -> movie1.timestamp - movie2.timestamp);
     }
 }
