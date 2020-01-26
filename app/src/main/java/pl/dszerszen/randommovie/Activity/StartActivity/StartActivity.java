@@ -55,6 +55,8 @@ public class StartActivity extends AppCompatActivity implements StartInterface.V
     //Used in unlogged user use case - to show the same movie after logging in
     private int unloggedMovieId = -1;
 
+    private boolean carouselListVisible = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -129,6 +131,7 @@ public class StartActivity extends AppCompatActivity implements StartInterface.V
                             })
                             .start();
                 }).start();
+        carouselListVisible = true;
     }
 
     @Override
@@ -162,7 +165,7 @@ public class StartActivity extends AppCompatActivity implements StartInterface.V
 
     @Override
     public void setPostersList(ArrayList<CarouselMoviePOJO> postersUriList) {
-        if (loader.getVisibility() == View.VISIBLE) {
+        if (!carouselListVisible) {
             carousel = new FeatureCoverFlow(StartActivity.this);
             carousel.setLayoutParams(new FrameLayout.LayoutParams(
                     FrameLayout.LayoutParams.MATCH_PARENT,
