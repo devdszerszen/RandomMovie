@@ -37,6 +37,7 @@ import static android.view.View.GONE;
 
 public class MovieDetailsFragment extends Fragment {
     final String TAG = "RandomMovie_log";
+    final String NOT_AVAILABLE = "N/A";
 
     private OnFragmentInteractionListener mListener;
     private Unbinder unbinder;
@@ -195,7 +196,7 @@ public class MovieDetailsFragment extends Fragment {
                 String timeWithMins = String.format(Locale.getDefault(), "%d min", movieDetails.runtime);
                 timeValue.setText(timeWithMins);
             } else {
-                timeValue.setText("N/A");
+                timeValue.setText(NOT_AVAILABLE);
             }
 
             //Description
@@ -204,7 +205,11 @@ public class MovieDetailsFragment extends Fragment {
             //tabDescription.scrollTo(0, 0);
 
             //Rating
-            rating.setText(String.valueOf(movieDetails.voteAverage));
+            if (movieDetails.voteAverage == 0.0) {
+                rating.setText(NOT_AVAILABLE);
+            } else {
+                rating.setText(String.valueOf(movieDetails.voteAverage));
+            }
 
             //Previous movie button
             previousMovies.add(movieDetails.id);
