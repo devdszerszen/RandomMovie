@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import pl.dszerszen.randommovie.Activity.MovieDetailsActivity.MovieDetailsActivity;
 import pl.dszerszen.randommovie.Base.BaseActivity;
+import pl.dszerszen.randommovie.CustomViews.LoadingView;
 import pl.dszerszen.randommovie.Firebase.FirebaseStoredMovie;
 import pl.dszerszen.randommovie.R;
 
@@ -19,7 +20,7 @@ import java.util.ArrayList;
 public class FavListActivity extends BaseActivity implements FavInterface.View, FavAdapterInterface {
 
     RecyclerView favRecyclerView;
-    ProgressBar loader;
+    LoadingView newLoader;
     ConstraintLayout noResultsLayout;
     FavInterface.Presenter presenter;
     FavListAdapter adapter;
@@ -32,7 +33,7 @@ public class FavListActivity extends BaseActivity implements FavInterface.View, 
 
         this.presenter = new FavPresenter(this);
 
-        loader = findViewById(R.id.fav_loader);
+        newLoader = findViewById(R.id.fav_new_loader);
         noResultsLayout = findViewById(R.id.fav_noresults);
         favRecyclerView = findViewById(R.id.fav_recycler_view);
         favRecyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -46,12 +47,12 @@ public class FavListActivity extends BaseActivity implements FavInterface.View, 
     @Override
     public void showLoader() {
         favRecyclerView.setVisibility(View.GONE);
-        loader.setVisibility(View.VISIBLE);
+        newLoader.showLoader();
     }
 
     @Override
     public void hideLoader() {
-        loader.setVisibility(View.GONE);
+        newLoader.hideLoader();
         favRecyclerView.setVisibility(View.VISIBLE);
     }
 

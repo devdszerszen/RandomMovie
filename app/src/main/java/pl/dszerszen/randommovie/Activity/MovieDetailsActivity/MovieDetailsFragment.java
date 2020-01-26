@@ -28,6 +28,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import pl.dszerszen.randommovie.CustomViews.LoadingView;
 import pl.dszerszen.randommovie.Error.ErrorType;
 import pl.dszerszen.randommovie.Network.SingleMovieDetails;
 import pl.dszerszen.randommovie.R;
@@ -51,7 +52,7 @@ public class MovieDetailsFragment extends Fragment {
     @BindView(R.id.df_time_value) TextView timeValue;
     @BindView(R.id.df_year_value) TextView yearValue;
     @BindView(R.id.df_rating_value) TextView rating;
-    @BindView(R.id.df_loader) ProgressBar loader;
+    @BindView(R.id.df_new_loader) LoadingView newLoader;
     @BindView(R.id.df_random_btn) Button randomButton;
     @BindView(R.id.df_previous_btn) Button previousButton;
     @BindView(R.id.df_tab_header) TabLayout tabHeader;
@@ -239,12 +240,12 @@ public class MovieDetailsFragment extends Fragment {
 
     public void startLoader() {
         detailsLayout.setVisibility(GONE);
-        loader.setVisibility(View.VISIBLE);
+        newLoader.showLoader();
     }
 
     public void stopLoader() {
         try {
-            loader.setVisibility(GONE);
+            newLoader.hideLoader();
             detailsLayout.setVisibility(View.VISIBLE);
         } catch (Exception e) {
             Log.d(TAG,"Catched: " + e.getLocalizedMessage());
@@ -253,7 +254,7 @@ public class MovieDetailsFragment extends Fragment {
 
     public void showError(ErrorType errorType) {
         errorInfoShowed = true;
-        loader.setVisibility(GONE);
+        newLoader.hideLoader();
         detailsLayout.setVisibility(GONE);
         errorLayout.setVisibility(View.VISIBLE);
         switch (errorType) {

@@ -30,6 +30,7 @@ import pl.dszerszen.randommovie.Activity.InfoActivity.InfoActivity;
 import pl.dszerszen.randommovie.Activity.MovieDetailsActivity.MovieDetailsActivity;
 import pl.dszerszen.randommovie.Carousel.CarouselAdapter;
 import pl.dszerszen.randommovie.Carousel.CarouselMoviePOJO;
+import pl.dszerszen.randommovie.CustomViews.LoadingView;
 import pl.dszerszen.randommovie.EventBus.CarouselReadyEvent;
 import pl.dszerszen.randommovie.MessageCode;
 import pl.dszerszen.randommovie.R;
@@ -42,7 +43,7 @@ public class StartActivity extends AppCompatActivity implements StartInterface.V
     @BindView(R.id.start_search_btn) Button randomButton;
     @BindView(R.id.start_fav_btn) Button favorites;
     @BindView(R.id.start_buttons_layout) ConstraintLayout buttonsLayout;
-    @BindView(R.id.start_logo_image) ImageView logoImage;
+    @BindView(R.id.start_loader) LoadingView loader;
 
     @BindView(R.id.start_carousel_frame) FrameLayout carouselFrame;
     Menu menu;
@@ -71,6 +72,7 @@ public class StartActivity extends AppCompatActivity implements StartInterface.V
 
         //Presenter
         presenter = new StartPresenter(this);
+        loader.showLoader();
     }
 
     @Override
@@ -113,11 +115,11 @@ public class StartActivity extends AppCompatActivity implements StartInterface.V
 
     @Subscribe
     public void showCarousel(CarouselReadyEvent event) {
-        logoImage.animate()
+        loader.animate()
                 .alpha(0.0f)
                 .setDuration(400)
                 .withEndAction(() -> {
-                    logoImage.setVisibility(View.GONE);
+                    loader.hideLoader();
                     carouselFrame.setVisibility(View.VISIBLE);
                     carouselFrame.setAlpha(0.0f);
                     carouselFrame.animate()
@@ -160,7 +162,7 @@ public class StartActivity extends AppCompatActivity implements StartInterface.V
 
     @Override
     public void setPostersList(ArrayList<CarouselMoviePOJO> postersUriList) {
-        if (logoImage.getVisibility() == View.VISIBLE) {
+        if (loader.getVisibility() == View.VISIBLE) {
             carousel = new FeatureCoverFlow(StartActivity.this);
             carousel.setLayoutParams(new FrameLayout.LayoutParams(
                     FrameLayout.LayoutParams.MATCH_PARENT,
