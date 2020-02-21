@@ -11,14 +11,25 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
+
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import androidx.appcompat.app.ActionBar;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.fragment.app.FragmentTransaction;
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import pl.dszerszen.randommovie.Activity.StartActivity.StartActivityFilter;
 import pl.dszerszen.randommovie.Base.BaseActivity;
+import pl.dszerszen.randommovie.CustomViews.LoadingView;
 import pl.dszerszen.randommovie.Error.ErrorType;
 import pl.dszerszen.randommovie.EventBus.ShowMessageEvent;
 import pl.dszerszen.randommovie.Filter.FilterData;
@@ -27,6 +38,7 @@ import pl.dszerszen.randommovie.MessageCode;
 import pl.dszerszen.randommovie.Network.ResponseGenre;
 import pl.dszerszen.randommovie.Network.SingleMovieDetails;
 import pl.dszerszen.randommovie.R;
+
 import static android.view.View.GONE;
 
 
@@ -39,6 +51,11 @@ public class MovieDetailsActivity extends BaseActivity implements MovieDetailsIn
     ActionBar actionBar;
     TextView notificationBadge;
     Menu menu;
+    @BindView(R.id.movie_activity_layout) ConstraintLayout mainLayout;
+    @BindView(R.id.movie_errorLayout) ConstraintLayout errorLayout;
+    @BindView(R.id.error_desc) TextView errorDescription;
+    @BindView(R.id.movie_new_loader) LoadingView loader;
+    @BindView(R.id.df_previous_btn) Button previousButton;
 
     //Genres genresList
     List<ResponseGenre.Genre> genres = new ArrayList<>();
@@ -49,7 +66,12 @@ public class MovieDetailsActivity extends BaseActivity implements MovieDetailsIn
     //Current movie
     SingleMovieDetails currentMovie;
 
-    boolean isSetAsFavourite = false;
+    //Previous movies
+    ArrayList<Integer> previousMovies = new ArrayList<>();
+
+    private boolean isSetAsFavourite = false;
+    private boolean errorInfoShowed = false;
+    private boolean isPreviousMovie = false;
     int firstMovieId;
 
     @Override
@@ -57,6 +79,11 @@ public class MovieDetailsActivity extends BaseActivity implements MovieDetailsIn
         super.onCreate(savedInstanceState);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setContentView(R.layout.activity_movie_details);
+
+        ButterKnife.bind(this);
+
+        //Loader
+        showLoader();
 
         //Filter data
         this.filterData = FilterData.getInstance();
@@ -66,7 +93,10 @@ public class MovieDetailsActivity extends BaseActivity implements MovieDetailsIn
 
         //Fragment
         detailsFragment = MovieDetailsFragment.newInstance();
-        setFragment(detailsFragment);
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.fragmentMovieLayout, detailsFragment);
+        fragmentTransaction.commit();
+
         firstMovieId = getIntent().getIntExtra("MOVIE_ID",-1);
 
         //ActionBar
@@ -90,7 +120,6 @@ public class MovieDetailsActivity extends BaseActivity implements MovieDetailsIn
 
     private void setupActionBar() {
         actionBar = getSupportActionBar();
-        //actionBar.setDisplayHomeAsUpEnabled(true);
     }
 
     @Override
@@ -108,7 +137,6 @@ public class MovieDetailsActivity extends BaseActivity implements MovieDetailsIn
         return true;
     }
 
-
     public void onFilterIconClicked () {
         FiltersDialog dialog = new FiltersDialog(this, genres);
 
@@ -120,7 +148,7 @@ public class MovieDetailsActivity extends BaseActivity implements MovieDetailsIn
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.menu_favIcon) {
-            if (!detailsFragment.errorInfoShowed)
+            if (!errorInfoShowed)
             presenter.onFavIconClicked(currentMovie, isSetAsFavourite);
         } else if (item.getItemId() == android.R.id.home) {
             onBackPressed();
@@ -148,6 +176,11 @@ public class MovieDetailsActivity extends BaseActivity implements MovieDetailsIn
     }
 
     @Override
+    public void saveGenresList(List<ResponseGenre.Genre> genresList) {
+        this.genres = genresList;
+    }
+
+    @Override
     public void onFiltersSaved() {
         this.filterData = FilterData.getInstance();
         setupBadge();
@@ -161,31 +194,27 @@ public class MovieDetailsActivity extends BaseActivity implements MovieDetailsIn
         }
     }
 
-
     @Override
     public void showMovie(SingleMovieDetails movieDetails) {
         currentMovie = movieDetails;
         detailsFragment.showMovieDetails(movieDetails);
+        previousMovies.add(movieDetails.id);
+        setPreviousMovieButton();
     }
 
     @Override
     public void showLoader() {
-        detailsFragment.startLoader();
-    }
-
-    @Override
-    public void hideLoader() {
-        detailsFragment.stopLoader();
-    }
-
-    @Override
-    public void saveGenresList(List<ResponseGenre.Genre> genresList) {
-        this.genres = genresList;
+        mainLayout.setVisibility(GONE);
+        loader.showLoader();
     }
 
     @Override
     public void showToast(String message) {
         runOnUiThread(() -> showToastMessage(message));
+    }
+
+    private void showToastMessage(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -216,20 +245,35 @@ public class MovieDetailsActivity extends BaseActivity implements MovieDetailsIn
     }
 
     @Override
+    public void showError(ErrorType errorType) {
+        errorInfoShowed = true;
+        loader.hideLoader();
+        mainLayout.setVisibility(GONE);
+        errorLayout.setVisibility(View.VISIBLE);
+        switch (errorType) {
+            case NETWORK: errorDescription.setText(getString(R.string.error_msg_network));
+            case LACK_OF_RESULT: errorDescription.setText(getString(R.string.error_msg_lack_of_results));
+        }
+    }
+
+    @Override
+    public void hideLoader() {
+        loader.hideLoader();
+        mainLayout.setVisibility(View.VISIBLE);
+    }
+
+    private void hideNetworkError() {
+        errorInfoShowed = false;
+        mainLayout.setVisibility(View.VISIBLE);
+        errorLayout.setVisibility(GONE);
+    }
+
+    @Override
     public void backToStartActivityWithLoginPrompt() {
         Intent returnIntent = new Intent();
         returnIntent.putExtra("MOVIE_ID",currentMovie.id);
         setResult(Activity.RESULT_FIRST_USER,returnIntent);
         finish();
-    }
-
-    @Override
-    public void showError(ErrorType errorType) {
-        detailsFragment.showError(errorType);
-    }
-
-    private void showToastMessage(String message) {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -249,5 +293,54 @@ public class MovieDetailsActivity extends BaseActivity implements MovieDetailsIn
         } else {
             getRandomMovie();
         }
+    }
+
+    @OnClick(R.id.df_random_btn)
+    public void onNextButtonClicked() {
+        if (errorInfoShowed) hideNetworkError();
+        isPreviousMovie = true;
+        presenter.onRandomMovieButtonClicked();
+    }
+
+    @OnClick(R.id.df_previous_btn)
+    public void onPreviousButtonClicked() {
+        if (errorInfoShowed) hideNetworkError();
+        isPreviousMovie = false;
+        getMovieDetails(previousMovies.get(previousMovies.size()-2));
+    }
+
+    private void setPreviousMovieButton() {
+        if (previousMovies.size()>1 && isPreviousMovie) {
+            previousButton.setVisibility(View.VISIBLE);
+        } else {
+            previousButton.setVisibility(GONE);
+        }
+    }
+
+    @Override
+    public void initGoogleAds() {
+        MobileAds.initialize(this, initializationStatus -> {
+        });
+        AdView adView = findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().addTestDevice("94D4F809E44EC23AAB4C3005DE1B5130").build();
+        adView.loadAd(adRequest);
+    }
+
+    public void showGoogleAd() {
+
+    }
+
+    public void hideGoogleAd() {
+
+    }
+
+    @Override
+    public void notifyImageReady() {
+        hideLoader();
+    }
+
+    @Override
+    public void notifyError() {
+        showError(ErrorType.NETWORK);
     }
 }

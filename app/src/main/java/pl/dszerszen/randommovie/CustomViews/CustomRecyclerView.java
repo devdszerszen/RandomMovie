@@ -2,14 +2,13 @@ package pl.dszerszen.randommovie.CustomViews;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 import pl.dszerszen.randommovie.Filter.FilterData;
-import pl.dszerszen.randommovie.Filter.SingleFilter;
 import pl.dszerszen.randommovie.Filter.GenreFilterAdapter;
+import pl.dszerszen.randommovie.Filter.SingleFilter;
 
 public class CustomRecyclerView extends RecyclerView implements FilterExpandView.AttachedView {
     final String TAG = "RandomMovie_log";
@@ -41,7 +40,6 @@ public class CustomRecyclerView extends RecyclerView implements FilterExpandView
         singleFilter.genreId = adapter.getCurrentGenreId();
         singleFilter.genreName = adapter.getCurrentGenreName();
         singleFilter.genrePosition = adapter.getCurrentGenrePosition();
-        Log.d(TAG, "GENREFILTER: CustomRecyclerView returns genreId:" + singleFilter.genreId);
         return singleFilter;
     }
 }

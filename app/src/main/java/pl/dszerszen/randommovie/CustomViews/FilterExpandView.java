@@ -4,7 +4,6 @@ import android.content.Context;
 import android.graphics.Typeface;
 import android.os.Handler;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.ImageView;
@@ -54,7 +53,7 @@ public class FilterExpandView extends LinearLayout {
                     showContent();
                 }
             } else {
-                Log.d(TAG, "FilterExpandView: Child is null");
+
             }
         });
     }

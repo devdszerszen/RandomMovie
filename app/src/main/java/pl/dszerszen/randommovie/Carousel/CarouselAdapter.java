@@ -2,14 +2,11 @@ package pl.dszerszen.randommovie.Carousel;
 
 import android.content.Context;
 import android.content.Intent;
-import android.telecom.Call;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
@@ -90,7 +87,6 @@ public class CarouselAdapter extends BaseAdapter {
 
     private synchronized void checkCarouselReady() {
         loadedImagesCounter++;
-        Log.d(TAG,"Check carousel, ready: " +  + loadedImagesCounter);
         if (loadedImagesCounter == data.size()) {
             EventBus.getDefault().post(new CarouselReadyEvent());
         }

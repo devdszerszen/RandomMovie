@@ -2,7 +2,6 @@ package pl.dszerszen.randommovie.Activity.MovieDetailsActivity;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,6 +51,9 @@ public class MovieDetailsPresenter extends BasePresenter implements MovieDetails
         this.firebaseDatabase = DatabaseManager.getInstance();
         this.firebaseAuth = AuthManager.getInstance((Context)view);
         updateFavMoviesIdList();
+        if (isAdModuleActive()) {
+            view.initGoogleAds();
+        }
     }
 
     @Override
@@ -81,18 +83,13 @@ public class MovieDetailsPresenter extends BasePresenter implements MovieDetails
         connector.getMoviesList(page).subscribe(new DisposableObserver<ResponseMovieList>() {
             @Override
             public void onNext(ResponseMovieList responseMovieList) {
-                Log.d(TAG, "logRX onNext: Current page:" + responseMovieList.page);
-                Log.d(TAG, "logRX onNext: Total pages:" + responseMovieList.totalPages);
-                Log.d(TAG, "logRX onNext: Results list size:" + responseMovieList.results.size());
+
 
                 if (responseMovieList.totalPages == 0) {
-                    Log.d(TAG, "logRX onNext: No results");
                     view.showError(ErrorType.LACK_OF_RESULT);
                 } else if (responseMovieList.page>responseMovieList.totalPages || responseMovieList.results.size()==0) {
-                    Log.d(TAG, "logRX onNext: Current page greater than total pages");
                     getRandomMovie(responseMovieList.totalPages);
                 } else {
-                    Log.d(TAG, "logRX onNext: Result OK");
                     int movieId = getValidMovieId(responseMovieList);
                     if (movieId>-1) {
                         getMovieDetails(movieId);
@@ -127,11 +124,9 @@ public class MovieDetailsPresenter extends BasePresenter implements MovieDetails
                 }
             }
         }
-        Log.d(TAG, "logRX getValidMovieId: goodMovies size:"+goodMoviesList.size());
 
         if (goodMoviesList.size()>0) {
             int movieId = goodMoviesList.get(random.nextInt(goodMoviesList.size())).id;
-            Log.d(TAG, "logRX getValidMovieId: returns id:" + movieId);
             return movieId;
         } else {
             return -1;
@@ -149,8 +144,8 @@ public class MovieDetailsPresenter extends BasePresenter implements MovieDetails
 
             @Override
             public void onNext(SingleMovieDetails movieDetails) {
-                view.showMovie(movieDetails);
                 view.setMovieAsFavourite(isSetAsFavourite(movieDetails));
+                view.showMovie(movieDetails);
             }
 
             @Override
@@ -232,7 +227,6 @@ public class MovieDetailsPresenter extends BasePresenter implements MovieDetails
 
     @SuppressLint("CheckResult")
     private void updateFavMoviesIdList() {
-        Log.d(TAG, "updateFavMoviesIdList: called");
         firebaseDatabase.getFavouriteMoviesIds().subscribeWith(new SingleObserver<ArrayList<Integer>>() {
             @Override
             public void onSubscribe(Disposable d) {
@@ -242,13 +236,12 @@ public class MovieDetailsPresenter extends BasePresenter implements MovieDetails
             @Override
             public void onSuccess(ArrayList<Integer> integers) {
                 favMoviesIdsList = integers;
-                Log.d(TAG, "updateFavMoviesIdList: " + favMoviesIdsList.toString());
                 shouldRefreshFavMoviesIdList = false;
             }
 
             @Override
             public void onError(Throwable e) {
-
+                e.getMessage();
             }
         });
     }

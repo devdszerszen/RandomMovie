@@ -19,6 +19,8 @@ public interface MovieDetailsInterface {
         void showLoginPrompt();
         void showError(ErrorType errorType);
         void backToStartActivityWithLoginPrompt();
+
+        void initGoogleAds();
     }
 
     interface Presenter {

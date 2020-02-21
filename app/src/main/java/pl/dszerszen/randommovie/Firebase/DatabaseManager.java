@@ -1,7 +1,6 @@
 package pl.dszerszen.randommovie.Firebase;
 
 import android.annotation.SuppressLint;
-import android.util.Log;
 
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.firebase.database.DataSnapshot;
@@ -11,10 +10,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import io.reactivex.Completable;
 import io.reactivex.Observable;
 import io.reactivex.Single;
@@ -64,7 +61,6 @@ public class DatabaseManager implements FirebaseDBInterface {
 
     @Override
     public void incrementCounter() {
-        Log.d(TAG, "incrementCounter: called");
         users.child(sharPrefsManager.getFirebaseKey()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

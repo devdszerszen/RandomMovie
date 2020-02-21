@@ -8,8 +8,10 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
+
 import java.io.Serializable;
 import java.util.ArrayList;
+
 import io.reactivex.CompletableObserver;
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
@@ -60,6 +62,7 @@ public class StartPresenter extends BasePresenter implements StartInterface.Pres
         } else {
             showLoginPrompt(true);
         }
+        view.showToast(getGoogleAdsId());
     }
 
     @Override

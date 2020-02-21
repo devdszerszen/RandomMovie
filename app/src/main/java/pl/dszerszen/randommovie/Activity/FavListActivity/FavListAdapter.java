@@ -1,11 +1,9 @@
 package pl.dszerszen.randommovie.Activity.FavListActivity;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.ScaleAnimation;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -16,11 +14,8 @@ import com.bumptech.glide.Glide;
 import java.util.ArrayList;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import pl.dszerszen.randommovie.Dagger.MyApplication;
 import pl.dszerszen.randommovie.Firebase.FirebaseStoredMovie;
 import pl.dszerszen.randommovie.R;
 
@@ -75,7 +70,6 @@ public class FavListAdapter extends RecyclerView.Adapter<FavListAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Log.d(TAG, "onBindViewHolder: called");
         FirebaseStoredMovie movie = moviesList.get(position);
         holder.title.setText(String.format("%s (%s)",movie.title, movie.year));
         holder.id = movie.id;

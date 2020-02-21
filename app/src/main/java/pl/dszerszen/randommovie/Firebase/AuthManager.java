@@ -2,12 +2,6 @@ package pl.dszerszen.randommovie.Firebase;
 
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
-
-import io.reactivex.Completable;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.schedulers.Schedulers;
-import pl.dszerszen.randommovie.SharPrefs.SharPrefsManager;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -16,6 +10,11 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.GoogleAuthProvider;
+
+import io.reactivex.Completable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
+import pl.dszerszen.randommovie.SharPrefs.SharPrefsManager;
 
 public class AuthManager implements FirebaseAuthInterface {
 
@@ -44,10 +43,10 @@ public class AuthManager implements FirebaseAuthInterface {
                 .build();
 
         this.googleSignClient = GoogleSignIn.getClient(context, googleSignOptions);
-        Log.d(TAG, "AuthManager: GoogleSignClient: " + googleSignClient);
+
 
         this.googleSignAccount = GoogleSignIn.getLastSignedInAccount(context);
-        Log.d(TAG, "AuthManager: GoogleSignAccount: " + googleSignAccount);
+
 
         this.firebaseAuth = FirebaseAuth.getInstance();
 
@@ -76,7 +75,6 @@ public class AuthManager implements FirebaseAuthInterface {
 
     @Override
     public Completable loginToFirebase(GoogleSignInAccount account) {
-        Log.d(TAG, "AuthManager: firebaseLogin called: " + account.getIdToken());
 
         AuthCredential credential = GoogleAuthProvider.getCredential(account.getIdToken(), null);
 

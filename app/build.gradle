@@ -15,6 +15,11 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            resValue("string", "google_ads_id", "id dla wersji release")
+        }
+
+        debug {
+            resValue("string", "google_ads_id", "ca-app-pub-3940256099942544~3347511713")
         }
     }
 
@@ -93,10 +98,14 @@ dependencies {
     implementation 'com.google.firebase:firebase-database:19.1.0'
     implementation 'com.google.android.gms:play-services-auth:17.0.0'
     implementation 'com.google.android.material:material:1.0.0'
+    implementation 'com.google.firebase:firebase-config:19.1.1'
 
     //Carousel
     implementation 'com.github.moondroid.coverflow:library:1.0'
 
     //Tutorial
     implementation 'me.toptas.fancyshowcase:fancyshowcaseview:1.2.1'
+
+    //Google ads
+    implementation 'com.google.android.gms:play-services-ads:18.3.0'
 }

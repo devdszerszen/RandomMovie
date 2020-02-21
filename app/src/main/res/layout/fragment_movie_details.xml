@@ -9,45 +9,6 @@
     tools:context=".Activity.MovieDetailsActivity.MovieDetailsFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/errorLayout"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="200dp"
-        android:layout_marginEnd="40dp"
-        android:layout_marginBottom="200dp"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:visibility="visible">
-
-        <ImageView
-            android:id="@+id/df_error_img"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:src="@drawable/ic_sad_face"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/df_error_desc"
-            style="@style/error_desc_style"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
-            android:gravity="center"
-            android:text="@string/error_msg_network"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/df_error_img" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/df_layout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -79,85 +40,19 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/df_infobar">
 
-            <com.google.android.material.tabs.TabLayout
-                android:id="@+id/df_tab_header"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:visibility="gone"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:tabSelectedTextColor="@color/colorAccent"
-                app:tabTextColor="@android:color/white">
-
-                <com.google.android.material.tabs.TabItem
-                    android:id="@+id/df_description_tab"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:tag="TAB_DESC"
-                    android:text="@string/description" />
-
-                <com.google.android.material.tabs.TabItem
-                    android:id="@+id/df_details_tab"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:tag="TAB_DETAILS"
-                    android:text="@string/details"
-                    android:visibility="gone"
-                    tools:visibility="gone" />
-
-            </com.google.android.material.tabs.TabLayout>
-
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/df_view_under_tabs"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_marginStart="4dp"
-                android:layout_marginTop="4dp"
                 android:layout_marginEnd="4dp"
                 android:layout_marginBottom="4dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/df_tab_header"
-                app:layout_constraintVertical_bias="0.0">
+                app:layout_constraintTop_toTopOf="parent">
 
-                <ScrollView
-                    android:id="@+id/df_detailsScrollView"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:visibility="gone">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical" />
-                </ScrollView>
-
-                <ScrollView
-                    android:id="@+id/df_descriptionScrollView"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:visibility="visible"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.0"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
-
-                    <TextView
-                        android:id="@+id/df_desc"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="10dp"
-                        android:layout_marginEnd="10dp"
-                        android:layout_marginBottom="16dp"
-                        android:justificationMode="inter_word"
-                        android:padding="8dp"
-                        android:textColor="@android:color/background_light"
-                        android:textSize="15sp" />
-                </ScrollView>
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -254,58 +149,29 @@
                 android:textStyle="bold" />
         </FrameLayout>
 
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/df_buttons_layout"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="4dp"
-        android:animateLayoutChanges="true"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
-
-        <Button
-            android:id="@+id/df_random_btn"
-            style="@style/DefaultButton"
+        <ScrollView
+            android:id="@+id/df_descriptionScrollView"
             android:layout_width="0dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="8dp"
-            android:text="@string/random_movie"
+            android:layout_height="wrap_content"
             android:visibility="visible"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/df_previous_btn"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintEnd_toEndOf="@+id/dr_details_layout"
+            app:layout_constraintStart_toStartOf="@+id/dr_details_layout"
+            app:layout_constraintTop_toBottomOf="@+id/df_infobar">
 
-        <Button
-            android:id="@+id/df_previous_btn"
-            style="@style/BorderlessButton"
-            android:layout_width="wrap_content"
-            android:layout_marginStart="4dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
-            android:text="@string/btn_previous"
-            android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            <TextView
+                android:id="@+id/df_desc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="16dp"
+                android:justificationMode="inter_word"
+                android:padding="8dp"
+                android:textColor="@android:color/background_light"
+                android:textSize="15sp" />
+        </ScrollView>
+
+
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <pl.dszerszen.randommovie.CustomViews.LoadingView
-        android:id="@+id/df_new_loader"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:visibility="visible"/>
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
