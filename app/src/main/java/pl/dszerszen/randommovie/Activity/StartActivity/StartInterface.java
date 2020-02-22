@@ -16,6 +16,8 @@ public interface StartInterface {
         void showLoginPromptWithoutDialog(Intent intent);
         void startFavListActivity();
         void setPostersList(ArrayList<CarouselMoviePOJO> postersUriList);
+        void showGoogleLoginLoader();
+        void hideGoogleLoginLoader();
     }
 
     interface Presenter {

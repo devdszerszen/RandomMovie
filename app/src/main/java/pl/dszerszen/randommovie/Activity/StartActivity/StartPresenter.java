@@ -62,7 +62,6 @@ public class StartPresenter extends BasePresenter implements StartInterface.Pres
         } else {
             showLoginPrompt(true);
         }
-        view.showToast(getGoogleAdsId());
     }
 
     @Override
@@ -78,12 +77,14 @@ public class StartPresenter extends BasePresenter implements StartInterface.Pres
     //Used when user selects google account to be logged in
     @Override
     public void loginToFirebaseWithSelectedGoogleAccount(Intent data) {
+        view.showGoogleLoginLoader();
         try {
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
             GoogleSignInAccount account = task.getResult(ApiException.class);
             loginToFirebase(account);
             firebaseAuth.updateGoogleAccount(account);
         } catch (ApiException e) {
+
         }
     }
 
@@ -98,10 +99,12 @@ public class StartPresenter extends BasePresenter implements StartInterface.Pres
             public void onComplete() {
                 firebaseDatabase.addUser(firebaseAuth.getLoggedAccount());
                 view.showToast(MessageCode.USER_LOGGED_OK);
+                view.hideGoogleLoginLoader();
             }
 
             @Override
             public void onError(Throwable e) {
+
             }
         });
     }

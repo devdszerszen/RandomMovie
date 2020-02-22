@@ -9,7 +9,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import org.greenrobot.eventbus.EventBus;
@@ -19,7 +18,6 @@ import java.util.ArrayList;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -28,6 +26,7 @@ import it.moondroid.coverflow.components.ui.containers.FeatureCoverFlow;
 import pl.dszerszen.randommovie.Activity.FavListActivity.FavListActivity;
 import pl.dszerszen.randommovie.Activity.InfoActivity.InfoActivity;
 import pl.dszerszen.randommovie.Activity.MovieDetailsActivity.MovieDetailsActivity;
+import pl.dszerszen.randommovie.Base.BaseActivity;
 import pl.dszerszen.randommovie.Carousel.CarouselAdapter;
 import pl.dszerszen.randommovie.Carousel.CarouselMoviePOJO;
 import pl.dszerszen.randommovie.CustomViews.LoadingView;
@@ -35,7 +34,7 @@ import pl.dszerszen.randommovie.EventBus.CarouselReadyEvent;
 import pl.dszerszen.randommovie.MessageCode;
 import pl.dszerszen.randommovie.R;
 
-public class StartActivity extends AppCompatActivity implements StartInterface.View{
+public class StartActivity extends BaseActivity implements StartInterface.View{
     
     final public static int RC_LOGIN = 187;
     final static int RC_MOVIE = 188;
@@ -49,6 +48,7 @@ public class StartActivity extends AppCompatActivity implements StartInterface.V
     Menu menu;
     FeatureCoverFlow carousel;
     ActionBar actionBar;
+    Dialog googleLoginDialog;
 
     private StartInterface.Presenter presenter;
 
@@ -190,7 +190,7 @@ public class StartActivity extends AppCompatActivity implements StartInterface.V
         Dialog dialog = new Dialog(this);
         dialog.setContentView(R.layout.dialog_login);
         dialog.setCancelable(false);
-        dialog.getWindow().setDimAmount(0.9f);
+        dialog.getWindow().setDimAmount(0.8f);
         dialog.getWindow().setBackgroundDrawableResource(R.drawable.filter_background);
         dialog.show();
 
@@ -217,6 +217,16 @@ public class StartActivity extends AppCompatActivity implements StartInterface.V
     @Override
     public void showLoginPromptWithoutDialog(Intent intent) {
         startActivityForResult(intent, RC_LOGIN);
+    }
+
+    @Override
+    public void showGoogleLoginLoader() {
+       showFullscreenLoaderDialog();
+    }
+
+    @Override
+    public void hideGoogleLoginLoader() {
+        hideFullScreenLoaderDialog();
     }
 
     @Override

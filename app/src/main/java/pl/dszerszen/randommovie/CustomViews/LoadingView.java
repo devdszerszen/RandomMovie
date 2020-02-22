@@ -1,11 +1,7 @@
 package pl.dszerszen.randommovie.CustomViews;
 
-import android.animation.AnimatorInflater;
-import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.util.AttributeSet;
-import android.util.Log;
-import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
@@ -56,6 +52,10 @@ public class LoadingView extends LinearLayout {
         for (ImageView view: viewsList) {
             view.clearAnimation();
         }
+    }
+
+    public void startLoader() {
+        startAnimation();
     }
 
     private void startAnimation() {
