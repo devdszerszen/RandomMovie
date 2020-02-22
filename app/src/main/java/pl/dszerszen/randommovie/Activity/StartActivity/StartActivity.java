@@ -144,6 +144,8 @@ public class StartActivity extends BaseActivity implements StartInterface.View{
         switch (code) {
             case MessageCode.USER_LOGGED_OK:
                 showToast(getString(R.string.user_logged_toast));
+            case MessageCode.USER_LOGIN_ERROR:
+                showToast(getString(R.string.user_login_error));
         }
     }
 

@@ -84,7 +84,8 @@ public class StartPresenter extends BasePresenter implements StartInterface.Pres
             loginToFirebase(account);
             firebaseAuth.updateGoogleAccount(account);
         } catch (ApiException e) {
-
+            view.hideGoogleLoginLoader();
+            view.showToast(MessageCode.USER_LOGIN_ERROR);
         }
     }
 
@@ -98,13 +99,14 @@ public class StartPresenter extends BasePresenter implements StartInterface.Pres
             @Override
             public void onComplete() {
                 firebaseDatabase.addUser(firebaseAuth.getLoggedAccount());
-                view.showToast(MessageCode.USER_LOGGED_OK);
                 view.hideGoogleLoginLoader();
+                view.showToast(MessageCode.USER_LOGGED_OK);
             }
 
             @Override
             public void onError(Throwable e) {
-
+                view.hideGoogleLoginLoader();
+                view.showToast(MessageCode.USER_LOGIN_ERROR);
             }
         });
     }

@@ -36,4 +36,5 @@
     <string name="error_msg_lack_of_results">Nie znaleziono pasujących filmów, zmień filtry i spróbuj ponownie</string>
     <string name="movie_deleted_fav_toast">Film usunięty z listy ulubionych</string>
     <string name="more">Więcej</string>
+    <string name="user_login_error">Wystąpił błąd, spróbuj ponownie.</string>
 </resources>
