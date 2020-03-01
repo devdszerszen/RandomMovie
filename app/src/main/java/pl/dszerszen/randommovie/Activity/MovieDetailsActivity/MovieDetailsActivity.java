@@ -54,6 +54,7 @@ public class MovieDetailsActivity extends BaseActivity implements MovieDetailsIn
     Menu menu;
     @BindView(R.id.movie_activity_layout) ConstraintLayout mainLayout;
     @BindView(R.id.movie_errorLayout) ConstraintLayout errorLayout;
+    @BindView(R.id.df_buttons_layout) ConstraintLayout buttonsLayout;
     @BindView(R.id.error_desc) TextView errorDescription;
     @BindView(R.id.movie_new_loader) LoadingView loader;
     @BindView(R.id.df_previous_btn) Button previousButton;
@@ -206,6 +207,7 @@ public class MovieDetailsActivity extends BaseActivity implements MovieDetailsIn
     @Override
     public void showLoader() {
         mainLayout.setVisibility(GONE);
+        buttonsLayout.setVisibility(GONE);
         loader.showLoader();
     }
 
@@ -250,6 +252,7 @@ public class MovieDetailsActivity extends BaseActivity implements MovieDetailsIn
         errorInfoShowed = true;
         loader.hideLoader();
         mainLayout.setVisibility(GONE);
+        buttonsLayout.setVisibility(View.VISIBLE);
         errorLayout.setVisibility(View.VISIBLE);
         switch (errorType) {
             case NETWORK: errorDescription.setText(getString(R.string.error_msg_network));
@@ -260,6 +263,7 @@ public class MovieDetailsActivity extends BaseActivity implements MovieDetailsIn
     @Override
     public void hideLoader() {
         loader.hideLoader();
+        buttonsLayout.setVisibility(View.VISIBLE);
         mainLayout.setVisibility(View.VISIBLE);
     }
 
