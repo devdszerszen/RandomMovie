@@ -29,6 +29,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import pl.dszerszen.randommovie.Activity.StartActivity.StartActivityFilter;
 import pl.dszerszen.randommovie.Base.BaseActivity;
+import pl.dszerszen.randommovie.BuildConfig;
 import pl.dszerszen.randommovie.CustomViews.LoadingView;
 import pl.dszerszen.randommovie.Error.ErrorType;
 import pl.dszerszen.randommovie.EventBus.ShowMessageEvent;
@@ -319,19 +320,13 @@ public class MovieDetailsActivity extends BaseActivity implements MovieDetailsIn
 
     @Override
     public void initGoogleAds() {
-        MobileAds.initialize(this, initializationStatus -> {
-        });
+        MobileAds.initialize(this, getString(R.string.google_ads_id));
         AdView adView = findViewById(R.id.adView);
-        AdRequest adRequest = new AdRequest.Builder().addTestDevice("94D4F809E44EC23AAB4C3005DE1B5130").build();
-        adView.loadAd(adRequest);
-    }
-
-    public void showGoogleAd() {
-
-    }
-
-    public void hideGoogleAd() {
-
+        AdRequest.Builder adRequest = new AdRequest.Builder();
+        if (BuildConfig.DEBUG) {
+            adRequest.addTestDevice("94D4F809E44EC23AAB4C3005DE1B5130");
+        }
+        adView.loadAd(adRequest.build());
     }
 
     @Override
