@@ -1,17 +1,20 @@
 package pl.dszerszen.randommovie.Filter;
 
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.util.List;
 
 import androidx.annotation.NonNull;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 import pl.dszerszen.randommovie.CustomViews.CustomRecyclerView;
+import pl.dszerszen.randommovie.EventBus.CloseExpandedFilterEvent;
 import pl.dszerszen.randommovie.Network.ResponseGenre;
 import pl.dszerszen.randommovie.R;
 
@@ -38,11 +41,18 @@ public class GenreFilterAdapter extends CustomRecyclerView.Adapter<GenreFilterAd
 
             itemView.setOnClickListener(v -> {
                 saveSelectedItem(getAdapterPosition());
+                closeFilter();
             });
 
             radioButton.setOnClickListener(v -> {
                 saveSelectedItem(getAdapterPosition());
+                closeFilter();
             });
+        }
+
+        private void closeFilter() {
+            Handler handler = new Handler();
+            handler.postDelayed(() -> EventBus.getDefault().post(new CloseExpandedFilterEvent()),100);
         }
     }
 

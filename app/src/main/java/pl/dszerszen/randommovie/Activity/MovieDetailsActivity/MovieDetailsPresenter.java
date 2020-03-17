@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
@@ -166,6 +167,8 @@ public class MovieDetailsPresenter extends BasePresenter implements MovieDetails
         connector.getGenresList().subscribeWith(new DisposableObserver<ResponseGenre>() {
             @Override
             public void onNext(ResponseGenre responseGenre) {
+                List<ResponseGenre.Genre> genresList = responseGenre.genres;
+                Collections.sort(genresList, (ResponseGenre.Genre g1, ResponseGenre.Genre g2) -> g1.name.compareTo(g2.name));
                 view.saveGenresList(responseGenre.genres);
             }
 
