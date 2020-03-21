@@ -37,4 +37,5 @@
     <string name="movie_deleted_fav_toast">Film usunięty z listy ulubionych</string>
     <string name="more">Więcej</string>
     <string name="user_login_error">Wystąpił błąd, spróbuj ponownie.</string>
+    <string name="privacy_policy">Polityka prywatności</string>
 </resources>

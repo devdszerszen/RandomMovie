@@ -5,10 +5,8 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import pl.dszerszen.randommovie.Base.BaseActivity;
 import pl.dszerszen.randommovie.R;
@@ -45,5 +43,12 @@ public class InfoActivity extends BaseActivity {
         Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.parse("mailto:"+getResources().getString(R.string.devMail)));
         emailIntent.putExtra(Intent.EXTRA_SUBJECT, getResources().getString(R.string.app_name));
         startActivity(emailIntent);
+    }
+
+    public void showPrivacyPolicy(View view) {
+        String url = "https://film-na-dzis.flycricket.io/privacy.html";
+        Intent i = new Intent(Intent.ACTION_VIEW);
+        i.setData(Uri.parse(url));
+        startActivity(i);
     }
 }
